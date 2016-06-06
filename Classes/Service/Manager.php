@@ -146,7 +146,7 @@ class Manager {
 			/** @var \HDNET\Importr\Service\Resources\ResourceInterface $resource */
 			// Resourcen Object anhand der Datei auswählen
 			if (preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
-				if (is_array($strategyConfiguration['before'])) {
+				if (isset($strategyConfiguration['before']) && is_array($strategyConfiguration['before'])) {
 					$this->parseConfiguration($strategyConfiguration['before']);
 				}
 				// Resource "benutzen"
@@ -157,7 +157,7 @@ class Manager {
 				$this->updateImport($import);
 				// Durchlauf starten
 				for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
-					if (is_array($strategyConfiguration['each'])) {
+					if (isset($strategyConfiguration['each']) && is_array($strategyConfiguration['each'])) {
 						$this->parseConfiguration($strategyConfiguration['each']);
 					}
 					$entry = $resource->getEntry($pointer);
@@ -170,7 +170,7 @@ class Manager {
 				}
 				$import->setEndtime(new \DateTime('now'));
 				$this->updateImport($import, $pointer);
-				if (is_array($strategyConfiguration['after'])) {
+				if (isset($strategyConfiguration['after']) && is_array($strategyConfiguration['after'])) {
 					$this->parseConfiguration($strategyConfiguration['after']);
 				}
 				break;
