@@ -14,7 +14,7 @@ class Excel extends AbstractResource implements ResourceInterface {
 	/**
 	 * @var string
 	 */
-	protected $filepathExpression = "/.xls$/";
+	protected $filepathExpression = "/.xlsx?$/";
 
 	/**
 	 * @var array
