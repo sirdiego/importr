@@ -1,0 +1,41 @@
+{namespace importr=HDNET\Importr\ViewHelpers}
+<f:layout name="Backend" />
+
+<f:section name="iconButtons">
+	<f:be.buttons.icon uri="{f:uri.action(action: 'index')}" icon="button_left" title="Cancel Import" />
+</f:section>
+
+<f:section name="content">
+	<h4 class="uppercase">
+		<f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xml:importr" />
+	</h4>
+
+	<f:form action="create">
+		<f:form.hidden name="filepath" value="{filepath}" />
+		<f:form.hidden name="strategy" value="{strategy}" />
+		Import file <b>{filepath}</b> with the strategy <b>{strategy.title}</b>!
+
+		<f:form.submit value="Importieren" />
+	</f:form>
+
+	<h4 class="uppercase">Preview</h4>
+
+	<script type="text/javascript" src="{f:uri.resource(path:'JavaScript/Components/Table.js')}"></script>
+	<script type="text/javascript">
+		var dataTest = eval("{preview -> importr:json()}");
+	</script>
+	<script type="text/javascript">    /*<![CDATA[*/
+	Ext.onReady(function () {
+		var t = new HDNET.Importr.Table({
+			storeData: dataTest,
+			title: 'Preview your data',
+			height: 500
+		});
+		t.render('grid');
+	});
+	/*]]>*/</script>
+	<div id="grid"></div>
+
+</f:section>
+
+

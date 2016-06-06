@@ -1,0 +1,87 @@
+<f:layout name="Backend"/>
+
+<f:section name="iconButtons">
+
+</f:section>
+
+<f:section name="content">
+    <h4 class="uppercase">
+        <f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xml:importr"/>
+    </h4>
+
+    <f:if condition="{folder}">
+        <f:then>
+            <f:if condition="{f:count(subject '{folder}')} > 0">
+                <f:then>
+                    <f:form action="import">
+                        Import file
+                        <f:form.select options="{folder}" name="identifier"/>
+                        <f:form.submit value="Weiter"/>
+                    </f:form>
+                </f:then>
+                <f:else>
+                    <p style="color: red;">There are no files in the current folder</p>
+                </f:else>
+            </f:if>
+        </f:then>
+        <f:else>
+            <p style="color: red;">Please select a folder in the foldertree to start the import create process.</p>
+        </f:else>
+    </f:if>
+
+
+    <h4 class="uppercase">Imports in the last 7 Days</h4>
+    <f:form action="index">
+        <f:form.submit value="Refresh"/>
+    </f:form>
+
+    <f:for each="{imports}" as="import">
+
+        <hr />
+        <h4>Import <u>{import.filepath}</u> with <u>{import.strategy.title}</u></h4>
+        Von <f:format.date format="d.m.Y H:i">{import.starttime}</f:format.date> bis <f:format.date format="d.m.Y H:i">{import.endtime}</f:format.date>
+        <br/>
+        <f:if condition="{import.amount}">
+            <div style="width: 100%; background-color: white; position: relative; height: 40px; ">
+                <div style="position: absolute; width: 100%">
+                    <div style="height: 40px; width: {import.ignoredPercentage}%; background-color: #fdbcff; float:left;">
+                        &nbsp;
+                    </div>
+                    <div style="height: 40px; width: {import.insertedPercentage}%; background-color: #bee6b8; float:left;">
+                        &nbsp;
+                    </div>
+                    <div style="height: 40px; width: {import.errorsPercentage}%; background-color: #ffadad; float:left;">
+                        &nbsp;
+                    </div>
+                    <div style="height: 40px; width: {import.unknownsPercentage}%; background-color: #fffab0; float:left;">
+                        &nbsp;
+                    </div>
+                    <div style="height: 40px; width: {import.updatedPercentage}%; background-color: #bcc7ff; float:left;">
+                        &nbsp;
+                    </div>
+                </div>
+                <div style="position: absolute; height: 30px; width: 100%; padding: 5px; font-weight:bold; text-align: center;">
+                    {import.percentage}% ({import.pointer} von {import.amount})<br />
+                    Ignored: {import.ignored} (<f:format.number>{import.ignoredPercentage}</f:format.number>%) ---
+                    Insert: {import.inserted} (<f:format.number>{import.insertedPercentage}</f:format.number>%) ---
+                    Error: {import.errors} (<f:format.number>{import.errorsPercentage}</f:format.number>%) ---
+                    Unsure: {import.unknowns} (<f:format.number>{import.unknownsPercentage}</f:format.number>%) ---
+                    Update: {import.updated} (<f:format.number>{import.updatedPercentage}</f:format.number>%)
+                </div>
+            </div>
+
+        </f:if>
+    </f:for>
+
+    <hr />
+    <h4>Legende</h4>
+    <ul style="list-style:disc;padding-left: 20px;">
+        <li style="font-weight: bold; color: #fdbcff;">ignored</li>
+        <li style="font-weight: bold; color: #bee6b8;">insert</li>
+        <li style="font-weight: bold; color: #ffadad;">error</li>
+        <li style="font-weight: bold; color: #fffab0;">unsure</li>
+        <li style="font-weight: bold; color: #bcc7ff;">update</li>
+    </ul>
+
+
+</f:section>
