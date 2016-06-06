@@ -146,7 +146,7 @@ class Manager {
 			/** @var \HDNET\Importr\Service\Resources\ResourceInterface $resource */
 			// Resourcen Object anhand der Datei auswählen
 			if (preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
-				if (is_array($strategyConfiguration['before'])) {
+				if (isset($strategyConfiguration['before']) && is_array($strategyConfiguration['before'])) {
 					$this->parseConfiguration($strategyConfiguration['before']);
 				}
 				// Resource "benutzen"
@@ -157,7 +157,7 @@ class Manager {
 				$this->updateImport($import);
 				// Durchlauf starten
 				for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
-					if (is_array($strategyConfiguration['each'])) {
+					if (isset($strategyConfiguration['each']) && is_array($strategyConfiguration['each'])) {
 						$this->parseConfiguration($strategyConfiguration['each']);
 					}
 					$entry = $resource->getEntry($pointer);
@@ -170,7 +170,7 @@ class Manager {
 				}
 				$import->setEndtime(new \DateTime('now'));
 				$this->updateImport($import, $pointer);
-				if (is_array($strategyConfiguration['after'])) {
+				if (isset($strategyConfiguration['after']) && is_array($strategyConfiguration['after'])) {
 					$this->parseConfiguration($strategyConfiguration['after']);
 				}
 				break;
@@ -264,7 +264,7 @@ class Manager {
 		$resources = array();
 		$resourceConfiguration = $strategy->getResources(TRUE);
 		foreach ($resourceConfiguration as $resource => $configuration) {
-			$object = $this->objectManager->create($resource);
+			$object = $this->objectManager->get($resource);
 			$object->start($strategy, $filepath);
 			$object->setConfiguration($configuration);
 			$resources[$resource] = $object;
@@ -282,7 +282,7 @@ class Manager {
 		$targetConfiguration = $import->getStrategy()
 		                              ->getTargets(TRUE);
 		foreach ($targetConfiguration as $target => $configuration) {
-			$object = $this->objectManager->create($target);
+			$object = $this->objectManager->get($target);
 			$object->setConfiguration($configuration);
 			$object->getConfiguration();
 			$object->start($import->getStrategy());
