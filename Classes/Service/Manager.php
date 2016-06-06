@@ -264,7 +264,7 @@ class Manager {
 		$resources = array();
 		$resourceConfiguration = $strategy->getResources(TRUE);
 		foreach ($resourceConfiguration as $resource => $configuration) {
-			$object = $this->objectManager->create($resource);
+			$object = $this->objectManager->get($resource);
 			$object->start($strategy, $filepath);
 			$object->setConfiguration($configuration);
 			$resources[$resource] = $object;
@@ -282,7 +282,7 @@ class Manager {
 		$targetConfiguration = $import->getStrategy()
 		                              ->getTargets(TRUE);
 		foreach ($targetConfiguration as $target => $configuration) {
-			$object = $this->objectManager->create($target);
+			$object = $this->objectManager->get($target);
 			$object->setConfiguration($configuration);
 			$object->getConfiguration();
 			$object->start($import->getStrategy());

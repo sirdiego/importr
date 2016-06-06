@@ -47,7 +47,7 @@ class ImportCommandController extends CommandController {
 		/**
 		 * @var FlashMessage $message
 		 */
-		$message = $this->objectManager->create('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', '', 'Initializing ServiceManager', FlashMessage::INFO);
+		$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', '', 'Initializing ServiceManager', FlashMessage::INFO);
 		/** @noinspection PhpUndefinedMethodInspection */
 		FlashMessageQueue::addMessage($message);
 		/**
@@ -61,7 +61,7 @@ class ImportCommandController extends CommandController {
 			/**
 			 * @var FlashMessage $message
 			 */
-			$message = $this->objectManager->create('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', '', 'An Error occured: ' . $e->getCode() . ': ' . $e->getMessage(), FlashMessage::ERROR);
+			$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', '', 'An Error occured: ' . $e->getCode() . ': ' . $e->getMessage(), FlashMessage::ERROR);
 			/** @noinspection PhpUndefinedMethodInspection */
 			FlashMessageQueue::addMessage($message);
 			// if mail is configured send an email
