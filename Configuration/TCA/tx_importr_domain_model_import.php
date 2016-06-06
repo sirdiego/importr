@@ -4,8 +4,19 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-$GLOBALS['TCA']['tx_importr_domain_model_import'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_importr_domain_model_import']['ctrl'],
+return array(
+    'ctrl'      => array(
+        'title'             => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:tx_importr_domain_model_import',
+        'label'             => 'starttime',
+        'label_alt'         => 'filepath',
+        'label_alt_force'   => 1,
+        'searchFields'      => 'filepath',
+        'rootLevel'         => 1,
+        'default_sortby'    => 'ORDER BY starttime',
+        'delete'            => 'deleted',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('importr') . 'Configuration/Tca/Import.php',
+        'iconfile'          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Import.png',
+    ),
 	'interface' => array(
 		'showRecordFieldList' => 'strategy,filepath,starttime,endtime,pointer,amount',
 	),

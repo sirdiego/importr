@@ -4,8 +4,17 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-$GLOBALS['TCA']['tx_importr_domain_model_strategy'] = array(
-	'ctrl' => $GLOBALS['TCA']['tx_importr_domain_model_strategy']['ctrl'],
+return array(
+    'ctrl'      => array(
+        'title'             => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:tx_importr_domain_model_strategy',
+        'label'             => 'title',
+        'searchFields'      => 'title',
+        'rootLevel'         => 1,
+        'delete'            => 'deleted',
+        'default_sortby'    => 'ORDER BY title',
+        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('importr') . 'Configuration/Tca/Strategy.php',
+        'iconfile'          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Strategy.png',
+    ),
 	'interface' => array(
 		'showRecordFieldList' => 'title, configuration, resources, targets',
 	),
