@@ -29,9 +29,12 @@ class Utility {
 		return $object;
 	}
 
-	/**
-	 * Get TYPO3 Version
-	 */
+    /**
+     * Get TYPO3 Version
+     * 
+     * @param null $version
+     * @return string
+     */
 	static public function getVersion($version = NULL) {
 		if ($version === NULL) {
 			$version = TYPO3_version;

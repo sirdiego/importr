@@ -1,9 +1,17 @@
 <?php
+
+/**
+ * ImportRepository
+ */
+
 namespace HDNET\Importr\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
+/**
+ * ImportRepository
+ */
 class ImportRepository extends Repository {
 
 	/**

@@ -18,6 +18,9 @@ class DbRecord extends AbstractTarget implements TargetInterface {
 
 	}
 
+    /**
+     * @return array
+     */
 	public function getConfiguration() {
 		$configuration = parent::getConfiguration();
 		$configuration['pid'] = (isset($configuration['pid']) && is_numeric($configuration['pid'])) ? $configuration['pid'] : 0;
