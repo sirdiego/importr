@@ -11,17 +11,18 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Importr',
-	'description' => 'Flexible importr for all kinds of files!',
-	'category' => 'be',
-	'version' => '1.0.1',
-	'state' => 'stable',
-	'author' => 'Tim Lochmüller, Tim Spiekerkötter',
-	'author_email' => 'tl@hdnet.de, ts@hdnet.de',
-	'author_company' => '',
-	'constraints' => array(
-		'depends' => array(
-			'typo3' => '6.2.0-7.6.99'
-		),
-	),
+    'title' => 'Importr',
+    'description' => 'Flexible importer for all kinds of files!',
+    'category' => 'be',
+    'version' => '1.0.1',
+    'state' => 'stable',
+    'author' => 'Tim Lochmüller, Tim Spiekerkötter',
+    'author_email' => 'tl@hdnet.de, ts@hdnet.de',
+    'author_company' => '',
+    'constraints' => array(
+        'depends' => array(
+            'typo3' => '6.2.0-7.6.99',
+            'php' => '5.5.0-0.0.0'
+        ),
+    ),
 );
