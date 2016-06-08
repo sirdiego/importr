@@ -9,47 +9,55 @@ use HDNET\Importr\Utility;
  *
  * @author timlochmueller
  */
-class DbRecord extends AbstractTarget implements TargetInterface {
+class DbRecord extends AbstractTarget implements TargetInterface
+{
 
-	/**
-	 * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-	 */
-	public function start(Strategy $strategy) {
+    /**
+     * @param \HDNET\Importr\Domain\Model\Strategy $strategy
+     */
+    public function start(Strategy $strategy)
+    {
 
-	}
+    }
 
-	public function getConfiguration() {
-		$configuration = parent::getConfiguration();
-		$configuration['pid'] = (isset($configuration['pid']) && is_numeric($configuration['pid'])) ? $configuration['pid'] : 0;
+    /**
+     * @return array
+     */
+    public function getConfiguration()
+    {
+        $configuration = parent::getConfiguration();
+        $configuration['pid'] = (isset($configuration['pid']) && is_numeric($configuration['pid'])) ? $configuration['pid'] : 0;
 
-		return $configuration;
-	}
+        return $configuration;
+    }
 
-	/**
-	 * @param array $entry
-	 *
-	 * @return integer
-	 */
-	public function processEntry(array $entry) {
-		$configuration = $this->getConfiguration();
-		$mapping = $configuration['mapping'];
+    /**
+     * @param array $entry
+     *
+     * @return integer
+     */
+    public function processEntry(array $entry)
+    {
+        $configuration = $this->getConfiguration();
+        $mapping = $configuration['mapping'];
 
-		$insertFields = array();
-		foreach ($mapping as $key => $value) {
-			$insertFields[$value] = $entry[$key];
-		}
+        $insertFields = [];
+        foreach ($mapping as $key => $value) {
+            $insertFields[$value] = $entry[$key];
+        }
 
-		$insertFields['pid'] = $configuration['pid'];
+        $insertFields['pid'] = $configuration['pid'];
 
-		Utility::getDatabaseConnection()
-		       ->exec_INSERTquery($configuration['table'], $insertFields);
-		return TargetInterface::RESULT_INSERT;
-	}
+        Utility::getDatabaseConnection()
+            ->exec_INSERTquery($configuration['table'], $insertFields);
+        return TargetInterface::RESULT_INSERT;
+    }
 
-	/**
-	 *
-	 */
-	public function end() {
+    /**
+     *
+     */
+    public function end()
+    {
 
-	}
+    }
 }

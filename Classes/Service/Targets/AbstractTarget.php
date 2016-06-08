@@ -6,23 +6,37 @@ namespace HDNET\Importr\Service\Targets;
  *
  * @author timlochmueller
  */
-class AbstractTarget {
+class AbstractTarget
+{
 
-	/**
-	 * @var array
-	 */
-	protected $configuration;
+    /**
+     * @var array
+     */
+    protected $configuration;
 
-	public function getConfiguration() {
-		return $this->configuration;
-	}
+    /**
+     * @return array
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
 
-	public function setConfiguration($configuration) {
-		$this->configuration = $configuration;
-	}
+    /**
+     * @param array $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+    }
 
-	public function addConfiguration($key, $value) {
-		$this->configuration[$key] = $value;
-	}
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function addConfiguration($key, $value)
+    {
+        $this->configuration[$key] = $value;
+    }
 
 }
