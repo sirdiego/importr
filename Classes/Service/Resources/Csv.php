@@ -24,7 +24,7 @@ class Csv extends AbstractResource implements ResourceInterface {
 	/**
 	 * @var array
 	 */
-	protected $content = array();
+	protected $content = [];
 
 	/**
 	 * @var string

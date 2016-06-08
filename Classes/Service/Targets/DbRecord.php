@@ -34,7 +34,7 @@ class DbRecord extends AbstractTarget implements TargetInterface {
 		$configuration = $this->getConfiguration();
 		$mapping = $configuration['mapping'];
 
-		$insertFields = array();
+		$insertFields = [];
 		foreach ($mapping as $key => $value) {
 			$insertFields[$value] = $entry[$key];
 		}

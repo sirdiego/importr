@@ -10,7 +10,7 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Importr',
     'description' => 'Flexible importer for all kinds of files!',
     'category' => 'be',
@@ -19,10 +19,10 @@ $EM_CONF[$_EXTKEY] = array(
     'author' => 'Tim Lochmüller, Tim Spiekerkötter',
     'author_email' => 'tl@hdnet.de, ts@hdnet.de',
     'author_company' => '',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'typo3' => '6.2.0-7.6.99',
             'php' => '5.5.0-0.0.0'
-        ),
-    ),
-);
+        ],
+    ],
+];

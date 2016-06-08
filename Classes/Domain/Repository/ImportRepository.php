@@ -16,13 +16,13 @@ class ImportRepository extends Repository {
 	public function findUserQueue($days = 7) {
 		$query = $this->createQuery();
 
-		$conditions = array(
+		$conditions = [
 			$query->greaterThan('starttime', time() - 60 * 60 * 24 * $days)
-		);
+        ];
 
 		$query->matching($query->logicalAnd($conditions));
 
-		$query->setOrderings(array('starttime' => Query::ORDER_DESCENDING));
+		$query->setOrderings(['starttime' => Query::ORDER_DESCENDING]);
 
 		return $query->execute();
 	}
@@ -35,14 +35,14 @@ class ImportRepository extends Repository {
 	public function findWorkQueue() {
 		$query = $this->createQuery();
 
-		$conditions = array(
+		$conditions = [
 			$query->lessThanOrEqual('starttime', time()),
 			$query->lessThan('endtime', 1),
-		);
+        ];
 
 		$query->matching($query->logicalAnd($conditions));
 
-		$query->setOrderings(array('starttime' => Query::ORDER_ASCENDING));
+		$query->setOrderings(['starttime' => Query::ORDER_ASCENDING]);
 
 		return $query->execute();
 	}

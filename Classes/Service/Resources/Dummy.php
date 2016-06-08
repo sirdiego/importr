@@ -16,7 +16,7 @@ class Dummy extends AbstractResource implements ResourceInterface {
 	/**
 	 * @var array
 	 */
-	protected $content = array();
+	protected $content = [];
 
 	/**
 	 * @var string
@@ -77,7 +77,7 @@ class Dummy extends AbstractResource implements ResourceInterface {
 		$configuration = $this->getConfiguration();
 
 		for ($i = 0; $i < $configuration['records']; $i++) {
-			$record = array();
+			$record = [];
 
 			for ($a = 0; $a < $configuration['itemsPerRecord']; $a++) {
 				$record[] = $this->getRandomContent();

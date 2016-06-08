@@ -19,7 +19,7 @@ class Excel extends AbstractResource implements ResourceInterface {
 	/**
 	 * @var array
 	 */
-	protected $content = array();
+	protected $content = [];
 
 	/**
 	 * @var string
@@ -79,7 +79,7 @@ class Excel extends AbstractResource implements ResourceInterface {
 		$highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
 
 		for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
-			$rowRecord = array();
+			$rowRecord = [];
 			for ($col = 0; $col <= $highestColumnIndex; ++$col) {
 				$rowRecord[] = trim($objWorksheet->getCellByColumnAndRow($col, $row)
 				                                 ->getValue());

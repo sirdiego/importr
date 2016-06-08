@@ -34,7 +34,7 @@ class ImportCommandController extends CommandController {
 	/**
 	 * @var array
 	 */
-	protected $commandsByExtensionsAndControllers = array();
+	protected $commandsByExtensionsAndControllers = [];
 
 	/**
 	 * initializes the import service manager

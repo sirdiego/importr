@@ -4,8 +4,8 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-return array(
-    'ctrl'      => array(
+return [
+    'ctrl'      => [
         'title'             => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:tx_importr_domain_model_strategy',
         'label'             => 'title',
         'searchFields'      => 'title',
@@ -14,51 +14,51 @@ return array(
         'default_sortby'    => 'ORDER BY title',
         'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('importr') . 'Configuration/Tca/Strategy.php',
         'iconfile'          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Strategy.png',
-    ),
-	'interface' => array(
+    ],
+	'interface' => [
 		'showRecordFieldList' => 'title, configuration, resources, targets',
-	),
-	'types' => array(
-		'1' => array('showitem' => 'title, general, configuration, resources, targets'),
-	),
-	'columns' => array(
-		'title' => array(
+    ],
+	'types' => [
+		'1' => ['showitem' => 'title, general, configuration, resources, targets'],
+    ],
+	'columns' => [
+		'title' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:title',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 50,
 				'eval' => 'trim,required'
-			),
-		),
-		'configuration' => array(
+            ],
+        ],
+		'configuration' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:configuration',
-			'config' => array(
+			'config' => [
 				'type' => 'text',
 				'rows' => 15,
 				'cols' => 100,
-			),
-		),
-		'resources' => array(
+            ],
+        ],
+		'resources' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:resources',
-			'config' => array(
+			'config' => [
 				'type' => 'text',
 				'rows' => 15,
 				'cols' => 100,
-			),
-		),
-		'targets' => array(
+            ],
+        ],
+		'targets' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:targets',
-			'config' => array(
+			'config' => [
 				'type' => 'text',
 				'rows' => 15,
 				'cols' => 100,
-			),
-		),
-		'general' => array(
+            ],
+        ],
+		'general' => [
 			'label' => 'General strategy (selectable for the user)',
-			'config' => array(
+			'config' => [
 				'type' => 'check',
-			),
-		),
-	),
-);
+            ],
+        ],
+    ],
+];

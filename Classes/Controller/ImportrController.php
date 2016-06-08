@@ -45,7 +45,7 @@ class ImportrController extends ActionController {
 		$combinedIdentifier = GeneralUtility::_GP('id');
 		if (isset($combinedIdentifier)) {
 			$folder = $this->resourceFactory->getFolderObjectFromCombinedIdentifier($combinedIdentifier);
-			$files = array();
+			$files = [];
 			foreach ($folder->getFiles() as $file) {
 				$files[$file->getStorage()
 				            ->getUid() . ':' . $file->getIdentifier()] = $file->getName();

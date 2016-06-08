@@ -40,13 +40,13 @@ class Dummy extends AbstractTarget implements TargetInterface {
 		}
 
 		// Return
-		$results = array(
+		$results = [
 			'ignored',
 			'insert',
 			'error',
 			'unsure',
 			'update'
-		);
+        ];
 		if ($configuration['result'] == 'random') {
 			$configuration['result'] = $results[rand(0, sizeof($results) - 1)];
 		}

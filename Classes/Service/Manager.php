@@ -65,7 +65,7 @@ class Manager {
 	 * @param \HDNET\Importr\Domain\Model\Strategy $strategy
 	 * @param array                                $configuration
 	 */
-	public function addToQueue($filepath, Strategy $strategy, $configuration = array()) {
+	public function addToQueue($filepath, Strategy $strategy, $configuration = []) {
 		/** @var $import Import */
 		$import = $this->objectManager->get('HDNET\Importr\Domain\Model\Import');
 		$start = 'now';
@@ -107,7 +107,7 @@ class Manager {
 	 * @return array
 	 */
 	public function getPreview(Strategy $strategy, $filepath) {
-		$data = array();
+		$data = [];
 		$resources = $this->initializeResources($strategy, $filepath);
 		foreach ($resources as $resource) {
 			/** @var \HDNET\Importr\Service\Resources\ResourceInterface $resource */
@@ -133,10 +133,10 @@ class Manager {
 	 * @param \HDNET\Importr\Domain\Model\Import $import
 	 */
 	protected function runImport(Import $import) {
-		$this->signalSlotDispatcher->dispatch(__CLASS__, 'preImport', array(
+		$this->signalSlotDispatcher->dispatch(__CLASS__, 'preImport', [
 			$this,
 			$import
-		));
+        ]);
 		$resources = $this->initializeResourcesByImport($import);
 		$targets = $this->initializeTargets($import);
 		$strategyConfiguration = $import->getStrategy()
@@ -176,10 +176,10 @@ class Manager {
 				break;
 			}
 		}
-		$this->signalSlotDispatcher->dispatch(__CLASS__, 'pastImport', array(
+		$this->signalSlotDispatcher->dispatch(__CLASS__, 'pastImport', [
 			$this,
 			$import
-		));
+        ]);
 	}
 
 	/**
@@ -209,10 +209,10 @@ class Manager {
 	 * @throws ReinitializeException
 	 */
 	protected function parseConfiguration(array $configuration) {
-		$this->signalSlotDispatcher->dispatch(__CLASS__, 'preParseConfiguration', array(
+		$this->signalSlotDispatcher->dispatch(__CLASS__, 'preParseConfiguration', [
 			$this,
 			$configuration
-		));
+        ]);
 		if (isset($configuration['updateInterval'])) {
 			$this->updateInterval = (int)$configuration['updateInterval'];
 		}
@@ -228,10 +228,10 @@ class Manager {
 		if (isset($configuration['reinitializeScheduler'])) {
 			throw new ReinitializeException();
 		}
-		$this->signalSlotDispatcher->dispatch(__CLASS__, 'pastParseConfiguration', array(
+		$this->signalSlotDispatcher->dispatch(__CLASS__, 'pastParseConfiguration', [
 			$this,
 			$configuration
-		));
+        ]);
 	}
 
 	/**
@@ -261,7 +261,7 @@ class Manager {
 	 * @return array
 	 */
 	protected function initializeResources(Strategy $strategy, $filepath) {
-		$resources = array();
+		$resources = [];
 		$resourceConfiguration = $strategy->getResources(TRUE);
 		foreach ($resourceConfiguration as $resource => $configuration) {
 			$object = $this->objectManager->get($resource);
@@ -278,7 +278,7 @@ class Manager {
 	 * @return array
 	 */
 	protected function initializeTargets(Import $import) {
-		$targets = array();
+		$targets = [];
 		$targetConfiguration = $import->getStrategy()
 		                              ->getTargets(TRUE);
 		foreach ($targetConfiguration as $target => $configuration) {

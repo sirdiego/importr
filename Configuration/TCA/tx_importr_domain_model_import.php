@@ -4,8 +4,8 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-return array(
-    'ctrl'      => array(
+return [
+    'ctrl'      => [
         'title'             => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:tx_importr_domain_model_import',
         'label'             => 'starttime',
         'label_alt'         => 'filepath',
@@ -16,128 +16,128 @@ return array(
         'delete'            => 'deleted',
         'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('importr') . 'Configuration/Tca/Import.php',
         'iconfile'          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Import.png',
-    ),
-	'interface' => array(
+    ],
+	'interface' => [
 		'showRecordFieldList' => 'strategy,filepath,starttime,endtime,pointer,amount',
-	),
-	'types' => array(
-		'1' => array('showitem' => 'strategy,filepath,starttime,endtime,pointer,amount'),
-	),
-	'columns' => array(
-		'starttime' => array(
+    ],
+	'types' => [
+		'1' => ['showitem' => 'strategy,filepath,starttime,endtime,pointer,amount'],
+    ],
+	'columns' => [
+		'starttime' => [
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 13,
 				'max' => 20,
 				'eval' => 'datetime',
 				'checkbox' => 0,
 				'default' => 0,
-				'range' => array(
+				'range' => [
 					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'endtime' => array(
+                ],
+            ],
+        ],
+		'endtime' => [
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 13,
 				'max' => 20,
 				'eval' => 'datetime',
 				'checkbox' => 0,
 				'default' => 0,
-				'range' => array(
+				'range' => [
 					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'pointer' => array(
+                ],
+            ],
+        ],
+		'pointer' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:pointer',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'amount' => array(
+            ],
+        ],
+		'amount' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:amount',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'errors' => array(
+            ],
+        ],
+		'errors' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'inserted' => array(
+            ],
+        ],
+		'inserted' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'updated' => array(
+            ],
+        ],
+		'updated' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'ignored' => array(
+            ],
+        ],
+		'ignored' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'unknowns' => array(
+            ],
+        ],
+		'unknowns' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
-			'config' => array(
+			'config' => [
 				'type' => 'none',
 				'size' => 30,
 				'eval' => 'trim'
-			),
-		),
-		'filepath' => array(
+            ],
+        ],
+		'filepath' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:filepath',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 50,
 				'eval' => 'trim,required',
-				'wizards' => Array(
+				'wizards' => [
 					'_PADDING' => 2,
-					'link' => Array(
+					'link' => [
 						'type' => 'popup',
 						'title' => 'Link',
 						'icon' => 'link_popup.gif',
 						'script' => 'browse_links.php?mode=wizard',
 						'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1',
-						'params' => Array(
+						'params' => [
 							'blindLinkOptions' => 'page,url,mail,spec,folder',
 							'allowedExtensions' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['textfile_ext'],
-						)
-					),
-				),
-			),
-		),
-		'strategy' => array(
+                        ]
+                    ],
+                ],
+            ],
+        ],
+		'strategy' => [
 			'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:strategy',
-			'config' => array(
+			'config' => [
 				'type' => 'select',
 				'foreign_table' => 'tx_importr_domain_model_strategy',
 				'maxitems' => 1,
 				'size' => 1,
-			),
-		),
-	),
-);
+            ],
+        ],
+    ],
+];

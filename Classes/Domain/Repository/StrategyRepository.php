@@ -14,7 +14,7 @@ class StrategyRepository extends Repository {
 		$query->getQuerySettings()
 		      ->setRespectStoragePage(FALSE);
 		$query->matching($query->equals('general', 1));
-		$query->setOrderings(array('title' => Query::ORDER_ASCENDING));
+		$query->setOrderings(['title' => Query::ORDER_ASCENDING]);
 		return $query->execute();
 	}
 

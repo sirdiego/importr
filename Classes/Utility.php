@@ -21,10 +21,10 @@ class Utility {
 	static public function createObject($className) {
 		$arguments = func_get_args();
 		$objectManager = new ObjectManager();
-		$object = call_user_func_array(array(
+		$object = call_user_func_array([
 			$objectManager,
 			'get'
-		), $arguments);
+        ], $arguments);
 
 		return $object;
 	}

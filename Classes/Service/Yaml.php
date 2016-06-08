@@ -41,13 +41,13 @@ class Yaml {
 			 * we drop any other datatype here.
 			 */
 			if (!is_array($array)) {
-				$array = array();
+				$array = [];
 			}
 		} catch (ParseException $e) {
 			/**
 			 * @todo maybe log the error
 			 */
-			$array = array();
+			$array = [];
 		}
 		return $array;
 	}
