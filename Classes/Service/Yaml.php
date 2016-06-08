@@ -23,16 +23,18 @@ class Yaml
         /**
          * Maybe an custom autoloader would be cool here.
          */
-        $yamlComponentPath = ExtensionManagementUtility::extPath('importr', 'Resources/Private/Php/Yaml/');
-        require_once $yamlComponentPath . 'Yaml.php';
-        require_once $yamlComponentPath . 'Parser.php';
-        require_once $yamlComponentPath . 'Inline.php';
-        require_once $yamlComponentPath . 'Dumper.php';
-        require_once $yamlComponentPath . 'Escaper.php';
-        require_once $yamlComponentPath . 'Unescaper.php';
-        require_once $yamlComponentPath . 'Exception/ExceptionInterface.php';
-        require_once $yamlComponentPath . 'Exception/ParseException.php';
-        require_once $yamlComponentPath . 'Exception/DumpException.php';
+        if (!class_exists(\Symfony\Component\Yaml\Yaml::class)) {
+            $yamlComponentPath = ExtensionManagementUtility::extPath('importr', 'Resources/Private/Php/Yaml/');
+            require_once $yamlComponentPath . 'Yaml.php';
+            require_once $yamlComponentPath . 'Parser.php';
+            require_once $yamlComponentPath . 'Inline.php';
+            require_once $yamlComponentPath . 'Dumper.php';
+            require_once $yamlComponentPath . 'Escaper.php';
+            require_once $yamlComponentPath . 'Unescaper.php';
+            require_once $yamlComponentPath . 'Exception/ExceptionInterface.php';
+            require_once $yamlComponentPath . 'Exception/ParseException.php';
+            require_once $yamlComponentPath . 'Exception/DumpException.php';
+        }
 
         try {
             $array = \Symfony\Component\Yaml\Yaml::parse($input);
