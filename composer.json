@@ -1,0 +1,35 @@
+{
+  "name": "sirdiego/importr",
+  "type": "typo3-cms-extension",
+  "version": "1.0.1",
+  "description": "Flexible importer for all kinds of files!",
+  "autoload": {
+    "psr-4": {
+      "HDNET\\Importr\\": "Classes/"
+    }
+  },
+  "keywords": [
+    "TYPO3 CMS",
+    "Importer"
+  ],
+  "authors": [
+    {
+      "name": "Tim Spiekerkötter",
+      "role": "Developer",
+      "homepage": "https://github.com/sirdiego"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.2"
+  },
+  "replace": {
+    "importr": "self.version",
+    "typo3-ter/importr": "self.version"
+  },
+  "homepage": "https://github.com/sirdiego/importr",
+  "license": "GPL-2.0+",
+  "support": {
+    "issues": "https://github.com/sirdiego/importr/issues"
+  }
+}
