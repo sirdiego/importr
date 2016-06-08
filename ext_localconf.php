@@ -4,9 +4,9 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-if (TYPO3_MODE === 'BE') {
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'HDNET\\Importr\\Command\\ImportCommandController';
-}
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'HDNET\\Importr\\Command\\ImportCommandController';
+
 /**
  * Two possible (and implemented signals). You can use them
  * in your own Extension, just by coping the lines.
