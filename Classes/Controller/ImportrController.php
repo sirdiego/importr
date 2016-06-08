@@ -90,7 +90,7 @@ class ImportrController extends ActionController {
 	public function createAction($filepath, Strategy $strategy) {
 		$this->importManager->addToQueue($filepath, $strategy);
 
-        $message = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage',
+        $message = GeneralUtility::makeInstance(FlashMessage::class,
             'The Import file ' . $filepath . ' width the strategy ' . $strategy->getTitle() . ' was successfully added to the queue',
             'Import is in Queue',
             FlashMessage::INFO,

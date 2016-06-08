@@ -1,6 +1,7 @@
 <?php
 namespace HDNET\Importr\Command;
 
+use HDNET\Importr\Service\Manager;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -44,24 +45,15 @@ class ImportCommandController extends CommandController {
 	 * @return boolean
 	 */
 	public function initializeServiceManagerCommand($mail = NULL) {
-		/**
-		 * @var FlashMessage $message
-		 */
-		$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', '', 'Initializing ServiceManager', FlashMessage::INFO);
+		$message = $this->objectManager->get(FlashMessage::class, '', 'Initializing ServiceManager', FlashMessage::INFO);
 		/** @noinspection PhpUndefinedMethodInspection */
 		FlashMessageQueue::addMessage($message);
-		/**
-		 * @var \HDNET\Importr\Service\Manager $manager
-		 */
-		$manager = $this->objectManager->get('HDNET\\Importr\\Service\\Manager');
+		$manager = $this->objectManager->get(Manager::class);
 		try {
 			// let the manager run the imports now
 			$manager->runImports();
 		} catch (\Exception $e) {
-			/**
-			 * @var FlashMessage $message
-			 */
-			$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', '', 'An Error occured: ' . $e->getCode() . ': ' . $e->getMessage(), FlashMessage::ERROR);
+			$message = $this->objectManager->get(FlashMessage::class, '', 'An Error occured: ' . $e->getCode() . ': ' . $e->getMessage(), FlashMessage::ERROR);
 			/** @noinspection PhpUndefinedMethodInspection */
 			FlashMessageQueue::addMessage($message);
 			// if mail is configured send an email
