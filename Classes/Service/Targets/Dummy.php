@@ -8,69 +8,75 @@ use HDNET\Importr\Domain\Model\Strategy;
  *
  * @author tim
  */
-class Dummy extends AbstractTarget implements TargetInterface {
+class Dummy extends AbstractTarget implements TargetInterface
+{
 
-	/**
-	 * @return array
-	 */
-	public function getConfiguration() {
-		$configuration = parent::getConfiguration();
-		$configuration['sleepSeconds'] = (isset($configuration['sleepSeconds'])) ? (int)$configuration['sleepSeconds'] : 1;
-		$configuration['result'] = (isset($configuration['result'])) ? (int)$configuration['result'] : 'unsure';
-		return $configuration;
-	}
+    /**
+     * @return array
+     */
+    public function getConfiguration()
+    {
+        $configuration = parent::getConfiguration();
+        $configuration['sleepSeconds'] = (isset($configuration['sleepSeconds'])) ? (int)$configuration['sleepSeconds'] : 1;
+        $configuration['result'] = (isset($configuration['result'])) ? (int)$configuration['result'] : 'unsure';
+        return $configuration;
+    }
 
-	/**
-	 * @param Strategy $strategy
-	 *
-	 * @return void
-	 */
-	public function start(Strategy $strategy) {
+    /**
+     * @param Strategy $strategy
+     *
+     * @return void
+     */
+    public function start(Strategy $strategy)
+    {
 
-	}
+    }
 
-	/**
-	 * @param array $entry
-	 *
-	 * @throws \Exception
-	 * @return int|void
-	 */
-	public function processEntry(array $entry) {
-		$configuration = $this->getConfiguration();
-		if ($configuration['sleepSeconds'] > 0) {
-			sleep($configuration['sleepSeconds']);
-		}
+    /**
+     * @param array $entry
+     *
+     * @throws \Exception
+     * @return int|void
+     */
+    public function processEntry(array $entry)
+    {
+        $configuration = $this->getConfiguration();
+        if ($configuration['sleepSeconds'] > 0) {
+            sleep($configuration['sleepSeconds']);
+        }
 
-		// Return
-		$results = [
-			'ignored',
-			'insert',
-			'error',
-			'unsure',
-			'update'
+        // Return
+        $results = [
+            'ignored',
+            'insert',
+            'error',
+            'unsure',
+            'update'
         ];
-		if ($configuration['result'] == 'random') {
-			$configuration['result'] = $results[rand(0, sizeof($results) - 1)];
-		}
+        if ($configuration['result'] == 'random') {
+            $configuration['result'] = $results[rand(0, sizeof($results) - 1)];
+        }
 
-		switch ($configuration['result']) {
-			case 'ignored':
-				return TargetInterface::RESULT_IGNORED;
-			case 'insert':
-				return TargetInterface::RESULT_INSERT;
-			case 'error':
-				return TargetInterface::RESULT_ERROR;
-			case 'unsure':
-				return TargetInterface::RESULT_UNSURE;
-			case 'update':
-				return TargetInterface::RESULT_UPDATE;
-			default:
-				throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export($results, TRUE), 12617283);
+        switch ($configuration['result']) {
+            case 'ignored':
+                return TargetInterface::RESULT_IGNORED;
+            case 'insert':
+                return TargetInterface::RESULT_INSERT;
+            case 'error':
+                return TargetInterface::RESULT_ERROR;
+            case 'unsure':
+                return TargetInterface::RESULT_UNSURE;
+            case 'update':
+                return TargetInterface::RESULT_UPDATE;
+            default:
+                throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export($results,
+                        true), 12617283);
 
-		}
+        }
 
-	}
+    }
 
-	public function end() {
-	}
+    public function end()
+    {
+    }
 }

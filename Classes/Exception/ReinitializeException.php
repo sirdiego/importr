@@ -9,7 +9,9 @@ use TYPO3\CMS\Extbase\Exception;
  *
  * @author timlochmueller
  */
-class ReinitializeException extends Exception {
+class ReinitializeException extends Exception
+{
 
-	//put your code here
+    //put your code here
+
 }

@@ -10,106 +10,114 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author timlochmueller
  */
-class Excel extends AbstractResource implements ResourceInterface {
+class Excel extends AbstractResource implements ResourceInterface
+{
 
-	/**
-	 * @var string
-	 */
-	protected $filepathExpression = "/.xlsx?$/";
+    /**
+     * @var string
+     */
+    protected $filepathExpression = "/.xlsx?$/";
 
-	/**
-	 * @var array
-	 */
-	protected $content = [];
+    /**
+     * @var array
+     */
+    protected $content = [];
 
-	/**
-	 * @var string
-	 */
-	protected $filepath;
+    /**
+     * @var string
+     */
+    protected $filepath;
 
-	/**
-	 * @return mixed
-	 */
-	public function getConfiguration() {
-		$configuration = parent::getConfiguration();
-		$configuration['skipRows'] = isset($configuration['skipRows']) ? (int)$configuration['skipRows'] : 0;
-		$configuration['sheet'] = isset($configuration['sheet']) ? (int)$configuration['sheet'] : -1;
-		return $configuration;
-	}
+    /**
+     * @return mixed
+     */
+    public function getConfiguration()
+    {
+        $configuration = parent::getConfiguration();
+        $configuration['skipRows'] = isset($configuration['skipRows']) ? (int)$configuration['skipRows'] : 0;
+        $configuration['sheet'] = isset($configuration['sheet']) ? (int)$configuration['sheet'] : -1;
+        return $configuration;
+    }
 
-	/**
-	 * @param Strategy $strategy
-	 * @param string                               $filepath
-	 */
-	public function start(Strategy $strategy, $filepath) {
-		$this->filepath = $filepath;
-	}
+    /**
+     * @param Strategy $strategy
+     * @param string $filepath
+     */
+    public function start(Strategy $strategy, $filepath)
+    {
+        $this->filepath = $filepath;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getFilepathExpression() {
-		return $this->filepathExpression;
-	}
+    /**
+     * @return string
+     */
+    public function getFilepathExpression()
+    {
+        return $this->filepathExpression;
+    }
 
-	/**
-	 *
-	 */
-	public function parseResource() {
-		$configuration = $this->getConfiguration();
+    /**
+     *
+     */
+    public function parseResource()
+    {
+        $configuration = $this->getConfiguration();
 
-		if (!ExtensionManagementUtility::isLoaded('phpexcel_library')) {
-			throw new \Exception('phpexcel_library is not loaded', 12367812368);
-		}
+        if (!ExtensionManagementUtility::isLoaded('phpexcel_library')) {
+            throw new \Exception('phpexcel_library is not loaded', 12367812368);
+        }
 
-		$filename = GeneralUtility::getFileAbsFileName($this->filepath);
-		GeneralUtility::makeInstanceService('phpexcel');
+        $filename = GeneralUtility::getFileAbsFileName($this->filepath);
+        GeneralUtility::makeInstanceService('phpexcel');
 
-		$objReader = \PHPExcel_IOFactory::createReaderForFile($filename);
-		$objReader->setReadDataOnly(TRUE);
-		$objPHPExcel = $objReader->load($filename);
-		if ($configuration['sheet'] >= 0) {
-			$objWorksheet = $objPHPExcel->getSheet($configuration['sheet']);
-		} else {
-			$objWorksheet = $objPHPExcel->getActiveSheet();
-		}
+        $objReader = \PHPExcel_IOFactory::createReaderForFile($filename);
+        $objReader->setReadDataOnly(true);
+        $objPHPExcel = $objReader->load($filename);
+        if ($configuration['sheet'] >= 0) {
+            $objWorksheet = $objPHPExcel->getSheet($configuration['sheet']);
+        } else {
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+        }
 
-		$highestRow = $objWorksheet->getHighestRow();
-		$highestColumn = $objWorksheet->getHighestColumn();
+        $highestRow = $objWorksheet->getHighestRow();
+        $highestColumn = $objWorksheet->getHighestColumn();
 
-		$highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
+        $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
 
-		for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
-			$rowRecord = [];
-			for ($col = 0; $col <= $highestColumnIndex; ++$col) {
-				$rowRecord[] = trim($objWorksheet->getCellByColumnAndRow($col, $row)
-				                                 ->getValue());
-			}
-			$this->content[] = $rowRecord;
-		}
-	}
+        for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
+            $rowRecord = [];
+            for ($col = 0; $col <= $highestColumnIndex; ++$col) {
+                $rowRecord[] = trim($objWorksheet->getCellByColumnAndRow($col, $row)
+                    ->getValue());
+            }
+            $this->content[] = $rowRecord;
+        }
+    }
 
-	/**
-	 * @return integer
-	 */
-	public function getAmount() {
-		return count($this->content);
-	}
+    /**
+     * @return integer
+     */
+    public function getAmount()
+    {
+        return count($this->content);
+    }
 
-	/**
-	 * @param integer $pointer
-	 *
-	 * @return mixed
-	 */
-	public function getEntry($pointer) {
-		return $this->content[$pointer];
-	}
+    /**
+     * @param integer $pointer
+     *
+     * @return mixed
+     */
+    public function getEntry($pointer)
+    {
+        return $this->content[$pointer];
+    }
 
-	/**
-	 *
-	 */
-	public function end() {
+    /**
+     *
+     */
+    public function end()
+    {
 
-	}
+    }
 
 }

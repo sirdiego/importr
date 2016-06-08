@@ -11,12 +11,14 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @package    Importr
  * @subpackage ViewHelper
  */
-class JsonViewHelper extends AbstractViewHelper {
+class JsonViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @return string
-	 */
-	public function render() {
-		return addslashes(json_encode($this->renderChildren()));
-	}
+    /**
+     * @return string
+     */
+    public function render()
+    {
+        return addslashes(json_encode($this->renderChildren()));
+    }
 }

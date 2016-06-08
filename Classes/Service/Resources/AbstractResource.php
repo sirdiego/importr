@@ -6,33 +6,37 @@ namespace HDNET\Importr\Service\Resources;
  *
  * @author timlochmueller
  */
-class AbstractResource {
+class AbstractResource
+{
 
-	/**
-	 * @var array
-	 */
-	protected $configuration;
+    /**
+     * @var array
+     */
+    protected $configuration;
 
     /**
      * @return array
      */
-	public function getConfiguration() {
-		return $this->configuration;
-	}
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
 
     /**
      * @param array $configuration
      */
-	public function setConfiguration($configuration) {
-		$this->configuration = $configuration;
-	}
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+    }
 
     /**
      * @param $key
      * @param $value
      */
-	public function addConfiguration($key, $value) {
-		$this->configuration[$key] = $value;
-	}
+    public function addConfiguration($key, $value)
+    {
+        $this->configuration[$key] = $value;
+    }
 
 }

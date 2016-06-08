@@ -47,8 +47,6 @@ class ImportCommandController extends CommandController
      */
     public function initializeServiceManagerCommand($mail = null)
     {
-
-
         $message = GeneralUtility::makeInstance(FlashMessage::class,
             '',
             'Initializing ServiceManager',
