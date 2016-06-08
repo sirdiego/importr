@@ -3,7 +3,7 @@ namespace HDNET\Importr\Command;
 
 use HDNET\Importr\Service\Manager;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
@@ -24,44 +24,70 @@ use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
  * @package    Extension\importr
  * @subpackage Command
  */
-class ImportCommandController extends CommandController {
+class ImportCommandController extends CommandController
+{
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Mvc\Cli\CommandManager
-	 * @inject
-	 */
-	protected $commandManager;
+    /**
+     * @var \TYPO3\CMS\Extbase\Mvc\Cli\CommandManager
+     * @inject
+     */
+    protected $commandManager;
 
-	/**
-	 * @var array
-	 */
-	protected $commandsByExtensionsAndControllers = [];
+    /**
+     * @var array
+     */
+    protected $commandsByExtensionsAndControllers = [];
 
-	/**
-	 * initializes the import service manager
-	 *
-	 * @param string $mail Set an email address for error reporting
-	 *
-	 * @return boolean
-	 */
-	public function initializeServiceManagerCommand($mail = NULL) {
-		$message = $this->objectManager->get(FlashMessage::class, '', 'Initializing ServiceManager', FlashMessage::INFO);
-		/** @noinspection PhpUndefinedMethodInspection */
-		FlashMessageQueue::addMessage($message);
-		$manager = $this->objectManager->get(Manager::class);
-		try {
-			// let the manager run the imports now
-			$manager->runImports();
-		} catch (\Exception $e) {
-			$message = $this->objectManager->get(FlashMessage::class, '', 'An Error occured: ' . $e->getCode() . ': ' . $e->getMessage(), FlashMessage::ERROR);
-			/** @noinspection PhpUndefinedMethodInspection */
-			FlashMessageQueue::addMessage($message);
-			// if mail is configured send an email
-			if ($mail !== NULL && GeneralUtility::validEmail($mail)) {
-				// @TODO: send mail
-			}
-			return FALSE;
-		}
-		return TRUE;
-	}
+    /**
+     * initializes the import service manager
+     *
+     * @param string $mail Set an email address for error reporting
+     *
+     * @return boolean
+     */
+    public function initializeServiceManagerCommand($mail = null)
+    {
+
+
+        $message = GeneralUtility::makeInstance(FlashMessage::class,
+            '',
+            'Initializing ServiceManager',
+            FlashMessage::INFO,
+            true
+        );
+        $this->addFlashMessage($message);
+
+        $manager = $this->objectManager->get(Manager::class);
+        try {
+            // let the manager run the imports now
+            $manager->runImports();
+        } catch (\Exception $e) {
+            $message = GeneralUtility::makeInstance(
+                FlashMessage::class,
+                '',
+                'An Error occured: ' . $e->getCode() . ': ' . $e->getMessage(),
+                FlashMessage::ERROR
+            );
+            $this->addFlashMessage($message);
+
+            // if mail is configured send an email
+            if ($mail !== null && GeneralUtility::validEmail($mail)) {
+                // @TODO: send mail
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param FlashMessage $flashMessage
+     */
+    protected function addFlashMessage(FlashMessage $flashMessage)
+    {
+        $flashMessageService = $this->objectManager->get(
+            FlashMessageService::class);
+        $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
+        $messageQueue->addMessage($flashMessage);
+    }
+
 }
