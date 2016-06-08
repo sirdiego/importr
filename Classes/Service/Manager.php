@@ -153,7 +153,7 @@ class Manager {
 				$resource->parseResource();
 				// Basis Import Aktualsieren (DB)
 				$import->setAmount($resource->getAmount());
-				$import->getStarttime(new \DateTime('now'));
+				$import->setStarttime(new \DateTime('now'));
 				$this->updateImport($import);
 				// Durchlauf starten
 				for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
