@@ -1,6 +1,8 @@
 <?php
 namespace HDNET\Importr\Service\Targets;
 
+use HDNET\Importr\Domain\Model\Strategy;
+
 /**
  * Description of ExtbaseModel
  *
@@ -19,11 +21,11 @@ class Dummy extends AbstractTarget implements TargetInterface {
 	}
 
 	/**
-	 * @param \HDNET\Importr\Domain\Model\Strategy $strategy
+	 * @param Strategy $strategy
 	 *
 	 * @return void
 	 */
-	public function start(\HDNET\Importr\Domain\Model\Strategy $strategy) {
+	public function start(Strategy $strategy) {
 
 	}
 

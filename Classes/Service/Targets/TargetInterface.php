@@ -2,6 +2,8 @@
 
 namespace HDNET\Importr\Service\Targets;
 
+use HDNET\Importr\Domain\Model\Strategy;
+
 /**
  * Description of TargetInterface
  *
@@ -20,9 +22,9 @@ interface TargetInterface {
 	const RESULT_ERROR = 5;
 
 	/**
-	 * @param $strategy \HDNET\Importr\Domain\Model\Strategy
+	 * @param $strategy Strategy
 	 */
-	public function start(\HDNET\Importr\Domain\Model\Strategy $strategy);
+	public function start(Strategy $strategy);
 
 	/**
 	 *

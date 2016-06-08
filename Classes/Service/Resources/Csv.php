@@ -1,6 +1,7 @@
 <?php
 namespace HDNET\Importr\Service\Resources;
 
+use HDNET\Importr\Domain\Model\Strategy;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -45,10 +46,10 @@ class Csv extends AbstractResource implements ResourceInterface {
 	}
 
 	/**
-	 * @param \HDNET\Importr\Domain\Model\Strategy $strategy
+	 * @param Strategy $strategy
 	 * @param string                               $filepath
 	 */
-	public function start(\HDNET\Importr\Domain\Model\Strategy $strategy, $filepath) {
+	public function start(Strategy $strategy, $filepath) {
 		$this->filepath = $filepath;
 	}
 

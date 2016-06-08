@@ -2,6 +2,8 @@
 
 namespace HDNET\Importr\Service\Resources;
 
+use HDNET\Importr\Domain\Model\Strategy;
+
 /**
  * Description of ResourceInterface
  *
@@ -10,10 +12,10 @@ namespace HDNET\Importr\Service\Resources;
 interface ResourceInterface {
 
 	/**
-	 * @param $strategy \HDNET\Importr\Domain\Model\Strategy
+	 * @param $strategy Strategy
 	 * @param $filepath array
 	 */
-	public function start(\HDNET\Importr\Domain\Model\Strategy $strategy, $filepath);
+	public function start(Strategy $strategy, $filepath);
 
 	/**
 	 * @return string

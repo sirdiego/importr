@@ -1,6 +1,8 @@
 <?php
 namespace HDNET\Importr\Service\Resources;
 
+use HDNET\Importr\Domain\Model\Strategy;
+
 /**
  * Description of Excel
  *
@@ -56,10 +58,10 @@ class Dummy extends AbstractResource implements ResourceInterface {
 	}
 
 	/**
-	 * @param \HDNET\Importr\Domain\Model\Strategy $strategy
+	 * @param Strategy $strategy
 	 * @param string                               $filepath
 	 */
-	public function start(\HDNET\Importr\Domain\Model\Strategy $strategy, $filepath) {
+	public function start(Strategy $strategy, $filepath) {
 
 	}
 
