@@ -12,7 +12,6 @@ return [
         'rootLevel'         => 1,
         'delete'            => 'deleted',
         'default_sortby'    => 'ORDER BY title',
-        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('importr') . 'Configuration/Tca/Strategy.php',
         'iconfile'          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Strategy.png',
     ],
 	'interface' => [

@@ -14,7 +14,6 @@ return [
         'rootLevel'         => 1,
         'default_sortby'    => 'ORDER BY starttime',
         'delete'            => 'deleted',
-        'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('importr') . 'Configuration/Tca/Import.php',
         'iconfile'          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Import.png',
     ],
 	'interface' => [
