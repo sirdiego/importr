@@ -11,5 +11,5 @@ if (!defined('TYPO3_MODE')) {
 ], [
     'access' => 'user,group',
     'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
-    'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_mod.xml'
+    'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_mod.xlf'
 ]);
