@@ -14,7 +14,7 @@ return [
         'rootLevel' => 1,
         'default_sortby' => 'ORDER BY starttime',
         'delete' => 'deleted',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Import.png',
+        'iconfile' => 'EXT:importr/Resources/Public/Icons/Import.png',
     ],
     'interface' => [
         'showRecordFieldList' => 'strategy,filepath,starttime,endtime,pointer,amount',

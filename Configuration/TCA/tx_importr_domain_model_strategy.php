@@ -12,7 +12,7 @@ return [
         'rootLevel' => 1,
         'delete' => 'deleted',
         'default_sortby' => 'ORDER BY title',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('importr') . 'Resources/Public/Icons/Strategy.png',
+        'iconfile' => 'EXT:importr/Resources/Public/Icons/Strategy.png',
     ],
     'interface' => [
         'showRecordFieldList' => 'title, configuration, resources, targets',
