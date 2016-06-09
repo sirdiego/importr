@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:tx_importr_domain_model_import',
+        'title' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:tx_importr_domain_model_import',
         'label' => 'starttime',
         'label_alt' => 'filepath',
         'label_alt_force' => 1,
@@ -24,7 +24,7 @@ return [
     ],
     'columns' => [
         'starttime' => [
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
                 'size' => 13,
@@ -38,7 +38,7 @@ return [
             ],
         ],
         'endtime' => [
-            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
+            'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
                 'size' => 13,
@@ -52,7 +52,7 @@ return [
             ],
         ],
         'pointer' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:pointer',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:pointer',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -60,7 +60,7 @@ return [
             ],
         ],
         'amount' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:amount',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:amount',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -68,7 +68,7 @@ return [
             ],
         ],
         'errors' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:error',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -76,7 +76,7 @@ return [
             ],
         ],
         'inserted' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:error',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -84,7 +84,7 @@ return [
             ],
         ],
         'updated' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:error',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -92,7 +92,7 @@ return [
             ],
         ],
         'ignored' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:error',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -100,7 +100,7 @@ return [
             ],
         ],
         'unknowns' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:error',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:error',
             'config' => [
                 'type' => 'none',
                 'size' => 30,
@@ -108,7 +108,7 @@ return [
             ],
         ],
         'filepath' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:filepath',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:filepath',
             'config' => [
                 'type' => 'input',
                 'size' => 50,
@@ -130,7 +130,7 @@ return [
             ],
         ],
         'strategy' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:strategy',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:strategy',
             'config' => [
                 'type' => 'select',
                 'foreign_table' => 'tx_importr_domain_model_strategy',

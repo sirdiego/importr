@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-06-09T12:35:06Z">
+		<header>
+			<type>database</type>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="amount" approved="yes">
+			<source>Amount</source>
+			<target>Anzahl</target>
+		</trans-unit>
+		<trans-unit id="configuration" approved="yes">
+			<source>Configuration</source>
+			<target>Konfiguration</target>
+		</trans-unit>
+		<trans-unit id="filepath" approved="yes">
+			<source>Filepath</source>
+			<target>Dateipfad</target>
+		</trans-unit>
+		<trans-unit id="pointer" approved="yes">
+			<source>Pointer</source>
+			<target>Zeiger</target>
+		</trans-unit>
+		<trans-unit id="resources" approved="yes">
+			<source>Resources</source>
+			<target>Ressourcen</target>
+		</trans-unit>
+		<trans-unit id="strategy" approved="yes">
+			<source>Strategy</source>
+			<target>Strategie</target>
+		</trans-unit>
+		<trans-unit id="targets" approved="yes">
+			<source>Targets</source>
+			<target>Ziele</target>
+		</trans-unit>
+		<trans-unit id="title" approved="yes">
+			<source>Title</source>
+			<target>Titel</target>
+		</trans-unit>
+		<trans-unit id="tx_importr_domain_model_import" approved="yes">
+			<source>Import</source>
+			<target>Import</target>
+		</trans-unit>
+		<trans-unit id="tx_importr_domain_model_strategy" approved="yes">
+			<source>Strategy</source>
+			<target>Strategie</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

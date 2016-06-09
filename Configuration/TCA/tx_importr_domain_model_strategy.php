@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:tx_importr_domain_model_strategy',
+        'title' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:tx_importr_domain_model_strategy',
         'label' => 'title',
         'searchFields' => 'title',
         'rootLevel' => 1,
@@ -22,7 +22,7 @@ return [
     ],
     'columns' => [
         'title' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:title',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:title',
             'config' => [
                 'type' => 'input',
                 'size' => 50,
@@ -30,7 +30,7 @@ return [
             ],
         ],
         'configuration' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:configuration',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:configuration',
             'config' => [
                 'type' => 'text',
                 'rows' => 15,
@@ -38,7 +38,7 @@ return [
             ],
         ],
         'resources' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:resources',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:resources',
             'config' => [
                 'type' => 'text',
                 'rows' => 15,
@@ -46,7 +46,7 @@ return [
             ],
         ],
         'targets' => [
-            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xml:targets',
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:targets',
             'config' => [
                 'type' => 'text',
                 'rows' => 15,

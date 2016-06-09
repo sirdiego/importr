@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-06-09T12:35:06Z">
+		<header>
+			<type>database</type>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="amount">
+			<source>Amount</source>
+		</trans-unit>
+		<trans-unit id="configuration">
+			<source>Configuration</source>
+		</trans-unit>
+		<trans-unit id="filepath">
+			<source>Filepath</source>
+		</trans-unit>
+		<trans-unit id="importr">
+			<source>Importr</source>
+		</trans-unit>
+		<trans-unit id="pointer">
+			<source>Pointer</source>
+		</trans-unit>
+		<trans-unit id="resources">
+			<source>Resources</source>
+		</trans-unit>
+		<trans-unit id="strategy">
+			<source>Strategy</source>
+		</trans-unit>
+		<trans-unit id="targets">
+			<source>Targets</source>
+		</trans-unit>
+		<trans-unit id="title">
+			<source>Title</source>
+		</trans-unit>
+		<trans-unit id="tx_importr_domain_model_import">
+			<source>Import</source>
+		</trans-unit>
+		<trans-unit id="tx_importr_domain_model_strategy">
+			<source>Strategy</source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>
