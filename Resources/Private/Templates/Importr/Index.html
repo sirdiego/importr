@@ -5,83 +5,135 @@
 </f:section>
 
 <f:section name="Content">
-    <h4 class="uppercase">
-        <f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xlf:importr"/>
-    </h4>
+	<h1>
+		<f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xlf:importr"/>
+	</h1>
 
-    <f:if condition="{folder}">
-        <f:then>
-            <f:if condition="{f:count(subject '{folder}')} > 0">
-                <f:then>
-                    <f:form action="import">
-                        Import file
-                        <f:form.select options="{folder}" name="identifier"/>
-                        <f:form.submit value="Weiter"/>
-                    </f:form>
-                </f:then>
-                <f:else>
-                    <p style="color: red;">There are no files in the current folder</p>
-                </f:else>
-            </f:if>
-        </f:then>
-        <f:else>
-            <p style="color: red;">Please select a folder in the foldertree to start the import create process.</p>
-        </f:else>
-    </f:if>
+	<f:if condition="{folder}">
+		<f:then>
+			<f:if condition="{f:count(subject '{folder}')} > 0">
+				<f:then>
+					<f:form action="import" class="form-inline">
+						Import file
+						<f:form.select options="{folder}" name="identifier" class="form-control"/>
+						<f:form.submit value="Weiter" class="btn btn-default"/>
+					</f:form>
+				</f:then>
+				<f:else>
+					<p style="color: red;">There are no files in the current folder</p>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<p style="color: red;">Please select a folder in the foldertree to start the import create process.</p>
+		</f:else>
+	</f:if>
 
 
-    <h4 class="uppercase">Imports in the last 7 Days</h4>
-    <f:form action="index">
-        <f:form.submit value="Refresh"/>
-    </f:form>
+	<h1 class="uppercase">Imports in the last 7 Days</h1>
+	<f:form action="index" class="form-inline">
+		<f:form.submit value="Refresh" class="btn btn-default"/>
+	</f:form>
 
-    <f:for each="{imports}" as="import">
+	<f:for each="{imports}" as="import">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Import <strong>{import.filepath}</strong> with <strong>{import.strategy.title}</strong>
+				</h3>
+			</div>
+			<div class="panel-body">
 
-        <hr />
-        <h4>Import <u>{import.filepath}</u> with <u>{import.strategy.title}</u></h4>
-        Von <f:format.date format="d.m.Y H:i">{import.starttime}</f:format.date> bis <f:format.date format="d.m.Y H:i">{import.endtime}</f:format.date>
-        <br/>
-        <f:if condition="{import.amount}">
-            <div style="width: 100%; background-color: white; position: relative; height: 40px; ">
-                <div style="position: absolute; width: 100%">
-                    <div style="height: 40px; width: {import.ignoredPercentage}%; background-color: #fdbcff; float:left;">
-                        &nbsp;
-                    </div>
-                    <div style="height: 40px; width: {import.insertedPercentage}%; background-color: #bee6b8; float:left;">
-                        &nbsp;
-                    </div>
-                    <div style="height: 40px; width: {import.errorsPercentage}%; background-color: #ffadad; float:left;">
-                        &nbsp;
-                    </div>
-                    <div style="height: 40px; width: {import.unknownsPercentage}%; background-color: #fffab0; float:left;">
-                        &nbsp;
-                    </div>
-                    <div style="height: 40px; width: {import.updatedPercentage}%; background-color: #bcc7ff; float:left;">
-                        &nbsp;
-                    </div>
-                </div>
-                <div style="position: absolute; height: 30px; width: 100%; padding: 5px; font-weight:bold; text-align: center;">
-                    {import.percentage}% ({import.pointer} von {import.amount})<br />
-                    Ignored: {import.ignored} (<f:format.number>{import.ignoredPercentage}</f:format.number>%) ---
-                    Insert: {import.inserted} (<f:format.number>{import.insertedPercentage}</f:format.number>%) ---
-                    Error: {import.errors} (<f:format.number>{import.errorsPercentage}</f:format.number>%) ---
-                    Unsure: {import.unknowns} (<f:format.number>{import.unknownsPercentage}</f:format.number>%) ---
-                    Update: {import.updated} (<f:format.number>{import.updatedPercentage}</f:format.number>%)
-                </div>
-            </div>
 
-        </f:if>
-    </f:for>
+				<f:if condition="{import.amount}">
 
-    <hr />
-    <h4>Legende</h4>
-    <ul style="list-style:disc;padding-left: 20px;">
-        <li style="font-weight: bold; color: #fdbcff;">ignored</li>
-        <li style="font-weight: bold; color: #bee6b8;">insert</li>
-        <li style="font-weight: bold; color: #ffadad;">error</li>
-        <li style="font-weight: bold; color: #fffab0;">unsure</li>
-        <li style="font-weight: bold; color: #bcc7ff;">update</li>
-    </ul>
+					<div class="progress">
+						<div class="progress-bar progress-bar-success" style="width: {import.insertedPercentage}%">
+							<f:format.number>{import.insertedPercentage}</f:format.number>
+							%
+						</div>
+						<div class="progress-bar progress-bar-info" style="width: {import.ignoredPercentage}%">
+							<f:format.number>{import.ignoredPercentage}</f:format.number>
+							%
+						</div>
+						<div class="progress-bar progress-bar-info" style="width: {import.unknownsPercentage}%">
+							<f:format.number>{import.unknownsPercentage}</f:format.number>
+							%
+						</div>
+						<div class="progress-bar progress-bar-warning" style="width: {import.updatedPercentage}%">
+							<f:format.number>{import.updatedPercentage}</f:format.number>
+							%
+						</div>
+						<div class="progress-bar progress-bar-danger" style="width: {import.errorsPercentage}%">
+							<f:format.number>{import.errorsPercentage}</f:format.number>
+							%
+						</div>
+					</div>
 
+				</f:if>
+
+				<dl class="dl-horizontal">
+					<dt>Von</dt>
+					<dd>
+						<f:format.date format="d.m.Y H:i">{import.starttime}</f:format.date>
+					</dd>
+					<dt>Bis</dt>
+					<dd>
+						<f:format.date format="d.m.Y H:i">{import.endtime}</f:format.date>
+					</dd>
+
+					<f:if condition="{import.amount}">
+						<dt>Count</dt>
+						<dd>
+							{import.percentage}% ({import.pointer} von {import.amount})
+						</dd>
+						<dt>Details</dt>
+						<dd>
+							<ul>
+								<li>Insert: {import.inserted}</li>
+								<li>Ignored: {import.ignored}</li>
+								<li>Updated: {import.updated}</li>
+								<li>Warning: {import.unknowns}</li>
+								<li>Errors: {import.errors}</li>
+							</ul>
+						</dd>
+
+					</f:if>
+					<!--<dt>Status</dt>
+					<dd>
+						<div class="row">
+							<div class="col-md-2">
+								<div class="progress">
+									<div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar"
+											 style="width:100%">
+										Running
+									</div>
+								</div>
+								<div class="progress">
+									<div class="progress-bar progress-bar-warning" role="progressbar"
+											 style="width:100%">
+										Pending
+									</div>
+								</div>
+								<div class="progress">
+									<div class="progress-bar progress-bar-info" role="progressbar"
+											 style="width:100%">
+										Finish
+									</div>
+								</div>
+							</div>
+						</div>
+					</dd>-->
+				</dl>
+
+			</div>
+		</div>
+	</f:for>
+
+	<h1>Legende</h1>
+
+	<span class="label label-success">Success (Insert)</span>
+	<span class="label label-info">Info (Update / Ignored)</span>
+	<span class="label label-warning">Warning</span>
+	<span class="label label-danger">Error</span>
 
 </f:section>

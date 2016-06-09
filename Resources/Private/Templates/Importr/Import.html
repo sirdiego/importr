@@ -1,35 +1,45 @@
-<f:layout name="Backend" />
+<f:layout name="Backend"/>
 
 <f:section name="IconButtons">
-	<f:be.buttons.icon uri="{f:uri.action(action: 'index')}" icon="button_left" title="Cancel Import" />
+	<f:be.buttons.icon uri="{f:uri.action(action: 'index')}" icon="actions-move-left" title="Cancel Import"/>
 </f:section>
 
 <f:section name="Content">
-	<h4 class="uppercase"><f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xlf:importr" /></h4>
+	<h1>
+		<f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xlf:importr"/>
+	</h1>
 
-	<f:form action="preview">
-		<f:form.hidden name="identifier" value="{file.storage.uid}:{file.identifier}" />
+	<f:form action="preview" class="form-inline">
+		<f:form.hidden name="identifier" value="{file.storage.uid}:{file.identifier}"/>
 
-		Import file <b>{file.name}</b> with the strategy
-		<f:form.select options="{strategies}" id="strategy_select" class="strategy_select" name="strategy" optionLabelField="title" />
-		<f:form.submit value="Weiter" />
+		Import file <b>{file.name}</b> with the strategy:
+		<f:form.select options="{strategies}" id="strategy_select" class="strategy_select form-control" name="strategy"
+									 optionLabelField="title"/>
+
+		<f:form.submit value="Weiter" class="btn btn-default"/>
 	</f:form>
 
 	<f:for each="{strategies}" as="strategy">
 		<div id="configuration{strategy.uid}">
-			<h4 class="uppercase">{strategy.title}</h4>
-			<table>
+			<h2>{strategy.title}</h2>
+			<table class="table">
 				<tr>
 					<td><strong>Configuration:</strong></td>
-					<td><pre>{strategy.configuration}</pre></td>
+					<td>
+						<pre>{strategy.configuration}</pre>
+					</td>
 				</tr>
 				<tr>
 					<td><strong>Resources:</strong></td>
-					<td><pre>{strategy.resources}</pre></td>
+					<td>
+						<pre>{strategy.resources}</pre>
+					</td>
 				</tr>
 				<tr>
 					<td><strong>Targets:</strong></td>
-					<td><pre>{strategy.targets}</pre></td>
+					<td>
+						<pre>{strategy.targets}</pre>
+					</td>
 				</tr>
 			</table>
 		</div>
