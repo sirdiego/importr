@@ -1,6 +1,6 @@
 <?php
 
-namespace HDNET\Importr\Tests\ViewHelpers;
+namespace HDNET\Importr\Tests\Unit\ViewHelpers;
 
 use HDNET\Importr\ViewHelpers\JsonViewHelper;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
