@@ -27,5 +27,4 @@ class StrategyRepository extends Repository
         $query->setOrderings(['title' => Query::ORDER_ASCENDING]);
         return $query->execute();
     }
-
 }

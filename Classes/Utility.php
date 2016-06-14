@@ -19,7 +19,7 @@ class Utility
      *
      * @return \StdClass
      */
-    static public function createObject($className)
+    public static function createObject($className)
     {
         $arguments = func_get_args();
         $objectManager = new ObjectManager();
@@ -37,7 +37,7 @@ class Utility
      * @param null $version
      * @return string
      */
-    static public function getVersion($version = null)
+    public static function getVersion($version = null)
     {
         if ($version === null) {
             $version = TYPO3_version;
@@ -48,7 +48,7 @@ class Utility
     /**
      * @return \TYPO3\CMS\Core\Database\DatabaseConnection
      */
-    static public function getDatabaseConnection()
+    public static function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
     }

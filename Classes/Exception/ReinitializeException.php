@@ -12,6 +12,4 @@ use TYPO3\CMS\Extbase\Exception;
 class ReinitializeException extends Exception
 {
 
-    //put your code here
-
 }

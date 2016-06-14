@@ -38,5 +38,4 @@ class AbstractTarget
     {
         $this->configuration[$key] = $value;
     }
-
 }

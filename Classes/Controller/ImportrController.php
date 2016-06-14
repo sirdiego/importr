@@ -95,7 +95,8 @@ class ImportrController extends ActionController
     {
         $this->importManager->addToQueue($filepath, $strategy);
 
-        $message = GeneralUtility::makeInstance(FlashMessage::class,
+        $message = GeneralUtility::makeInstance(
+            FlashMessage::class,
             'The Import file ' . $filepath . ' width the strategy ' . $strategy->getTitle() . ' was successfully added to the queue',
             'Import is in Queue',
             FlashMessage::INFO,
@@ -103,11 +104,11 @@ class ImportrController extends ActionController
         );
 
         $flashMessageService = $this->objectManager->get(
-            FlashMessageService::class);
+            FlashMessageService::class
+        );
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->addMessage($message);
 
         $this->redirect('index');
     }
-
 }

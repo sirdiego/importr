@@ -117,5 +117,4 @@ class Dummy extends AbstractResource implements ResourceInterface
     {
 
     }
-
 }

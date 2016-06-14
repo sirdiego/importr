@@ -38,5 +38,4 @@ class AbstractResource
     {
         $this->configuration[$key] = $value;
     }
-
 }

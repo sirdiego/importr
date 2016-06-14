@@ -69,9 +69,10 @@ class Dummy extends AbstractTarget implements TargetInterface
             case 'update':
                 return TargetInterface::RESULT_UPDATE;
             default:
-                throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export($results,
-                        true), 12617283);
-
+                throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
+                    $results,
+                    true
+                ), 12617283);
         }
 
     }

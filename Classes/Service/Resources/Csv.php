@@ -73,8 +73,13 @@ class Csv extends AbstractResource implements ResourceInterface
         ini_set('auto_detect_line_endings', true);
         if (($handle = fopen(GeneralUtility::getFileAbsFileName($this->filepath), "r")) !== false) {
             $row = 0;
-            while (($buffer = fgetcsv($handle, $configuration['length'], $configuration['delimiter'],
-                    $configuration['enclosure'], $configuration['escape'])) !== false) {
+            while (($buffer = fgetcsv(
+                $handle,
+                $configuration['length'],
+                $configuration['delimiter'],
+                $configuration['enclosure'],
+                $configuration['escape']
+            )) !== false) {
                 if ($row < $configuration['skipRows']) {
                     $row++;
                     continue;
@@ -113,5 +118,4 @@ class Csv extends AbstractResource implements ResourceInterface
     {
 
     }
-
 }

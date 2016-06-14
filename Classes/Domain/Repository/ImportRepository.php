@@ -57,5 +57,4 @@ class ImportRepository extends Repository
 
         return $query->execute();
     }
-
 }

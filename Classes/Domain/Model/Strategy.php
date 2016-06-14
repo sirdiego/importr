@@ -129,5 +129,4 @@ class Strategy extends AbstractEntity
     {
         $this->targets = $targets;
     }
-
 }

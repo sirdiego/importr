@@ -119,5 +119,4 @@ class Excel extends AbstractResource implements ResourceInterface
     {
 
     }
-
 }
