@@ -65,21 +65,29 @@ class Csv extends AbstractResource implements ResourceInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getFilePath()
+    {
+        return GeneralUtility::getFileAbsFileName($this->filepath);
+    }
+
+    /**
      *
      */
     public function parseResource()
     {
         $configuration = $this->getConfiguration();
         ini_set('auto_detect_line_endings', true);
-        if (($handle = fopen(GeneralUtility::getFileAbsFileName($this->filepath), "r")) !== false) {
+        if (($handle = fopen($this->getFilePath(), "r")) !== false) {
             $row = 0;
             while (($buffer = fgetcsv(
-                $handle,
-                $configuration['length'],
-                $configuration['delimiter'],
-                $configuration['enclosure'],
-                $configuration['escape']
-            )) !== false) {
+                    $handle,
+                    $configuration['length'],
+                    $configuration['delimiter'],
+                    $configuration['enclosure'],
+                    $configuration['escape']
+                )) !== false) {
                 if ($row < $configuration['skipRows']) {
                     $row++;
                     continue;

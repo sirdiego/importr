@@ -11,7 +11,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class Yaml
 {
-
     /**
      * @param $input string
      *
@@ -19,23 +18,7 @@ class Yaml
      */
     public static function parse($input)
     {
-
-        /**
-         * Maybe an custom autoloader would be cool here.
-         */
-        if (!class_exists(\Symfony\Component\Yaml\Yaml::class)) {
-            $yamlComponentPath = ExtensionManagementUtility::extPath('importr', 'Resources/Private/Php/Yaml/');
-            require_once $yamlComponentPath . 'Yaml.php';
-            require_once $yamlComponentPath . 'Parser.php';
-            require_once $yamlComponentPath . 'Inline.php';
-            require_once $yamlComponentPath . 'Dumper.php';
-            require_once $yamlComponentPath . 'Escaper.php';
-            require_once $yamlComponentPath . 'Unescaper.php';
-            require_once $yamlComponentPath . 'Exception/ExceptionInterface.php';
-            require_once $yamlComponentPath . 'Exception/ParseException.php';
-            require_once $yamlComponentPath . 'Exception/DumpException.php';
-        }
-
+        self::legacyClassLoading();
         try {
             $array = \Symfony\Component\Yaml\Yaml::parse($input);
             /**
@@ -54,5 +37,24 @@ class Yaml
             $array = [];
         }
         return $array;
+    }
+
+    /**
+     *
+     */
+    public static function legacyClassLoading()
+    {
+        if (!class_exists(\Symfony\Component\Yaml\Yaml::class)) {
+            $yamlComponentPath = ExtensionManagementUtility::extPath('importr', 'Resources/Private/Php/Yaml/');
+            require_once $yamlComponentPath . 'Yaml.php';
+            require_once $yamlComponentPath . 'Parser.php';
+            require_once $yamlComponentPath . 'Inline.php';
+            require_once $yamlComponentPath . 'Dumper.php';
+            require_once $yamlComponentPath . 'Escaper.php';
+            require_once $yamlComponentPath . 'Unescaper.php';
+            require_once $yamlComponentPath . 'Exception/ExceptionInterface.php';
+            require_once $yamlComponentPath . 'Exception/ParseException.php';
+            require_once $yamlComponentPath . 'Exception/DumpException.php';
+        }
     }
 }
