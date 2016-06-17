@@ -13,7 +13,7 @@ class YamlTest extends UnitTestCase
     /**
      * @test
      */
-    public function parse()
+    public function parseValid()
     {
         $string = <<<EOT
 men: [John Smith, Bill Jones]
@@ -32,5 +32,30 @@ EOT;
                 'Susan Williams',
             ]
         ], $result);
+    }
+
+    /**
+     * @test
+     */
+    public function parseInvalid()
+    {
+        $string = <<<EOT
+men [John Smith, Bill Jones]
+women:
+  - Mary Smith
+  - Susan Williams
+EOT;
+        $result = Yaml::parse($string);
+        $this->assertEquals([], $result);
+    }
+
+    /**
+     * @test
+     */
+    public function parseSimpleText()
+    {
+        $string = "Test";
+        $result = Yaml::parse($string);
+        $this->assertEquals([], $result);
     }
 }
