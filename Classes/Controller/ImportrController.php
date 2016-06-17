@@ -2,6 +2,7 @@
 namespace HDNET\Importr\Controller;
 
 use HDNET\Importr\Domain\Model\Strategy;
+use HDNET\Importr\Service\ImportServiceInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -38,6 +39,12 @@ class ImportrController extends ActionController
      * @inject
      */
     protected $importManager;
+
+    /**
+     * @var ImportServiceInterface
+     * @inject
+     */
+    protected $importService;
 
     /**
      * @return void
@@ -93,7 +100,7 @@ class ImportrController extends ActionController
      */
     public function createAction($filepath, Strategy $strategy)
     {
-        $this->importManager->addToQueue($filepath, $strategy);
+        $this->importService->addToQueue($filepath, $strategy);
 
         $message = GeneralUtility::makeInstance(
             FlashMessage::class,

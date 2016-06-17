@@ -1,25 +1,15 @@
 <?php
-/**
- * Service Manager
- *
- * @package    Extension\importr
- * @subpackage Service
- */
 namespace HDNET\Importr\Service;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Exception\ReinitializeException;
-use HDNET\Importr\Service\Targets\TargetInterface;
 
 /**
  * Service Manager
  *
- * @package     Extension\importr
- * @subpackage  Service
  * @license     http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @author      Tim Lochmüller <tim.lochmueller@hdnet.de>
- * @version     $Id: Manager.php 490 2013-03-05 09:49:47Z tspiekerkoetter $
  */
 class Manager implements ManagerInterface
 {
@@ -53,6 +43,12 @@ class Manager implements ManagerInterface
      * @inject
      */
     protected $configuration;
+
+    /**
+     * @var \HDNET\Importr\Processor\Resource
+     * @inject
+     */
+    protected $resource;
 
     /**
      * Update Interval
@@ -123,97 +119,15 @@ class Manager implements ManagerInterface
             ->getConfiguration(true);
 
         foreach ($resources as $resource) {
-            /** @var \HDNET\Importr\Service\Resources\ResourceInterface $resource */
-            // Resourcen Object anhand der Datei auswählen
-            if (preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
-                if (isset($strategyConfiguration['before']) && is_array($strategyConfiguration['before'])) {
-                    $this->parseConfiguration($strategyConfiguration['before']);
-                }
-                // Resource "benutzen"
-                $resource->parseResource();
-                // Basis Import Aktualsieren (DB)
-                $import->setAmount($resource->getAmount());
-                $import->setStarttime(new \DateTime('now'));
-                $this->updateImport($import);
-                // Durchlauf starten
-                for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
-                    if (isset($strategyConfiguration['each']) && is_array($strategyConfiguration['each'])) {
-                        $this->parseConfiguration($strategyConfiguration['each']);
-                    }
-                    $entry = $resource->getEntry($pointer);
-                    foreach ($targets as $target) {
-                        $this->processTarget($target, $entry, $import, $pointer);
-                    }
-                    if (($pointer + 1) % $this->updateInterval == 0) {
-                        $this->updateImport($import, $pointer);
-                    }
-                }
-                $import->setEndtime(new \DateTime('now'));
-                $this->updateImport($import, $pointer);
-                if (isset($strategyConfiguration['after']) && is_array($strategyConfiguration['after'])) {
-                    $this->parseConfiguration($strategyConfiguration['after']);
-                }
+            if ($this->resource->process($import, $targets, $strategyConfiguration, $resource, $this)) {
                 break;
             }
         }
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'pastImport', [
+
+        $this->signalSlotDispatcher->dispatch(__CLASS__, 'postImport', [
             $this,
             $import
         ]);
-    }
-
-    /**
-     * @param \HDNET\Importr\Service\Targets\TargetInterface $target
-     * @param mixed $entry
-     * @param \HDNET\Importr\Domain\Model\Import $import
-     * @param int $pointer
-     *
-     * @throws \Exception
-     */
-    protected function processTarget(TargetInterface $target, $entry, Import $import, $pointer)
-    {
-        try {
-            $result = $target->processEntry($entry);
-            $import->increaseCount($result);
-        } catch (\Exception $e) {
-            $import->increaseCount(TargetInterface::RESULT_ERROR);
-            $this->updateImport($import, $pointer + 1);
-            throw $e;
-        }
-    }
-
-    /**
-     * Parse the configuration
-     *
-     * @param array $configuration
-     *
-     * @deprecated Will be removed soon!
-     */
-    protected function parseConfiguration(array $configuration)
-    {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'preParseConfiguration', [
-            $this,
-            $configuration
-        ]);
-
-        $this->configuration->process($configuration, $this);
-
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'pastParseConfiguration', [
-            $this,
-            $configuration
-        ]);
-    }
-
-    /**
-     * Parse the configuration
-     *
-     * @param array $configuration
-     *
-     * @deprecated use parseConfiguration instead
-     */
-    protected function parseConfguration(array $configuration)
-    {
-        $this->parseConfiguration($configuration);
     }
 
     /**
@@ -266,48 +180,18 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @param \HDNET\Importr\Domain\Model\Import $import
-     * @param bool|int $pointer
-     */
-    protected function updateImport(Import $import, $pointer = false)
-    {
-        if ($pointer) {
-            $import->setPointer($pointer);
-        }
-        $this->importRepository->update($import);
-        $this->persistenceManager->persistAll();
-    }
-
-    /**
-     * @param string $filepath
-     * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     * @param array $configuration
-     */
-    public function addToQueue($filepath, Strategy $strategy, array $configuration = [])
-    {
-        /** @var $import Import */
-        $import = $this->objectManager->get('HDNET\Importr\Domain\Model\Import');
-        $start = 'now';
-        if (isset($configuration['start'])) {
-            $start = $configuration['start'];
-        }
-        try {
-            $startTime = new \DateTime($start);
-        } catch (\Exception $e) {
-            $startTime = new \DateTime();
-        }
-        $import->setStarttime($startTime);
-        $import->setFilepath($filepath);
-        $import->setStrategy($strategy);
-        $this->importRepository->add($import);
-        $this->persistenceManager->persistAll();
-    }
-
-    /**
      * @param int $interval
      */
     public function setUpdateInterval($interval)
     {
         $this->updateInterval = $interval;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUpdateInterval()
+    {
+        return $this->updateInterval;
     }
 }

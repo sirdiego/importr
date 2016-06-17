@@ -3,9 +3,10 @@
 namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
+use HDNET\Importr\Domain\Repository\StrategyRepository;
 use HDNET\Importr\Exception\ReinitializeException;
+use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\ManagerInterface;
-use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -19,19 +20,25 @@ class Configuration
     protected $signalSlotDispatcher;
 
     /**
-     * @var RepositoryInterface
+     * @var StrategyRepository
      */
     protected $strategyRepository;
 
     /**
+     * @var ImportServiceInterface
+     */
+    protected $importService;
+
+    /**
      * Configuration constructor.
      * @param Dispatcher $signalSlotDispatcher
-     * @param RepositoryInterface $strategyRepository
+     * @param StrategyRepository $strategyRepository
      */
-    public function __construct(Dispatcher $signalSlotDispatcher, RepositoryInterface $strategyRepository)
+    public function __construct(Dispatcher $signalSlotDispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->strategyRepository = $strategyRepository;
+        $this->importService = $importService;
     }
 
     /**
@@ -56,7 +63,7 @@ class Configuration
                 $strategy = $this->strategyRepository->findByUid((int)$create['importId']);
                 if ($strategy instanceof Strategy) {
                     $filepath = isset($create['filepath']) ? $create['filepath'] : '';
-                    $manager->addToQueue($filepath, $strategy, $create);
+                    $this->importService->addToQueue($filepath, $strategy, $create);
                 }
             }
         }

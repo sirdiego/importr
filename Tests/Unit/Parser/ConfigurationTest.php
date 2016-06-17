@@ -2,10 +2,11 @@
 namespace HDNET\Importr\Tests\Unit\Parser;
 
 use HDNET\Importr\Domain\Model\Strategy;
+use HDNET\Importr\Domain\Repository\StrategyRepository;
 use HDNET\Importr\Processor\Configuration;
+use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\ManagerInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
-use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -23,13 +24,28 @@ class ConfigurationTest extends UnitTestCase
      */
     public function setUp()
     {
+        $this->fixture = $this->getConfiguration();
+    }
+
+    /**
+     * @param bool $shouldAddToQueueBeCalled
+     *
+     * @return Configuration
+     */
+    protected function getConfiguration($shouldAddToQueueBeCalled = false)
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Dispatcher $dispatcher */
         $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
-        /** @var \PHPUnit_Framework_MockObject_MockObject|RepositoryInterface $repository */
-        $repository = $this->getMockBuilder(RepositoryInterface::class)->getMock();
+        /** @var \PHPUnit_Framework_MockObject_MockObject|StrategyRepository $repository */
+        $repository = $this->getMockBuilder(StrategyRepository::class)->disableOriginalConstructor()->getMock();
         $repository->method('findByUid')->willReturn(new Strategy());
+        /** @var \PHPUnit_Framework_MockObject_MockObject|ImportServiceInterface $service */
+        $service = $this->getMockBuilder(ImportServiceInterface::class)->getMock();
+        if ($shouldAddToQueueBeCalled) {
+            $service->expects($this->once())->method('addToQueue');
+        }
 
-        $this->fixture = new Configuration($dispatcher, $repository);
+        return new Configuration($dispatcher, $repository, $service);
     }
 
     /**
@@ -78,14 +94,13 @@ class ConfigurationTest extends UnitTestCase
     public function createImport()
     {
         $manager = $this->getManagerMock();
-        $manager->expects($this->once())->method('addToQueue');
 
         $configuration = [
             'createImport' => [
-                ['importId' => 1,]
+                ['importId' => 1]
             ],
         ];
 
-        $this->fixture->process($configuration, $manager);
+        $this->getConfiguration()->process($configuration, $manager);
     }
 }

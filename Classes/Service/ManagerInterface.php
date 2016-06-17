@@ -1,8 +1,6 @@
 <?php
 namespace HDNET\Importr\Service;
 
-use HDNET\Importr\Domain\Model\Strategy;
-
 /**
  * ManagerInterface
  */
@@ -15,11 +13,7 @@ interface ManagerInterface
     public function setUpdateInterval($interval);
 
     /**
-     * @param $filepath
-     * @param Strategy $strategy
-     * @param array $configuration
-     *
-     * @return void
+     * @return int
      */
-    public function addToQueue($filepath, Strategy $strategy, array $configuration);
+    public function getUpdateInterval();
 }
