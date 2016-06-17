@@ -64,7 +64,8 @@ class Strategy extends AbstractEntity
     /**
      * @return array
      */
-    public function getConfiguration() {
+    public function getConfiguration()
+    {
         $configuration = Yaml::parse($this->getRawConfiguration());
         $configuration['updateInterval'] = (isset($configuration['updateInterval']) && is_numeric($configuration['updateInterval'])) ? $configuration['updateInterval'] : 100;
         return $configuration;
@@ -81,7 +82,8 @@ class Strategy extends AbstractEntity
     /**
      * @return array
      */
-    public function getResources() {
+    public function getResources()
+    {
         return Yaml::parse($this->getRawResources());
     }
 
@@ -96,7 +98,8 @@ class Strategy extends AbstractEntity
     /**
      * @return array
      */
-    public function getTargets() {
+    public function getTargets()
+    {
         return Yaml::parse($this->getRawTargets());
     }
 

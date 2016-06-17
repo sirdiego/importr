@@ -44,7 +44,7 @@ class SignalService
     public function renameFile(Manager $manager, Import $import)
     {
         $configuration = $import->getStrategy()
-            ->getConfiguration(true);
+            ->getConfiguration();
         if (isset($configuration['after']['rename'])) {
             $oldFileName = GeneralUtility::getFileAbsFileName($import->getFilepath());
             $info = pathinfo($oldFileName);

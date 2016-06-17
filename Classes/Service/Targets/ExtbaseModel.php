@@ -75,7 +75,9 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
         $configuration = $this->getConfiguration();
         $this->repository = $this->objectManager->get($configuration['repository']);
         $model = $this->mapModel($this->getModel(), $configuration['mapping'], $entry);
-        $this->processLanguageEntries($configuration, $model, $entry);
+        if (isset($configuration['language']) && is_array($configuration['language'])) {
+            $this->processLanguageEntries($configuration['language'], $model, $entry);
+        }
         $this->repository->add($model);
         $this->persistenceManager->persistAll();
 
@@ -91,20 +93,15 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
      */
     protected function processLanguageEntries(array $configuration, $model, $entry)
     {
-        if (isset($configuration['language'])) {
-            return;
-        }
-
-        foreach ($configuration['language'] as $languageKey => $mapping) {
+        foreach ($configuration as $languageKey => $mapping) {
             $modelLang = $this->mapModel($this->getModel(), $mapping, $entry);
+
             if (method_exists($modelLang, 'setSysLanguageUid') && method_exists($modelLang, 'setL10nParent')) {
-                continue;
+                $modelLang->setSysLanguageUid($languageKey);
+                $modelLang->setL10nParent($model);
+
+                $this->repository->add($modelLang);
             }
-
-            $modelLang->setSysLanguageUid($languageKey);
-            $modelLang->setL10nParent($model);
-
-            $this->repository->add($modelLang);
         }
     }
 

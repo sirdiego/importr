@@ -116,7 +116,7 @@ class Manager implements ManagerInterface
         $resources = $this->initializeResourcesByImport($import);
         $targets = $this->initializeTargets($import);
         $strategyConfiguration = $import->getStrategy()
-            ->getConfiguration(true);
+            ->getConfiguration();
 
         foreach ($resources as $resource) {
             if ($this->resource->process($import, $targets, $strategyConfiguration, $resource, $this)) {
