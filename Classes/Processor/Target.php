@@ -30,7 +30,7 @@ class Target
      * @param mixed $entry
      * @param Import $import
      * @param int $pointer
-     * 
+     *
      * @throws \Exception
      */
     public function process(TargetInterface $target, $entry, Import $import, $pointer)

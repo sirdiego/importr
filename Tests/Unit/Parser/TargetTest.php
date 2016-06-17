@@ -46,4 +46,24 @@ class TargetTest extends UnitTestCase
         $pointer = 1;
         $this->fixture->process($target, $entry, $import, $pointer);
     }
+
+    /**
+     * @test
+     * @expectedException \Exception
+     */
+    public function processWithException()
+    {
+        $entry = [];
+        /** @var \PHPUnit_Framework_MockObject_MockObject|TargetInterface $target */
+        $target = $this->getMockBuilder(TargetInterface::class)->getMock();
+        $target->expects($this->once())
+            ->method('processEntry')
+            ->with($this->equalTo($entry))
+            ->will($this->throwException(new \Exception()));
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Import $import */
+        $import = $this->getMockBuilder(Import::class)->getMock();
+        $import->expects($this->once())->method('increaseCount')->with($this->equalTo(TargetInterface::RESULT_ERROR));
+        $pointer = 1;
+        $this->fixture->process($target, $entry, $import, $pointer);
+    }
 }
