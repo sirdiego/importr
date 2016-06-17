@@ -2,7 +2,7 @@
 namespace HDNET\Importr\Tests\Unit\Parser;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use HDNET\Importr\Parser\Configuration;
+use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\ManagerInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
@@ -54,7 +54,7 @@ class ConfigurationTest extends UnitTestCase
             'updateInterval' => 1,
         ];
 
-        $this->fixture->parse($configuration, $manager);
+        $this->fixture->process($configuration, $manager);
     }
 
     /**
@@ -69,7 +69,7 @@ class ConfigurationTest extends UnitTestCase
             'reinitializeScheduler' => 1,
         ];
 
-        $this->fixture->parse($configuration, $manager);
+        $this->fixture->process($configuration, $manager);
     }
 
     /**
@@ -86,6 +86,6 @@ class ConfigurationTest extends UnitTestCase
             ],
         ];
 
-        $this->fixture->parse($configuration, $manager);
+        $this->fixture->process($configuration, $manager);
     }
 }

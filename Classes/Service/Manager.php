@@ -31,12 +31,6 @@ class Manager implements ManagerInterface
     protected $importRepository;
 
     /**
-     * @var \HDNET\Importr\Domain\Repository\StrategyRepository
-     * @inject
-     */
-    protected $strategyRepository;
-
-    /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      * @inject
      */
@@ -55,7 +49,7 @@ class Manager implements ManagerInterface
     protected $objectManager;
 
     /**
-     * @var \HDNET\Importr\Parser\Configuration
+     * @var \HDNET\Importr\Processor\Configuration
      * @inject
      */
     protected $configuration;
@@ -202,7 +196,7 @@ class Manager implements ManagerInterface
             $configuration
         ]);
 
-        $this->configuration->parse($configuration, $this);
+        $this->configuration->process($configuration, $this);
 
         $this->signalSlotDispatcher->dispatch(__CLASS__, 'pastParseConfiguration', [
             $this,

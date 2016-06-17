@@ -1,6 +1,6 @@
 <?php
 
-namespace HDNET\Importr\Parser;
+namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Exception\ReinitializeException;
@@ -42,7 +42,7 @@ class Configuration
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function parse(array $configuration, ManagerInterface $manager)
+    public function process(array $configuration, ManagerInterface $manager)
     {
         $this->signalSlotDispatcher->dispatch(__CLASS__, 'preParseConfiguration', [
             $this,
