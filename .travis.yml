@@ -66,8 +66,7 @@ after_script:
 - |
   if [[ "$COVERAGE" == "1" ]]; then
     echo; echo "Uploading code coverage results";
-    wget https://scrutinizer-ci.com/ocular.phar
-    php ocular.phar code-coverage:upload --format=php-clover .Build/unittest-coverage.clover
+    .Build/bin/ocular code-coverage:upload --format=php-clover .Build/unittest-coverage.clover
   fi
 notifications:
   email: false
