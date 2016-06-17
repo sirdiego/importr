@@ -4,14 +4,16 @@ php:
 - 5.6
 - 7
 env:
-- TYPO3_VERSION=^6.2.0
-- TYPO3_VERSION=^7.6.0
+- TYPO3_VERSION=^6.2.0 COVERAGE=0
+- TYPO3_VERSION=^7.6.0 COVERAGE=0
 matrix:
   fast_finish: true
   exclude:
     - php: 7
       env: TYPO3_VERSION=^6.2.0
   include:
+    - php: 7
+      env: TYPO3_VERSION=^7.6.0 COVERAGE=1
     - php: 7
       env: TYPO3_VERSION=^8.1.0
     - php: 7
@@ -33,7 +35,12 @@ before_script:
 - export TYPO3_PATH_WEB="$PWD/.Build/Web"
 script:
 - |
-  echo; echo "Running unit tests"; .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+  echo; echo "Running unit tests";
+  if [[ "$COVERAGE" == "1" ]]; then
+    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover Tests/Unit/
+  else
+    .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
+  fi;
 - |
   echo; echo "Executing PHP mess detector"; .Build/bin/phpmd Classes/ text cleancode,codesize,controversial,design,naming || true
 - |
@@ -51,6 +58,12 @@ after_script:
       .Build/bin/upload . "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE"
     fi;
   fi;
+- |
+  if [[ "$COVERAGE" == "1" ]]; then
+    echo; echo "Uploading code coverage results";
+    wget https://scrutinizer-ci.com/ocular.phar
+    php ocular.phar code-coverage:upload --format=php-clover .Build/unittest-coverage.clover
+  fi
 notifications:
   email: false
   slack:
