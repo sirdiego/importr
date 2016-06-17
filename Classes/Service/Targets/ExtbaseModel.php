@@ -2,7 +2,9 @@
 namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use HDNET\Importr\Utility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
 /**
  * Description of ExtbaseModel
@@ -25,7 +27,23 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface
      */
-    protected $epm;
+    protected $persistenceManager;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    protected $objectManager;
+
+    /**
+     * ExtbaseModel constructor.
+     * @param \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     */
+    public function __construct(PersistenceManagerInterface $persistenceManager, ObjectManagerInterface $objectManager)
+    {
+        $this->persistenceManager = $persistenceManager;
+        $this->objectManager = $objectManager;
+    }
 
     /**
      * @return array
@@ -44,7 +62,6 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
      */
     public function start(Strategy $strategy)
     {
-        $this->epm = Utility::createObject('Tx_Extbase_Persistence_Manager');
         $this->strategy = $strategy;
     }
 
@@ -56,23 +73,39 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     public function processEntry(array $entry)
     {
         $configuration = $this->getConfiguration();
-        $this->initializeRepository($configuration);
+        $this->repository = $this->objectManager->get($configuration['repository']);
         $model = $this->mapModel($this->getModel(), $configuration['mapping'], $entry);
+        $this->processLanguageEntries($configuration, $model, $entry);
         $this->repository->add($model);
-        $this->epm->persistAll();
-        if (isset($configuration['language'])) {
-            foreach ($configuration['language'] as $languageKey => $mapping) {
-                $modelLang = $this->mapModel($this->getModel(), $mapping, $entry);
-                /** @noinspection PhpUndefinedMethodInspection */
-                $modelLang->setSysLanguageUid($languageKey);
-                /** @noinspection PhpUndefinedMethodInspection */
-                $modelLang->setL10nParent($model);
-                $this->repository->add($modelLang);
-            }
-        }
-        $this->epm->persistAll();
+        $this->persistenceManager->persistAll();
+
+        $this->persistenceManager->persistAll();
 
         return TargetInterface::RESULT_INSERT;
+    }
+
+    /**
+     * @param array $configuration
+     * @param AbstractEntity $model
+     * @param $entry
+     */
+    protected function processLanguageEntries(array $configuration, $model, $entry)
+    {
+        if (isset($configuration['language'])) {
+            return;
+        }
+
+        foreach ($configuration['language'] as $languageKey => $mapping) {
+            $modelLang = $this->mapModel($this->getModel(), $mapping, $entry);
+            if (method_exists($modelLang, 'setSysLanguageUid') && method_exists($modelLang, 'setL10nParent')) {
+                continue;
+            }
+
+            $modelLang->setSysLanguageUid($languageKey);
+            $modelLang->setL10nParent($model);
+
+            $this->repository->add($modelLang);
+        }
     }
 
     public function end()
@@ -108,13 +141,5 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
         $model = new $configuration['model'];
         $model->setPid($configuration['pid']);
         return $model;
-    }
-
-    /**
-     * @param array $configuration
-     */
-    protected function initializeRepository($configuration)
-    {
-        $this->repository = Utility::createObject($configuration['repository']);
     }
 }

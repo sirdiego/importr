@@ -47,7 +47,7 @@ class ImportService implements ImportServiceInterface
      */
     public function updateImport(Import $import, $pointer = false)
     {
-        if ($pointer) {
+        if (is_int($pointer)) {
             $import->setPointer($pointer);
         }
         $this->importRepository->update($import);

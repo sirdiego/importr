@@ -52,7 +52,7 @@ class ImportrController extends ActionController
     public function indexAction()
     {
         $combinedIdentifier = GeneralUtility::_GP('id');
-        if (isset($combinedIdentifier)) {
+        if (isset($combinedIdentifier) && is_string($combinedIdentifier)) {
             $folder = $this->resourceFactory->getFolderObjectFromCombinedIdentifier($combinedIdentifier);
             $files = [];
             foreach ($folder->getFiles() as $file) {

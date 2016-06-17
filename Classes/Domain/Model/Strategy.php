@@ -54,44 +54,50 @@ class Strategy extends AbstractEntity
     }
 
     /**
-     * @param bool $returnAsArray
-     *
      * @return string
      */
-    public function getConfiguration($returnAsArray = false)
+    public function getRawConfiguration()
     {
-        if ($returnAsArray) {
-            $configuration = Yaml::parse($this->getConfiguration());
-            $configuration['updateInterval'] = (isset($configuration['updateInterval']) && is_numeric($configuration['updateInterval'])) ? $configuration['updateInterval'] : 100;
-            return $configuration;
-        }
         return $this->configuration;
     }
 
     /**
-     * @param bool $returnAsArray
-     *
-     * @return string|array
+     * @return array
      */
-    public function getResources($returnAsArray = false)
+    public function getConfiguration() {
+        $configuration = Yaml::parse($this->getRawConfiguration());
+        $configuration['updateInterval'] = (isset($configuration['updateInterval']) && is_numeric($configuration['updateInterval'])) ? $configuration['updateInterval'] : 100;
+        return $configuration;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawResources()
     {
-        if ($returnAsArray) {
-            return Yaml::parse($this->getResources());
-        }
         return $this->resources;
     }
 
     /**
-     * @param bool $returnAsArray
-     *
-     * @return string|array
+     * @return array
      */
-    public function getTargets($returnAsArray = false)
+    public function getResources() {
+        return Yaml::parse($this->getRawResources());
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawTargets()
     {
-        if ($returnAsArray) {
-            return Yaml::parse($this->getTargets());
-        }
         return $this->targets;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTargets() {
+        return Yaml::parse($this->getRawTargets());
     }
 
     /**

@@ -149,7 +149,7 @@ class Manager implements ManagerInterface
     protected function initializeResources(Strategy $strategy, $filepath)
     {
         $resources = [];
-        $resourceConfiguration = $strategy->getResources(true);
+        $resourceConfiguration = $strategy->getResources();
         foreach ($resourceConfiguration as $resource => $configuration) {
             $object = $this->objectManager->get($resource);
             $object->start($strategy, $filepath);
@@ -168,7 +168,7 @@ class Manager implements ManagerInterface
     {
         $targets = [];
         $targetConfiguration = $import->getStrategy()
-            ->getTargets(true);
+            ->getTargets();
         foreach ($targetConfiguration as $target => $configuration) {
             $object = $this->objectManager->get($target);
             $object->setConfiguration($configuration);
