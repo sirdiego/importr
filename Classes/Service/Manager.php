@@ -21,7 +21,7 @@ use HDNET\Importr\Service\Targets\TargetInterface;
  * @author      Tim Lochmüller <tim.lochmueller@hdnet.de>
  * @version     $Id: Manager.php 490 2013-03-05 09:49:47Z tspiekerkoetter $
  */
-class Manager
+class Manager implements ManagerInterface
 {
 
     /**
@@ -55,36 +55,17 @@ class Manager
     protected $objectManager;
 
     /**
+     * @var \HDNET\Importr\Parser\Configuration
+     * @inject
+     */
+    protected $configuration;
+
+    /**
      * Update Interval
      *
      * @var integer
      */
     protected $updateInterval = 1;
-
-    /**
-     * @param string $filepath
-     * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     * @param array $configuration
-     */
-    public function addToQueue($filepath, Strategy $strategy, $configuration = [])
-    {
-        /** @var $import Import */
-        $import = $this->objectManager->get('HDNET\Importr\Domain\Model\Import');
-        $start = 'now';
-        if (isset($configuration['start'])) {
-            $start = $configuration['start'];
-        }
-        try {
-            $startTime = new \DateTime($start);
-        } catch (\Exception $e) {
-            $startTime = new \DateTime();
-        }
-        $import->setStarttime($startTime);
-        $import->setFilepath($filepath);
-        $import->setStrategy($strategy);
-        $this->importRepository->add($import);
-        $this->persistenceManager->persistAll();
-    }
 
     /**
      * run the Importr
@@ -212,7 +193,7 @@ class Manager
      *
      * @param array $configuration
      *
-     * @throws ReinitializeException
+     * @deprecated Will be removed soon!
      */
     protected function parseConfiguration(array $configuration)
     {
@@ -220,21 +201,9 @@ class Manager
             $this,
             $configuration
         ]);
-        if (isset($configuration['updateInterval'])) {
-            $this->updateInterval = (int)$configuration['updateInterval'];
-        }
-        if (isset($configuration['createImport']) && is_array($configuration['createImport'])) {
-            foreach ($configuration['createImport'] as $create) {
-                $strategy = $this->strategyRepository->findByUid((int)$create['importId']);
-                if ($strategy instanceof Strategy) {
-                    $filepath = isset($create['filepath']) ? $create['filepath'] : '';
-                    $this->addToQueue($filepath, $strategy, $create);
-                }
-            }
-        }
-        if (isset($configuration['reinitializeScheduler'])) {
-            throw new ReinitializeException();
-        }
+
+        $this->configuration->parse($configuration, $this);
+
         $this->signalSlotDispatcher->dispatch(__CLASS__, 'pastParseConfiguration', [
             $this,
             $configuration
@@ -313,5 +282,38 @@ class Manager
         }
         $this->importRepository->update($import);
         $this->persistenceManager->persistAll();
+    }
+
+    /**
+     * @param string $filepath
+     * @param \HDNET\Importr\Domain\Model\Strategy $strategy
+     * @param array $configuration
+     */
+    public function addToQueue($filepath, Strategy $strategy, array $configuration = [])
+    {
+        /** @var $import Import */
+        $import = $this->objectManager->get('HDNET\Importr\Domain\Model\Import');
+        $start = 'now';
+        if (isset($configuration['start'])) {
+            $start = $configuration['start'];
+        }
+        try {
+            $startTime = new \DateTime($start);
+        } catch (\Exception $e) {
+            $startTime = new \DateTime();
+        }
+        $import->setStarttime($startTime);
+        $import->setFilepath($filepath);
+        $import->setStrategy($strategy);
+        $this->importRepository->add($import);
+        $this->persistenceManager->persistAll();
+    }
+
+    /**
+     * @param int $interval
+     */
+    public function setUpdateInterval($interval)
+    {
+        $this->updateInterval = $interval;
     }
 }
