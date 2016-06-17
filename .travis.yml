@@ -11,6 +11,8 @@ matrix:
   exclude:
     - php: 7
       env: TYPO3_VERSION=^6.2.0
+    - php: 7
+      env: TYPO3_VERSION=^7.6.0 COVERAGE=0
   include:
     - php: 7
       env: TYPO3_VERSION=^7.6.0 COVERAGE=1
@@ -25,7 +27,10 @@ cache:
   directories:
   - "$HOME/.composer/cache"
 before_install:
-- phpenv config-rm xdebug.ini
+- |
+  if [[ "$COVERAGE" == "0" ]]; then
+    phpenv config-rm xdebug.ini
+  fi;
 - composer self-update
 - composer --version
 - if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com
