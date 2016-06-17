@@ -1,0 +1,17 @@
+checks:
+    php: true
+    javascript: false
+filter:
+    paths:
+        - 'Classes/*'
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                concatenation: true
+            other:
+                after_type_cast: false
+tools:
+    external_code_coverage:
+        timeout: 600
+        runs: 1
