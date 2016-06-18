@@ -43,9 +43,9 @@ class ImportService implements ImportServiceInterface
 
     /**
      * @param \HDNET\Importr\Domain\Model\Import $import
-     * @param bool|int $pointer
+     * @param int|null $pointer
      */
-    public function updateImport(Import $import, $pointer = false)
+    public function updateImport(Import $import, $pointer = null)
     {
         if (is_int($pointer)) {
             $import->setPointer($pointer);

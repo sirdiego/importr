@@ -101,10 +101,10 @@ class ImportrController extends ActionController
     public function createAction($filepath, Strategy $strategy)
     {
         $this->importService->addToQueue($filepath, $strategy);
-
+        $text = 'The Import file %s width the strategy %s was successfully added to the queue';
         $message = GeneralUtility::makeInstance(
             FlashMessage::class,
-            'The Import file ' . $filepath . ' width the strategy ' . $strategy->getTitle() . ' was successfully added to the queue',
+            sprintf($text, $filepath, $strategy->getTitle()),
             'Import is in Queue',
             FlashMessage::INFO,
             true

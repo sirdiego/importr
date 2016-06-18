@@ -69,10 +69,7 @@ class ImportCommandController extends CommandController
             );
             $this->addFlashMessage($message);
 
-            // if mail is configured send an email
-            if ($mail !== null && GeneralUtility::validEmail($mail)) {
-                // @TODO: send mail
-            }
+            // @TODO: Send email when the manager crashes.
             return false;
         }
         return true;
