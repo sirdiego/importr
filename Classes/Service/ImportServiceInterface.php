@@ -11,10 +11,10 @@ interface ImportServiceInterface
 {
     /**
      * @param Import $import
-     * @param bool $pointer
+     * @param int|null $pointer
      * @return void
      */
-    public function updateImport(Import $import, $pointer = false);
+    public function updateImport(Import $import, $pointer = null);
 
     /**
      * @param string $filepath
