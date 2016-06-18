@@ -11,26 +11,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class Utility
 {
-
-    /**
-     * @param string $className
-     *
-     * @internal param mixed $params
-     *
-     * @return \StdClass
-     */
-    public static function createObject($className)
-    {
-        $arguments = func_get_args();
-        $objectManager = new ObjectManager();
-        $object = call_user_func_array([
-            $objectManager,
-            'get'
-        ], $arguments);
-
-        return $object;
-    }
-
     /**
      * Get TYPO3 Version
      *

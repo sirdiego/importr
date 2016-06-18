@@ -74,13 +74,14 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     {
         $configuration = $this->getConfiguration();
         $this->repository = $this->objectManager->get($configuration['repository']);
+
         $model = $this->mapModel($this->getModel(), $configuration['mapping'], $entry);
-        if (isset($configuration['language']) && is_array($configuration['language'])) {
-            $this->processLanguageEntries($configuration['language'], $model, $entry);
-        }
         $this->repository->add($model);
         $this->persistenceManager->persistAll();
 
+        if (isset($configuration['language']) && is_array($configuration['language'])) {
+            $this->processLanguageEntries($configuration['language'], $model, $entry);
+        }
         $this->persistenceManager->persistAll();
 
         return TargetInterface::RESULT_INSERT;
