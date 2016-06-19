@@ -53,10 +53,10 @@ class Dummy extends AbstractTarget implements TargetInterface
         }
 
         if ($configuration['result'] == 'random') {
-            $configuration['result'] = $this->possibleResults[rand(0, sizeof($results) - 1)];
+            $configuration['result'] = $this->possibleResults[rand(0, sizeof($this->possibleResults) - 1)];
         }
 
-        if(!in_array($configuration['result'], $this->possibleResults)) {
+        if (!in_array($configuration['result'], $this->possibleResults)) {
             throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
                 $results,
                 true
