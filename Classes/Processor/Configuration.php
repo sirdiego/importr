@@ -52,8 +52,8 @@ class Configuration
      */
     public function process(array $configuration, ManagerInterface $manager, $filter = null)
     {
-        if($filter !== null) {
-            if($this->canProcess($configuration, $filter)) {
+        if ($filter !== null) {
+            if ($this->canProcess($configuration, $filter)) {
                 $configuration = $configuration[$filter];
             } else {
                 return;
