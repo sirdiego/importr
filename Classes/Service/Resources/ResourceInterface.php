@@ -42,4 +42,20 @@ interface ResourceInterface
      *
      */
     public function end();
+
+    /**
+     * @return array
+     */
+    public function getConfiguration();
+
+    /**
+     * @param array $configuration
+     */
+    public function setConfiguration(array $configuration);
+
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     */
+    public function addConfiguration($key, $value);
 }

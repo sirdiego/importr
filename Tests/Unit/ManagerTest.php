@@ -2,8 +2,10 @@
 namespace HDNET\Importr\Tests\Unit;
 
 use HDNET\Importr\Domain\Model\Import;
+use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Domain\Repository\ImportRepository;
 use HDNET\Importr\Service\Manager;
+use HDNET\Importr\Service\Resources\ResourceInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use ReflectionClass;
@@ -22,14 +24,10 @@ class ManagerTest extends UnitTestCase {
             [$this->equalTo($imports[1])]
         );
 
-        $objectManager = $this->getMock(ObjectManagerInterface::class);
         $repository = $this->getMockBuilder(ImportRepository::class)->disableOriginalConstructor()->getMock();
         $repository->expects($this->once())->method('findWorkQueue')->willReturn($imports);
 
-        $reflection = new ReflectionClass($manager);
-        $property_reflection = $reflection->getProperty('importRepository');
-        $property_reflection->setAccessible(true);
-        $property_reflection->setValue($manager, $repository);
+        $this->setProtectedProperty($manager, 'importRepository', $repository);
 
         $manager->runImports();
     }
@@ -41,5 +39,41 @@ class ManagerTest extends UnitTestCase {
         $manager = new Manager;
         $manager->setUpdateInterval(42);
         $this->assertEquals(42, $manager->getUpdateInterval());
+    }
+
+    /**
+     * @test
+     */
+    public function is_preview_generated_correct()
+    {
+        $manager = new Manager;
+        $resource = $this->getMock(ResourceInterface::class);
+        $resource->expects($this->any())->method('getEntry')->will($this->returnValue('test'));
+        $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
+
+        $objectManager = $this->getMock(ObjectManagerInterface::class);
+        $objectManager->expects($this->once())->method('get')->will($this->returnCallback(function () use ($resource) {
+            return $resource;
+        }));
+        $this->setProtectedProperty($manager, 'objectManager', $objectManager);
+
+        $strategy = $this->getMock(Strategy::class);
+        $filepath = './import.csv';
+
+        $strategy->expects($this->once())->method('getResources')->will($this->returnValue([
+            ResourceInterface::class => []
+        ]));
+
+        $data = $manager->getPreview($strategy, $filepath);
+
+        $this->assertEquals(array_fill(0, 21, 'test'), $data);
+    }
+
+    protected function setProtectedProperty($object, $name, $value)
+    {
+        $reflection = new ReflectionClass($object);
+        $property_reflection = $reflection->getProperty($name);
+        $property_reflection->setAccessible(true);
+        $property_reflection->setValue($object, $value);
     }
 }
