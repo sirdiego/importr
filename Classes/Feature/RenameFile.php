@@ -2,7 +2,8 @@
 namespace HDNET\Importr\Feature;
 
 use HDNET\Importr\Service\ManagerInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use HDNET\Importr\Domain\Model\Import;
+use HDNET\Importr\Utility;
 
 class RenameFile extends AbstractFeature
 {
@@ -19,7 +20,8 @@ class RenameFile extends AbstractFeature
      * configuration if you are fully aware of it!
      *
      * @param ManagerInterface $manager
-     * @param \HDNET\Importr\Domain\Model\Import $import
+     * @param Import $import
+     * @return void
      */
     public function execute(ManagerInterface $manager, Import $import)
     {
