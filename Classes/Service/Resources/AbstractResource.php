@@ -25,7 +25,7 @@ class AbstractResource
     /**
      * @param array $configuration
      */
-    public function setConfiguration($configuration)
+    public function setConfiguration(array $configuration)
     {
         $this->configuration = $configuration;
     }

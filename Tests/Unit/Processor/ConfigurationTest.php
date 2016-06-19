@@ -20,6 +20,11 @@ class ConfigurationTest extends UnitTestCase
     protected $fixture;
 
     /**
+     * @var Dispatcher
+     */
+    protected $dispatcher;
+
+    /**
      *
      */
     public function setUp()
@@ -36,6 +41,7 @@ class ConfigurationTest extends UnitTestCase
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Dispatcher $dispatcher */
         $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->dispatcher = $dispatcher;
         /** @var \PHPUnit_Framework_MockObject_MockObject|StrategyRepository $repository */
         $repository = $this->getMockBuilder(StrategyRepository::class)->disableOriginalConstructor()->getMock();
         $repository->method('findByUid')->willReturn(new Strategy());
@@ -112,5 +118,27 @@ class ConfigurationTest extends UnitTestCase
         $this->assertEquals(true, $result);
         $result = $this->fixture->canProcess(['each' => []], 'after');
         $this->assertEquals(false, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function processes_with_filter()
+    {
+        $manager = $this->getMock(ManagerInterface::class);
+        $manager->expects($this->once())
+            ->method('setUpdateInterval')
+            ->with($this->equalTo(42));
+        $result = $this->fixture->process(['each' => ['updateInterval' => 42]], $manager, 'each');
+    }
+
+    /**
+     * @test
+     */
+    public function does_not_processes_with_invalid_filter()
+    {
+        $manager = $this->getMock(ManagerInterface::class);
+        $this->dispatcher->expects($this->never())->method('dispatch');
+        $result = $this->fixture->process(['each' => ['updateInterval' => 42]], $manager, 'lorem_ipsum');
     }
 }

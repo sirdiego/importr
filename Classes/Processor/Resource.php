@@ -52,37 +52,43 @@ class Resource
     public function process(Import $import, array $targets, array $configuration, ResourceInterface $resource, ManagerInterface $manager)
     {
         // Resourcen Object anhand der Datei auswählen
-        if (preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
-            if ($this->configuration->canProcess($configuration, 'before')) {
-                $this->configuration->process($configuration['before'], $manager);
-            }
-            // Resource "benutzen"
-            $resource->parseResource();
-            // Basis Import Aktualsieren (DB)
-            $import->setAmount($resource->getAmount());
-            $import->setStarttime(new \DateTime('now'));
-            $this->importService->updateImport($import);
-            // Durchlauf starten
-            for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
-                if ($this->configuration->canProcess($configuration, 'each')) {
-                    $this->configuration->process($configuration['each'], $manager);
-                }
-                $entry = $resource->getEntry($pointer);
-                foreach ($targets as $target) {
-                    $this->target->process($target, $entry, $import, $pointer);
-                }
-                if (($pointer + 1) % $manager->getUpdateInterval() == 0) {
-                    $this->importService->updateImport($import, $pointer);
-                }
-            }
-            $import->setEndtime(new \DateTime('now'));
-            $this->importService->updateImport($import, $pointer);
-            if ($this->configuration->canProcess($configuration, 'after')) {
-                $this->configuration->process($configuration['after'], $manager);
-            }
-            return true;
+        if (!preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
+            return false;
         }
 
-        return false;
+        $this->configuration->process($configuration, $manager, 'before');
+        // Resource "benutzen"
+        $resource->parseResource();
+        // Basis Import Aktualsieren (DB)
+        $import->setAmount($resource->getAmount());
+        $import->setStarttime(new \DateTime('now'));
+        $this->importService->updateImport($import);
+        // Durchlauf starten
+        for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
+            $this->configuration->process($configuration, $manager, 'each');
+            $this->processOneLine($resource, $pointer, $targets, $import);
+            if (($pointer + 1) % $manager->getUpdateInterval() == 0) {
+                $this->importService->updateImport($import, $pointer);
+            }
+        }
+        $import->setEndtime(new \DateTime('now'));
+        $this->importService->updateImport($import, $pointer);
+        $this->configuration->process($configuration, $manager, 'after');
+
+        return true;
+    }
+
+    /**
+     * @param ResourceInterface $resource
+     * @param int $pointer
+     * @param array $targets
+     * @param Import $import
+     */
+    protected function processOneLine(ResourceInterface $resource, $pointer, array $targets, Import $import)
+    {
+        $entry = $resource->getEntry($pointer);
+        foreach ($targets as $target) {
+            $this->target->process($target, $entry, $import, $pointer);
+        }
     }
 }

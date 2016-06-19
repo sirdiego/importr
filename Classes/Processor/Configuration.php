@@ -44,13 +44,22 @@ class Configuration
     /**
      * @param array $configuration
      * @param ManagerInterface $manager
+     * @param mixed $filter
      *
      * @throws ReinitializeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function process(array $configuration, ManagerInterface $manager)
+    public function process(array $configuration, ManagerInterface $manager, $filter = null)
     {
+        if($filter !== null) {
+            if($this->canProcess($configuration, $filter)) {
+                $configuration = $configuration[$filter];
+            } else {
+                return;
+            }
+        }
+
         $this->emitSignal('preParseConfiguration', $configuration);
         try {
             $this->updateInterval($configuration, $manager)
