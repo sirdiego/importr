@@ -1,5 +1,5 @@
 <?php
-namespace HDNET\Importr\Tests\Unit\Parser;
+namespace HDNET\Importr\Tests\Unit\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Domain\Repository\StrategyRepository;
@@ -102,5 +102,15 @@ class ConfigurationTest extends UnitTestCase
         ];
 
         $this->getConfiguration()->process($configuration, $manager);
+    }
+
+    /**
+     * @test
+     */
+    public function can_process_checks() {
+        $result = $this->fixture->canProcess(['each' => []], 'each');
+        $this->assertEquals(true, $result);
+        $result = $this->fixture->canProcess(['each' => []], 'after');
+        $this->assertEquals(false, $result);
     }
 }

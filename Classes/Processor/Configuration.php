@@ -65,6 +65,17 @@ class Configuration
     }
 
     /**
+     * @param array $configuration
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function canProcess(array $configuration, $name)
+    {
+        return isset($configuration[$name]) && is_array($configuration[$name]);
+    }
+
+    /**
      * @param string $name
      * @param array $configuration
      * @return $this

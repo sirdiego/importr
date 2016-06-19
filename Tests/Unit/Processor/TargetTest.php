@@ -1,5 +1,5 @@
 <?php
-namespace HDNET\Importr\Tests\Unit\Parser;
+namespace HDNET\Importr\Tests\Unit\Processor;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Processor\Target;

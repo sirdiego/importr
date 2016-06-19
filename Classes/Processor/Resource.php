@@ -53,7 +53,7 @@ class Resource
     {
         // Resourcen Object anhand der Datei auswählen
         if (preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
-            if (isset($configuration['before']) && is_array($configuration['before'])) {
+            if ($this->configuration->canProcess($configuration, 'before')) {
                 $this->configuration->process($configuration['before'], $manager);
             }
             // Resource "benutzen"
@@ -64,7 +64,7 @@ class Resource
             $this->importService->updateImport($import);
             // Durchlauf starten
             for ($pointer = $import->getPointer(); $pointer < $import->getAmount(); $pointer++) {
-                if (isset($configuration['each']) && is_array($configuration['each'])) {
+                if ($this->configuration->canProcess($configuration, 'each')) {
                     $this->configuration->process($configuration['each'], $manager);
                 }
                 $entry = $resource->getEntry($pointer);
@@ -77,7 +77,7 @@ class Resource
             }
             $import->setEndtime(new \DateTime('now'));
             $this->importService->updateImport($import, $pointer);
-            if (isset($configuration['after']) && is_array($configuration['after'])) {
+            if ($this->configuration->canProcess($configuration, 'after')) {
                 $this->configuration->process($configuration['after'], $manager);
             }
             return true;
