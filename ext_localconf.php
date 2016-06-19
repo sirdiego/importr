@@ -16,6 +16,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = \
  * By default they are not connected to the slots, because they
  * can be a security risk.
  *
- * t3lib_div::makeInstance('Tx_Extbase_SignalSlot_Dispatcher')->connect('Tx_Importr_Service_Manager', 'preParseConfiguration', 'Tx_Importr_Service_SignalService', 'truncateTable');
- * t3lib_div::makeInstance('Tx_Extbase_SignalSlot_Dispatcher')->connect('Tx_Importr_Service_Manager', 'pastImport', 'Tx_Importr_Service_SignalService', 'renameFile');
+ * \HDNET\Importr\Feature\RenameFile::enable('afterImport');
+ * \HDNET\Importr\Feature\TruncateTable::enable('preParseConfiguration');
  */
