@@ -5,7 +5,8 @@ use HDNET\Importr\Service\ManagerInterface;
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Utility;
 
-class TruncateTable {
+class TruncateTable extends AbstractFeature
+{
     /**
      * To truncate a table from the importr you
      * have to use the "truncate: " configuration.
@@ -17,7 +18,7 @@ class TruncateTable {
      * @param ManagerInterface $manager
      * @param Import $import
      */
-    public function execute(ManagerInterface $manager, Import $configuration)
+    public function execute(ManagerInterface $manager, Import $import)
     {
         $configuration = $import->getStrategy()
             ->getConfiguration();

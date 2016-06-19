@@ -4,7 +4,8 @@ namespace HDNET\Importr\Feature;
 use HDNET\Importr\Service\ManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class RenameFile {
+class RenameFile extends AbstractFeature
+{
 
     /**
      * To rename a file from the importr you

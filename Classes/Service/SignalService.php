@@ -25,14 +25,16 @@ class SignalService
     /**
      * @deprecated
      */
-    public function truncateTable() {
+    public function truncateTable()
+    {
         \HDNET\Importr\Feature\TruncateTable::enable('preParseConfiguration');
     }
 
     /**
      * @deprecated
      */
-    public function renameFile() {
+    public function renameFile()
+    {
         \HDNET\Importr\Feature\RenameFile::enable('afterImport');
     }
 }
