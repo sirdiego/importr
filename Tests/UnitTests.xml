@@ -16,11 +16,14 @@
 	<testsuites>
 		<testsuite name="importr tests">
 			<directory>Unit/</directory>
-			<filter>
-				<whitelist processUncoveredFilesFromWhitelist="true">
-					<directory suffix=".php">../Classes/</directory>
-				</whitelist>
-			</filter>
 		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../Classes/</directory>
+		</whitelist>
+		<blacklist>
+			<directory>../.Build/</directory>
+		</blacklist>
+	</filter>
 </phpunit>
