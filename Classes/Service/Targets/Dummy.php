@@ -11,6 +11,14 @@ use HDNET\Importr\Domain\Model\Strategy;
 class Dummy extends AbstractTarget implements TargetInterface
 {
 
+    protected $possibleResults = [
+        TargetInterface::RESULT_IGNORED,
+        TargetInterface::RESULT_INSERT,
+        TargetInterface::RESULT_ERROR,
+        TargetInterface::RESULT_UNSURE,
+        TargetInterface::RESULT_UPDATE,
+    ];
+
     /**
      * @return array
      */
@@ -29,7 +37,6 @@ class Dummy extends AbstractTarget implements TargetInterface
      */
     public function start(Strategy $strategy)
     {
-
     }
 
     /**
@@ -45,36 +52,18 @@ class Dummy extends AbstractTarget implements TargetInterface
             sleep($configuration['sleepSeconds']);
         }
 
-        // Return
-        $results = [
-            'ignored',
-            'insert',
-            'error',
-            'unsure',
-            'update'
-        ];
         if ($configuration['result'] == 'random') {
-            $configuration['result'] = $results[rand(0, sizeof($results) - 1)];
+            $configuration['result'] = $this->possibleResults[rand(0, sizeof($results) - 1)];
         }
 
-        switch ($configuration['result']) {
-            case 'ignored':
-                return TargetInterface::RESULT_IGNORED;
-            case 'insert':
-                return TargetInterface::RESULT_INSERT;
-            case 'error':
-                return TargetInterface::RESULT_ERROR;
-            case 'unsure':
-                return TargetInterface::RESULT_UNSURE;
-            case 'update':
-                return TargetInterface::RESULT_UPDATE;
-            default:
-                throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
-                    $results,
-                    true
-                ), 12617283);
+        if(!in_array($configuration['result'], $this->possibleResults)) {
+            throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
+                $results,
+                true
+            ), 12617283);
         }
 
+        return $configuration['result'];
     }
 
     public function end()
