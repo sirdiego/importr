@@ -68,7 +68,7 @@ class Resource
             $this->configuration->process($configuration, $manager, 'each');
             $this->processOneLine($resource, $pointer, $targets, $import);
             if (($pointer + 1) % $manager->getUpdateInterval() == 0) {
-                $this->importService->updateImport($import, $pointer);
+                $this->importService->updateImport($import, $pointer + 1);
             }
         }
         $import->setEndtime(new \DateTime('now'));
