@@ -105,10 +105,7 @@ class Configuration
         $this->signalSlotDispatcher->dispatch(
             __CLASS__,
             $name,
-            [
-            $this,
-            $configuration
-            ]
+            [$this, $configuration]
         );
     }
 

@@ -111,14 +111,8 @@ class Manager implements ManagerInterface
      */
     protected function runImport(Import $import)
     {
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            'preImport',
-            [
-            $this,
-            $import
-            ]
-        );
+        $this->emitSignal('preImport', $import);
+
         $resources = $this->initializeResourcesByImport($import);
         $targets = $this->initializeTargets($import);
         $strategyConfiguration = $import->getStrategy()
@@ -130,14 +124,7 @@ class Manager implements ManagerInterface
             }
         }
 
-        $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
-            'postImport',
-            [
-            $this,
-            $import
-            ]
-        );
+        $this->emitSignal('postImport', $import);
     }
 
     /**
@@ -203,5 +190,18 @@ class Manager implements ManagerInterface
     public function getUpdateInterval()
     {
         return $this->updateInterval;
+    }
+
+    /**
+     * @param string $name
+     * @param Import $import
+     */
+    protected function emitSignal($name, Import $import)
+    {
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            $name,
+            [$this, $import]
+        );
     }
 }
