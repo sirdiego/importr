@@ -16,7 +16,7 @@ class TruncateTable extends AbstractFeature
      * name.
      *
      * @param ManagerInterface $manager
-     * @param Import $import
+     * @param Import           $import
      */
     public function execute(ManagerInterface $manager, Import $import)
     {

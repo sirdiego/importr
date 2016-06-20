@@ -4,10 +4,10 @@
  *
  * General file information
  *
- * @category   Extension
- * @package    importr
- * @author     Tim Spiekerkoetter HDNET GmbH & Co. <tim.spiekerkoetter@hdnet.de>
- * @version    CVS: $Id:08.02.13$
+ * @category Extension
+ * @package  importr
+ * @author   Tim Spiekerkoetter HDNET GmbH & Co. <tim.spiekerkoetter@hdnet.de>
+ * @version  CVS: $Id:08.02.13$
  */
 namespace HDNET\Importr\Service;
 

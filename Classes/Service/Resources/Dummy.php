@@ -38,7 +38,6 @@ class Dummy extends AbstractResource implements ResourceInterface
     }
 
     /**
-     *
      * Get Random content
      *
      * @return int|string
@@ -60,7 +59,7 @@ class Dummy extends AbstractResource implements ResourceInterface
 
     /**
      * @param Strategy $strategy
-     * @param string $filepath
+     * @param string   $filepath
      */
     public function start(Strategy $strategy, $filepath)
     {

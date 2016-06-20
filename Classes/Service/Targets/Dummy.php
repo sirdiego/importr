@@ -57,10 +57,13 @@ class Dummy extends AbstractTarget implements TargetInterface
         }
 
         if (!in_array($configuration['result'], $this->possibleResults)) {
-            throw new \Exception('Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
-                $results,
-                true
-            ), 12617283);
+            throw new \Exception(
+                'Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
+                    $results,
+                    true
+                ),
+                12617283
+            );
         }
 
         return $configuration['result'];

@@ -14,7 +14,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  * CLASSNAME:
  *   CLASSNAME-CONFIGURATIONS (see Class)
  *
- *
  * @author timlochmueller
  */
 class Strategy extends AbstractEntity

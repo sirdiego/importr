@@ -29,8 +29,8 @@ class Resource
 
     /**
      * Resource constructor.
-     * @param Configuration $configuration
-     * @param Target $target
+     * @param Configuration          $configuration
+     * @param Target                 $target
      * @param ImportServiceInterface $importService
      */
     public function __construct(Configuration $configuration, Target $target, ImportServiceInterface $importService)
@@ -41,11 +41,11 @@ class Resource
     }
 
     /**
-     * @param Import $import
-     * @param array $targets
-     * @param array $configuration
+     * @param Import            $import
+     * @param array             $targets
+     * @param array             $configuration
      * @param ResourceInterface $resource
-     * @param ManagerInterface $manager
+     * @param ManagerInterface  $manager
      * @return bool
      * @throws \HDNET\Importr\Exception\ReinitializeException
      */
@@ -80,9 +80,9 @@ class Resource
 
     /**
      * @param ResourceInterface $resource
-     * @param int $pointer
-     * @param array $targets
-     * @param Import $import
+     * @param int               $pointer
+     * @param array             $targets
+     * @param Import            $import
      */
     protected function processOneLine(ResourceInterface $resource, $pointer, array $targets, Import $import)
     {

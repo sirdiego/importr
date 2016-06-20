@@ -49,7 +49,7 @@ class Csv extends AbstractResource implements ResourceInterface
 
     /**
      * @param Strategy $strategy
-     * @param string $filepath
+     * @param string   $filepath
      */
     public function start(Strategy $strategy, $filepath)
     {
@@ -97,7 +97,7 @@ class Csv extends AbstractResource implements ResourceInterface
 
     /**
      * @param $handle
-     * @param array $configuration
+     * @param array  $configuration
      * @return
      */
     protected function fgetcsv($handle, array $configuration)

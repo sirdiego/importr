@@ -31,7 +31,7 @@ class Configuration
 
     /**
      * Configuration constructor.
-     * @param Dispatcher $signalSlotDispatcher
+     * @param Dispatcher         $signalSlotDispatcher
      * @param StrategyRepository $strategyRepository
      */
     public function __construct(Dispatcher $signalSlotDispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
@@ -42,9 +42,9 @@ class Configuration
     }
 
     /**
-     * @param array $configuration
+     * @param array            $configuration
      * @param ManagerInterface $manager
-     * @param mixed $filter
+     * @param mixed            $filter
      *
      * @throws ReinitializeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
@@ -52,14 +52,34 @@ class Configuration
      */
     public function process(array $configuration, ManagerInterface $manager, $filter = null)
     {
-        if ($filter !== null) {
-            if ($this->canProcess($configuration, $filter)) {
-                $configuration = $configuration[$filter];
-            } else {
-                return;
-            }
+        if ($filter === null) {
+            $this->processInner($configuration, $manager);
+        } elseif ($this->canProcess($configuration, $filter)) {
+            $this->processInner($configuration[$filter], $manager);
         }
+    }
 
+    /**
+     * @param array  $configuration
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function canProcess(array $configuration, $name)
+    {
+        return isset($configuration[$name]) && is_array($configuration[$name]);
+    }
+
+    /**
+     * @param array            $configuration
+     * @param ManagerInterface $manager
+     *
+     * @throws ReinitializeException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    protected function processInner(array $configuration, ManagerInterface $manager)
+    {
         $this->emitSignal('preParseConfiguration', $configuration);
         try {
             $this->updateInterval($configuration, $manager)
@@ -74,33 +94,26 @@ class Configuration
     }
 
     /**
-     * @param array $configuration
      * @param string $name
-     *
-     * @return bool
-     */
-    public function canProcess(array $configuration, $name)
-    {
-        return isset($configuration[$name]) && is_array($configuration[$name]);
-    }
-
-    /**
-     * @param string $name
-     * @param array $configuration
+     * @param array  $configuration
      * @return $this
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
     protected function emitSignal($name, array &$configuration)
     {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, $name, [
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            $name,
+            [
             $this,
             $configuration
-        ]);
+            ]
+        );
     }
 
     /**
-     * @param array $configuration
+     * @param array            $configuration
      * @param ManagerInterface $manager
      * @return $this
      */

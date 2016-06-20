@@ -8,8 +8,8 @@ use HDNET\Importr\Exception\ReinitializeException;
 /**
  * Service Manager
  *
- * @license     http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @author      Tim Lochmüller <tim.lochmueller@hdnet.de>
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @author  Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class Manager implements ManagerInterface
 {
@@ -75,7 +75,7 @@ class Manager implements ManagerInterface
     /**
      * Get the preview
      *
-     * @param string $filepath
+     * @param string                               $filepath
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
      *
      * @return array
@@ -85,7 +85,9 @@ class Manager implements ManagerInterface
         $data = [];
         $resources = $this->initializeResources($strategy, $filepath);
         foreach ($resources as $resource) {
-            /** @var \HDNET\Importr\Service\Resources\ResourceInterface $resource */
+            /**
+ * @var \HDNET\Importr\Service\Resources\ResourceInterface $resource
+*/
             // Resourcen Object anhand der Datei auswählen
             if (preg_match($resource->getFilepathExpression(), $filepath)) {
                 // Resource "benutzen"
@@ -109,10 +111,14 @@ class Manager implements ManagerInterface
      */
     protected function runImport(Import $import)
     {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'preImport', [
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            'preImport',
+            [
             $this,
             $import
-        ]);
+            ]
+        );
         $resources = $this->initializeResourcesByImport($import);
         $targets = $this->initializeTargets($import);
         $strategyConfiguration = $import->getStrategy()
@@ -124,10 +130,14 @@ class Manager implements ManagerInterface
             }
         }
 
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'postImport', [
+        $this->signalSlotDispatcher->dispatch(
+            __CLASS__,
+            'postImport',
+            [
             $this,
             $import
-        ]);
+            ]
+        );
     }
 
     /**
@@ -142,7 +152,7 @@ class Manager implements ManagerInterface
 
     /**
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     * @param string $filepath
+     * @param string                               $filepath
      *
      * @return array
      */

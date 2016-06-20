@@ -35,8 +35,8 @@ class RenameFile extends AbstractFeature
      * you should only use this in the before
      * configuration if you are fully aware of it!
      *
-     * @param ManagerInterface $manager
-     * @param Import $import
+     * @param  ManagerInterface $manager
+     * @param  Import           $import
      * @return void
      */
     public function execute(ManagerInterface $manager, Import $import)

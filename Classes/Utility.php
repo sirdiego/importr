@@ -14,7 +14,7 @@ class Utility
     /**
      * Get TYPO3 Version
      *
-     * @param null $version
+     * @param  null $version
      * @return string
      */
     public static function getVersion($version = null)

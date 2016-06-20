@@ -31,8 +31,8 @@ class ImportService implements ImportServiceInterface
     /**
      * ImportService constructor.
      * @param PersistenceManagerInterface $persistenceManager
-     * @param ObjectManagerInterface $objectManager
-     * @param ImportRepository $importRepository
+     * @param ObjectManagerInterface      $objectManager
+     * @param ImportRepository            $importRepository
      */
     public function __construct(PersistenceManagerInterface $persistenceManager, ObjectManagerInterface $objectManager, ImportRepository $importRepository)
     {
@@ -43,7 +43,7 @@ class ImportService implements ImportServiceInterface
 
     /**
      * @param \HDNET\Importr\Domain\Model\Import $import
-     * @param int|null $pointer
+     * @param int|null                           $pointer
      */
     public function updateImport(Import $import, $pointer = null)
     {
@@ -55,9 +55,9 @@ class ImportService implements ImportServiceInterface
     }
 
     /**
-     * @param string $filepath
+     * @param string                               $filepath
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     * @param array $configuration
+     * @param array                                $configuration
      */
     public function addToQueue($filepath, Strategy $strategy, array $configuration = [])
     {

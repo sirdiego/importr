@@ -41,7 +41,7 @@ class Excel extends AbstractResource implements ResourceInterface
 
     /**
      * @param Strategy $strategy
-     * @param string $filepath
+     * @param string   $filepath
      */
     public function start(Strategy $strategy, $filepath)
     {
@@ -87,8 +87,10 @@ class Excel extends AbstractResource implements ResourceInterface
         for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
             $rowRecord = [];
             for ($col = 0; $col <= $highestColumnIndex; ++$col) {
-                $rowRecord[] = trim($objWorksheet->getCellByColumnAndRow($col, $row)
-                    ->getValue());
+                $rowRecord[] = trim(
+                    $objWorksheet->getCellByColumnAndRow($col, $row)
+                        ->getValue()
+                );
             }
             $this->content[] = $rowRecord;
         }

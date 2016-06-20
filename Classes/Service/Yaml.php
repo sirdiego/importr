@@ -46,15 +46,15 @@ class Yaml
     {
         if (!class_exists(\Symfony\Component\Yaml\Yaml::class)) {
             $yamlComponentPath = ExtensionManagementUtility::extPath('importr', 'Resources/Private/Php/Yaml/');
-            require_once $yamlComponentPath . 'Yaml.php';
-            require_once $yamlComponentPath . 'Parser.php';
-            require_once $yamlComponentPath . 'Inline.php';
-            require_once $yamlComponentPath . 'Dumper.php';
-            require_once $yamlComponentPath . 'Escaper.php';
-            require_once $yamlComponentPath . 'Unescaper.php';
-            require_once $yamlComponentPath . 'Exception/ExceptionInterface.php';
-            require_once $yamlComponentPath . 'Exception/ParseException.php';
-            require_once $yamlComponentPath . 'Exception/DumpException.php';
+            include_once $yamlComponentPath . 'Yaml.php';
+            include_once $yamlComponentPath . 'Parser.php';
+            include_once $yamlComponentPath . 'Inline.php';
+            include_once $yamlComponentPath . 'Dumper.php';
+            include_once $yamlComponentPath . 'Escaper.php';
+            include_once $yamlComponentPath . 'Unescaper.php';
+            include_once $yamlComponentPath . 'Exception/ExceptionInterface.php';
+            include_once $yamlComponentPath . 'Exception/ParseException.php';
+            include_once $yamlComponentPath . 'Exception/DumpException.php';
         }
     }
 }

@@ -27,9 +27,9 @@ class Target
 
     /**
      * @param TargetInterface $target
-     * @param mixed $entry
-     * @param Import $import
-     * @param int $pointer
+     * @param mixed           $entry
+     * @param Import          $import
+     * @param int             $pointer
      *
      * @throws \Exception
      */

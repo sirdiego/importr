@@ -10,16 +10,16 @@ use HDNET\Importr\Domain\Model\Strategy;
 interface ImportServiceInterface
 {
     /**
-     * @param Import $import
+     * @param Import   $import
      * @param int|null $pointer
      * @return void
      */
     public function updateImport(Import $import, $pointer = null);
 
     /**
-     * @param string $filepath
+     * @param string   $filepath
      * @param Strategy $strategy
-     * @param array $configuration
+     * @param array    $configuration
      * @return void
      */
     public function addToQueue($filepath, Strategy $strategy, array $configuration = []);

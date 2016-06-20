@@ -37,7 +37,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     /**
      * ExtbaseModel constructor.
      * @param \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface           $objectManager
      */
     public function __construct(PersistenceManagerInterface $persistenceManager, ObjectManagerInterface $objectManager)
     {
@@ -88,7 +88,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     }
 
     /**
-     * @param array $configuration
+     * @param array          $configuration
      * @param AbstractEntity $model
      * @param $entry
      */
@@ -112,7 +112,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
 
     /**
      * @param \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $model
-     * @param array $mapping
+     * @param array                                          $mapping
      * @param                                                $entry
      *
      * @return \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
@@ -135,7 +135,9 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     protected function getModel()
     {
         $configuration = $this->getConfiguration();
-        /** @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $model */
+        /**
+ * @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $model
+*/
         $model = new $configuration['model'];
         $model->setPid($configuration['pid']);
         return $model;

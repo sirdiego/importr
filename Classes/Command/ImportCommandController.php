@@ -1,4 +1,7 @@
 <?php
+/**
+ * ImportCommandController.php
+ */
 namespace HDNET\Importr\Command;
 
 use HDNET\Importr\Service\Manager;
@@ -8,21 +11,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
- * Import CommandController for initializing the Tx_Importr_Service_Manager
+ * ImportCommandController
  *
- * @package     Extension\importr
- * @subpackage  Command
- * @license     http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @author      Tim Lochmüller <tim.lochmueller@hdnet.de>
- * @author      Tim Spiekerkötter <tim.spiekerkoetter@hdnet.de>
- * @version     $Id:$
- */
-
-/**
- * Import CommandController for initializing the Tx_Importr_Service_Manager
- *
- * @package    Extension\importr
- * @subpackage Command
+ * For initializing the Manager
  */
 class ImportCommandController extends CommandController
 {

@@ -10,7 +10,7 @@ abstract class AbstractFeature
 {
     /**
      * @param ManagerInterface $manager
-     * @param Import $import
+     * @param Import           $import
      * @return void
      */
     abstract public function execute(ManagerInterface $manager, Import $import);

@@ -76,7 +76,7 @@ class ImportrController extends ActionController
 
     /**
      *
-     * @param string $identifier
+     * @param string                               $identifier
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
      *
      * @return void
@@ -93,7 +93,7 @@ class ImportrController extends ActionController
 
     /**
      *
-     * @param string $filepath
+     * @param string                               $filepath
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
      *
      * @return void

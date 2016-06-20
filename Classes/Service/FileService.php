@@ -11,8 +11,8 @@ class FileService
 {
     /**
      * @param string $filename
-     * @param bool $onlyRelative
-     * @param bool $relToTYPO3_mainDir
+     * @param bool   $onlyRelative
+     * @param bool   $relToTYPO3_mainDir
      * @return string
      */
     public function getFileAbsFileName($filename, $onlyRelative = true, $relToTYPO3_mainDir = false)
