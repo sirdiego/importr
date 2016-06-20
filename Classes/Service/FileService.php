@@ -17,6 +17,6 @@ class FileService
      */
     public function getFileAbsFileName($filename, $onlyRelative = true, $relToTYPO3_mainDir = false)
     {
-        return GeneralUtility::getFileAbsFileName($filename, $onlyRelative = true, $relToTYPO3_mainDir = false);
+        return GeneralUtility::getFileAbsFileName($filename, $onlyRelative, $relToTYPO3_mainDir);
     }
 }
