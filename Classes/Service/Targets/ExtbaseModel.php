@@ -51,7 +51,10 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     public function getConfiguration()
     {
         $configuration = parent::getConfiguration();
-        $configuration['pid'] = (isset($configuration['pid']) && is_numeric($configuration['pid'])) ? $configuration['pid'] : 0;
+        if (!isset($configuration['pid']) || !is_numeric($configuration['pid'])) {
+            $configuration['pid'] = 0;
+        }
+
         return $configuration;
     }
 

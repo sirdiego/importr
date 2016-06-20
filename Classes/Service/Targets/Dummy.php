@@ -25,8 +25,14 @@ class Dummy extends AbstractTarget implements TargetInterface
     public function getConfiguration()
     {
         $configuration = parent::getConfiguration();
-        $configuration['sleepSeconds'] = (isset($configuration['sleepSeconds'])) ? (int)$configuration['sleepSeconds'] : 1;
-        $configuration['result'] = (isset($configuration['result'])) ? (int)$configuration['result'] : 'unsure';
+        if (!isset($configuration['sleepSeconds']) || !is_numeric($configuration['sleepSeconds'])) {
+            $configuration['sleepSeconds'] = 1;
+        }
+
+        if (!isset($configuration['result']) || !is_numeric($configuration['result'])) {
+            $configuration['result'] = TargetInterface::RESULT_UNSURE;
+        }
+
         return $configuration;
     }
 
@@ -53,7 +59,7 @@ class Dummy extends AbstractTarget implements TargetInterface
         }
 
         if ($configuration['result'] == 'random') {
-            $configuration['result'] = $this->possibleResults[rand(0, sizeof($this->possibleResults) - 1)];
+            $configuration['result'] = $this->getRandomResult();
         }
 
         if (!in_array($configuration['result'], $this->possibleResults)) {
@@ -67,6 +73,14 @@ class Dummy extends AbstractTarget implements TargetInterface
         }
 
         return $configuration['result'];
+    }
+
+    /**
+     * @return int
+     */
+    protected function getRandomResult()
+    {
+        return $this->possibleResults[rand(0, sizeof($this->possibleResults) - 1)];
     }
 
     public function end()
