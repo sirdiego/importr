@@ -1,12 +1,28 @@
 <?php
 namespace HDNET\Importr\Feature;
 
+use HDNET\Importr\Service\FileService;
 use HDNET\Importr\Service\ManagerInterface;
 use HDNET\Importr\Domain\Model\Import;
-use HDNET\Importr\Utility;
 
+/**
+ * Class RenameFile
+ */
 class RenameFile extends AbstractFeature
 {
+    /**
+     * @var FileService
+     */
+    protected $fileService;
+
+    /**
+     * RenameFile constructor.
+     * @param FileService $fileService
+     */
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
 
     /**
      * To rename a file from the importr you
@@ -28,7 +44,7 @@ class RenameFile extends AbstractFeature
         $configuration = $import->getStrategy()
             ->getConfiguration();
         if (isset($configuration['after']['rename'])) {
-            $oldFileName = GeneralUtility::getFileAbsFileName($import->getFilepath());
+            $oldFileName = $this->fileService->getFileAbsFileName($import->getFilepath());
             $info = pathinfo($oldFileName);
             $newFileName = $info['dirname'] . DIRECTORY_SEPARATOR . date('YmdHis') . '_' . $info['basename'];
             rename($oldFileName, $newFileName);
