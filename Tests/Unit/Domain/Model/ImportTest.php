@@ -16,8 +16,6 @@ class ImportTest extends UnitTestCase {
      */
     public function do_all_increases_work_correctly()
     {
-        $import = new Import;
-
         $types = [
             TargetInterface::RESULT_INSERT => 'getInserted',
             TargetInterface::RESULT_UPDATE => 'getUpdated',
@@ -27,6 +25,7 @@ class ImportTest extends UnitTestCase {
         ];
 
         foreach($types as $type => $getter) {
+            $import = new Import;
             $import->increaseCount($type);
             $this->assertEquals(1, $import->$getter());
         }
