@@ -22,26 +22,9 @@
 	<f:for each="{strategies}" as="strategy">
 		<div id="configuration{strategy.uid}">
 			<h2>{strategy.title}</h2>
-			<table class="table">
-				<tr>
-					<td><strong>Configuration:</strong></td>
-					<td>
-						<pre>{strategy.configuration}</pre>
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Resources:</strong></td>
-					<td>
-						<pre>{strategy.resources}</pre>
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Targets:</strong></td>
-					<td>
-						<pre>{strategy.targets}</pre>
-					</td>
-				</tr>
-			</table>
+			<f:debug inline="1" title="Configuration">{strategy.configuration}</f:debug>
+			<f:debug inline="1" title="Resources">{strategy.resources}</f:debug>
+			<f:debug inline="1" title="Targets">{strategy.targets}</f:debug>
 		</div>
 	</f:for>
 
