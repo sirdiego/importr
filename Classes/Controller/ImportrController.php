@@ -41,7 +41,7 @@ class ImportrController extends ActionController
     protected $importManager;
 
     /**
-     * @var ImportServiceInterface
+     * @var \HDNET\Importr\Service\ImportServiceInterface
      * @inject
      */
     protected $importService;
