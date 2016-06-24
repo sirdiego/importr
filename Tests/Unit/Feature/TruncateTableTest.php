@@ -5,13 +5,14 @@
 
 namespace HDNET\Importr\Tests\Unit\Feature;
 
-use HDNET\Importr\Domain\Model\Import;
-use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Feature\TruncateTable;
+use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\DatabaseService;
 use HDNET\Importr\Service\ManagerInterface;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Class TruncateTableTest
@@ -43,13 +44,9 @@ class TruncateTableTest extends UnitTestCase
     public function do_not_truncate_when_not_configured()
     {
         $manager = $this->getMock(ManagerInterface::class);
-        $import = $this->getMock(Import::class);
-        $strategy = $this->getMock(Strategy::class);
-
-        $import->expects($this->once())->method('getStrategy')->will($this->returnValue($strategy));
         $this->connection->expects($this->never())->method('exec_TRUNCATEquery');
 
-        $this->fixture->execute($manager, $import);
+        $this->fixture->execute($manager, []);
     }
 
     /**
@@ -58,14 +55,10 @@ class TruncateTableTest extends UnitTestCase
     public function truncate_when_configured()
     {
         $manager = $this->getMock(ManagerInterface::class);
-        $import = $this->getMock(Import::class);
-        $strategy = $this->getMock(Strategy::class);
-        $strategy->expects($this->once())->method('getConfiguration')->will($this->returnValue(['truncate' => true]));
-        $import->expects($this->once())->method('getStrategy')->will($this->returnValue($strategy));
 
         $this->connection->expects($this->once())->method('exec_TRUNCATEquery');
 
-        $this->fixture->execute($manager, $import);
+        $this->fixture->execute($manager, ['truncate' => true]);
     }
 
     /**
@@ -82,15 +75,27 @@ class TruncateTableTest extends UnitTestCase
         ];
 
         $manager = $this->getMock(ManagerInterface::class);
-        $import = $this->getMock(Import::class);
-        $strategy = $this->getMock(Strategy::class);
-
-        $strategy->expects($this->once())
-            ->method('getConfiguration')
-            ->will($this->returnValue($configuration));
-        $import->expects($this->once())->method('getStrategy')->will($this->returnValue($strategy));
         $this->connection->expects($this->exactly(3))->method('exec_TRUNCATEquery')->withConsecutive(['test'], ['test2'], ['test3']);
 
-        $this->fixture->execute($manager, $import);
+        $this->fixture->execute($manager, $configuration);
+    }
+
+    /**
+     * @test
+     */
+    public function check_if_single_slot_gets_registered()
+    {
+        $this->fixture->enable();
+        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        $slots = $dispatcher->getSlots(Configuration::class, 'preParseConfiguration');
+        $expectedSlots = [
+            [
+                'class' => get_class($this->fixture),
+                'method' => 'execute',
+                'object' => null,
+                'passSignalInformation' => true,
+            ],
+        ];
+        $this->assertEquals($expectedSlots, $slots);
     }
 }

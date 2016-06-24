@@ -1,20 +1,17 @@
 <?php
+/**
+ * AbstractFeature.php
+ */
 namespace HDNET\Importr\Feature;
 
-use HDNET\Importr\Service\ManagerInterface;
-use HDNET\Importr\Domain\Model\Import;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
+/**
+ * Class AbstractFeature
+ */
 abstract class AbstractFeature
 {
-    /**
-     * @param ManagerInterface $manager
-     * @param Import           $import
-     * @return void
-     */
-    abstract public function execute(ManagerInterface $manager, Import $import);
-
     /**
      * @param string|array $names
      */

@@ -5,10 +5,13 @@ use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Feature\RenameFile;
 use HDNET\Importr\Service\FileService;
+use HDNET\Importr\Service\Manager;
 use HDNET\Importr\Service\ManagerInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Class RenameFileTest
@@ -62,5 +65,24 @@ class RenameFileTest extends UnitTestCase
         $children = $this->root->getChildren();
         $this->assertEquals(1, sizeof($children));
         $this->assertRegExp('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
+    }
+
+    /**
+     * @test
+     */
+    public function check_if_single_slot_gets_registered()
+    {
+        $this->fixture->enable();
+        $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        $slots = $dispatcher->getSlots(Manager::class, 'afterImport');
+        $expectedSlots = [
+            [
+                'class' => get_class($this->fixture),
+                'method' => 'execute',
+                'object' => null,
+                'passSignalInformation' => true,
+            ],
+        ];
+        $this->assertEquals($expectedSlots, $slots);
     }
 }
