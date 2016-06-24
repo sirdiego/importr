@@ -11,7 +11,7 @@ use HDNET\Importr\Service\ManagerInterface;
 /**
  * Class TruncateTable
  */
-class TruncateTable extends AbstractFeature
+class TruncateTable
 {
     /**
      * @var DatabaseService
@@ -32,7 +32,7 @@ class TruncateTable extends AbstractFeature
      */
     public static function enable()
     {
-        parent::enable('preParseConfiguration', Configuration::class);
+        FeatureRegistry::enable('preParseConfiguration', Configuration::class);
     }
 
     /**

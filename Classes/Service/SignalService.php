@@ -11,6 +11,9 @@
  */
 namespace HDNET\Importr\Service;
 
+use HDNET\Importr\Feature\RenameFile;
+use HDNET\Importr\Feature\TruncateTable;
+
 /**
  * SignalService.php
  *
@@ -27,7 +30,7 @@ class SignalService
      */
     public function truncateTable()
     {
-        \HDNET\Importr\Feature\TruncateTable::enable('preParseConfiguration');
+        TruncateTable::enable();
     }
 
     /**
@@ -35,6 +38,6 @@ class SignalService
      */
     public function renameFile()
     {
-        \HDNET\Importr\Feature\RenameFile::enable('afterImport');
+        RenameFile::enable();
     }
 }

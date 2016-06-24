@@ -6,13 +6,12 @@ namespace HDNET\Importr\Feature;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Service\FileService;
-use HDNET\Importr\Service\Manager;
 use HDNET\Importr\Service\ManagerInterface;
 
 /**
  * Class RenameFile
  */
-class RenameFile extends AbstractFeature
+class RenameFile
 {
     /**
      * @var FileService
@@ -33,7 +32,7 @@ class RenameFile extends AbstractFeature
      */
     public static function enable()
     {
-        parent::enable('afterImport');
+        FeatureRegistry::enable('afterImport');
     }
 
     /**
