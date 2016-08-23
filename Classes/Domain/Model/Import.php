@@ -315,21 +315,21 @@ class Import extends AbstractEntity
     public function increaseCount($type)
     {
         switch ($type) {
-            case TargetInterface::RESULT_INSERT:
-                $this->setInserted($this->getInserted() + 1);
-                break;
-            case TargetInterface::RESULT_UPDATE:
-                $this->setUpdated($this->getUpdated() + 1);
-                break;
-            case TargetInterface::RESULT_IGNORED:
-                $this->setIgnored($this->getIgnored() + 1);
-                break;
-            case TargetInterface::RESULT_UNSURE:
-                $this->setUnknowns($this->getUnknowns() + 1);
-                break;
-            case TargetInterface::RESULT_ERROR:
-                $this->setErrors($this->getErrors() + 1);
-                break;
+        case TargetInterface::RESULT_INSERT:
+            $this->setInserted($this->getInserted() + 1);
+            break;
+        case TargetInterface::RESULT_UPDATE:
+            $this->setUpdated($this->getUpdated() + 1);
+            break;
+        case TargetInterface::RESULT_IGNORED:
+            $this->setIgnored($this->getIgnored() + 1);
+            break;
+        case TargetInterface::RESULT_UNSURE:
+            $this->setUnknowns($this->getUnknowns() + 1);
+            break;
+        case TargetInterface::RESULT_ERROR:
+            $this->setErrors($this->getErrors() + 1);
+            break;
         }
     }
 }

@@ -20,6 +20,7 @@ class RenameFile
 
     /**
      * RenameFile constructor.
+     *
      * @param FileService $fileService
      */
     public function __construct(FileService $fileService)
@@ -47,7 +48,7 @@ class RenameFile
      * configuration if you are fully aware of it!
      *
      * @param  ManagerInterface $manager
-     * @param  Import $import
+     * @param  Import           $import
      * @return void
      */
     public function execute(ManagerInterface $manager, Import $import)

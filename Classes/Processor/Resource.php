@@ -29,6 +29,7 @@ class Resource
 
     /**
      * Resource constructor.
+     *
      * @param Configuration          $configuration
      * @param Target                 $target
      * @param ImportServiceInterface $importService

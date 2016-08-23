@@ -15,7 +15,7 @@ class FeatureRegistry
 {
     /**
      * @param string|array $names
-     * @param string $class
+     * @param string       $class
      */
     public static function enable($names, $class = Manager::class)
     {

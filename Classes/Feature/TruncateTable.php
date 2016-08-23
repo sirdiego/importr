@@ -19,6 +19,7 @@ class TruncateTable
 
     /**
      * TruncateTable constructor.
+     *
      * @param DatabaseService $databaseService
      */
     public function __construct(DatabaseService $databaseService)
@@ -43,7 +44,7 @@ class TruncateTable
      * name.
      *
      * @param Configuration $processor
-     * @param array $configuration
+     * @param array         $configuration
      */
     public function execute(Configuration $processor, array $configuration)
     {
