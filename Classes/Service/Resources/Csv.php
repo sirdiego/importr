@@ -128,6 +128,5 @@ class Csv extends AbstractResource implements ResourceInterface
      */
     public function end()
     {
-
     }
 }

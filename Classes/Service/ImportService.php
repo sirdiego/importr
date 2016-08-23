@@ -30,6 +30,7 @@ class ImportService implements ImportServiceInterface
 
     /**
      * ImportService constructor.
+     *
      * @param PersistenceManagerInterface $persistenceManager
      * @param ObjectManagerInterface      $objectManager
      * @param ImportRepository            $importRepository

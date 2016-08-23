@@ -63,7 +63,6 @@ class Dummy extends AbstractResource implements ResourceInterface
      */
     public function start(Strategy $strategy, $filepath)
     {
-
     }
 
     /**
@@ -114,6 +113,5 @@ class Dummy extends AbstractResource implements ResourceInterface
      */
     public function end()
     {
-
     }
 }

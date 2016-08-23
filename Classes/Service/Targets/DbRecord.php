@@ -17,7 +17,6 @@ class DbRecord extends AbstractTarget implements TargetInterface
      */
     public function start(Strategy $strategy)
     {
-
     }
 
     /**
@@ -58,6 +57,5 @@ class DbRecord extends AbstractTarget implements TargetInterface
      */
     public function end()
     {
-
     }
 }

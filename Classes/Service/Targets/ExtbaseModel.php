@@ -36,6 +36,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
 
     /**
      * ExtbaseModel constructor.
+     *
      * @param \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager
      * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface           $objectManager
      */
