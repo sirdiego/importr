@@ -6,7 +6,6 @@ namespace HDNET\Importr\Feature;
 
 use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\DatabaseService;
-use HDNET\Importr\Service\ManagerInterface;
 
 /**
  * Class TruncateTable
@@ -20,6 +19,7 @@ class TruncateTable
 
     /**
      * TruncateTable constructor.
+     *
      * @param DatabaseService $databaseService
      */
     public function __construct(DatabaseService $databaseService)
@@ -43,10 +43,10 @@ class TruncateTable
      * an array, every element is used as a table
      * name.
      *
-     * @param ManagerInterface $manager
-     * @param array $configuration
+     * @param Configuration $processor
+     * @param array         $configuration
      */
-    public function execute(ManagerInterface $manager, array $configuration)
+    public function execute(Configuration $processor, array $configuration)
     {
         if (isset($configuration['truncate'])) {
             if (is_array($configuration['truncate'])) {

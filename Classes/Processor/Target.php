@@ -18,6 +18,7 @@ class Target
 
     /**
      * Target constructor.
+     *
      * @param ImportServiceInterface $importService
      */
     public function __construct(ImportServiceInterface $importService)

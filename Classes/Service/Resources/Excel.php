@@ -119,6 +119,5 @@ class Excel extends AbstractResource implements ResourceInterface
      */
     public function end()
     {
-
     }
 }

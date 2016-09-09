@@ -31,6 +31,7 @@ class Configuration
 
     /**
      * Configuration constructor.
+     *
      * @param Dispatcher         $signalSlotDispatcher
      * @param StrategyRepository $strategyRepository
      */
