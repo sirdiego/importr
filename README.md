@@ -49,9 +49,9 @@ HDNET\Importr\Service\Resources\Csv:
 HDNET\Importr\Service\Target\ExtbaseModel: 
   model: VENDOR\MyExt\Domain\Model\MyModel
   repository: VENDOR\MyExt\Domain\Repository\MyRepository
-    pid: 123
-    mapping:
-      0: myPropertyA
-      1: myPropertyB
-      8: myPropertyD
+  pid: 123
+  mapping:
+    0: myPropertyA
+    1: myPropertyB
+    8: myPropertyD
 ```
