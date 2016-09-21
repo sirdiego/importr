@@ -46,7 +46,7 @@ HDNET\Importr\Service\Resources\Csv:
 ```
 **Targets**
 ```yaml
-HDNET\Importr\Service\Target\ExtbaseModel: 
+HDNET\Importr\Service\Targets\ExtbaseModel: 
   model: VENDOR\MyExt\Domain\Model\MyModel
   repository: VENDOR\MyExt\Domain\Repository\MyRepository
   pid: 123
