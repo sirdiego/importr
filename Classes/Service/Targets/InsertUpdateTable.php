@@ -21,6 +21,7 @@ use HDNET\Importr\Utility;
  *     2: zip
  *   pid: 324
  *   identifier: username
+ *   salt_password: 1
  *   mapping:
  *     0: username
  *     1: password
@@ -43,6 +44,8 @@ use HDNET\Importr\Utility;
  * ------------------------------------------------------------------------------------------------
  *
  *   exclude_from_update:    the elements specified in this array, are never being updated
+ *
+ *   salt_password:          if set to 1 then passwords are being salted before they are stored in the database
  *
  * ------------------------------------------------------------------------------------------------
  * @author Eduard Fekete
@@ -147,12 +150,16 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         foreach ($this->getConfiguration()["mapping"] as $key => $value) {
             $field_values[$value] = $entry[$key];
         }
+        
+        if ($this->getConfiguration()["salt_password"] == 1) {
+            $field_values["password"] = $this->saltPassword($field_values["password"]);
+        }
 
         $field_values['pid'] = $this->getConfiguration()['pid'];
         $time = time();
         $field_values['tstamp'] = $time;
         $field_values['crdate'] = $time;
-
+        
         Utility::getDatabaseConnection()->exec_INSERTquery($into_table, $field_values);
     }
 
@@ -168,14 +175,18 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
     {
         $into_table = $this->getConfiguration()['target_table'];
         $fieldName = $this->getConfiguration()['mapping'][$this->identifierField];
-        $whereStatement = "pid = '" . $this->getConfiguration()['pid'] . "' AND '" . $fieldName . "' = '" . $entry[$this->identifierField] . "'";
+        $whereStatement = "pid = '" . $this->getConfiguration()['pid'] . "' AND " . $fieldName . " = '" . $entry[$this->identifierField] . "'";
 
         $tmp_arr = [];
 
         foreach ($this->getConfiguration()["mapping"] as $key => $value) {
             $tmp_arr[$value] = $entry[$key];
         }
-
+        
+        if ($this->getConfiguration()["salt_password"] == 1) {
+            $tmp_arr['password'] = $this->saltPassword($tmp_arr['password']);
+        }
+        
         $field_values = $this->duplicateArray($tmp_arr, $this->getConfiguration()['exclude_from_update']);
         $field_values['tstamp'] = time();
 
@@ -204,6 +215,39 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         }
 
         return $arr;
+    }
+    
+    /**
+    * This function takes a password as argument, salts it and returns the new password.
+    *
+    * @param string $password
+    *
+    * @return string
+    */
+    protected function saltPassword($password)
+    {
+        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
+            $saltedpasswordsInstance = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(null, 'FE');
+            $password = $saltedpasswordsInstance->getHashedPassword($password);
+
+            if ($this->isValidMd5($password)) {
+                $password = 'M' . $password;
+            }
+        }
+
+        return $password;
+    }
+    
+    /**
+    * This function checks if a password is in md5 format.
+    *
+    * @param string $md5
+    *
+    * @return int
+    */
+    protected function isValidMd5($md5 = '')
+    {
+        return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
     /**
