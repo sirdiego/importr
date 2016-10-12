@@ -152,7 +152,9 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         }
         
         if ($this->getConfiguration()["salt_password"] == 1) {
-            $field_values["password"] = $this->saltPassword($field_values["password"]);
+            if (array_key_exists("password", $field_values)) {
+                $field_values["password"] = $this->saltPassword($field_values["password"]);
+            }
         }
 
         $field_values['pid'] = $this->getConfiguration()['pid'];
@@ -184,7 +186,9 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         }
         
         if ($this->getConfiguration()["salt_password"] == 1) {
-            $tmp_arr['password'] = $this->saltPassword($tmp_arr['password']);
+            if (array_key_exists("password", $tmp_arr)) {
+                $tmp_arr["password"] = $this->saltPassword($tmp_arr["password"]);
+            }
         }
         
         $field_values = $this->duplicateArray($tmp_arr, $this->getConfiguration()['exclude_from_update']);
