@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Importr by sirdiego</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Importr</h1>
+        <p>TYPO3 CMS Extension - importr</p>
+
+        <p class="view"><a href="https://github.com/sirdiego/importr">View the Project on GitHub <small>sirdiego/importr</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/sirdiego/importr/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sirdiego/importr/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sirdiego/importr">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="importr" class="anchor" href="#importr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>importr</h1>
+
+<p><a href="https://travis-ci.org/sirdiego/importr"><img src="https://travis-ci.org/sirdiego/importr.svg?branch=master" alt="Build Status"></a> <a href="https://scrutinizer-ci.com/g/sirdiego/importr/?branch=master"><img src="https://scrutinizer-ci.com/g/sirdiego/importr/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a> <a href="https://scrutinizer-ci.com/g/sirdiego/importr/?branch=master"><img src="https://scrutinizer-ci.com/g/sirdiego/importr/badges/coverage.png?b=master" alt="Code Coverage"></a></p>
+
+<p>The importr can be used to create a bridge between TYPO3 entities and Excel, CSV or other text files.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>After installing the extension via one of the possible methods you need to add the Scheduler Task to your tasks.</p>
+
+<ul>
+<li>Extbase CommandController Task (extbase) - importr:import:initializeservicemanager</li>
+</ul>
+
+<p>The frequency should be as often as possible (e.g. <code>* * * * *</code>), this way the Importr can be as precise as possible with the import timings.</p>
+
+<p>TODO: Screenshot</p>
+
+<h3>
+<a id="typo3-composer-mode" class="anchor" href="#typo3-composer-mode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TYPO3 Composer Mode</h3>
+
+<p><code>composer require diego/importr</code></p>
+
+<h3>
+<a id="via-extension-manager" class="anchor" href="#via-extension-manager" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Via Extension Manager</h3>
+
+<p>TODO: Screenshot</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>After installing the extension and adding the Scheduler Task you can start configuring your possible imports. These are called <em>Strategies</em> and should be placed on the root of your TYPO3 installation.</p>
+
+<p>A <em>Strategy</em> consists of three main parts. The <strong>general configuration</strong>, the <strong>resource configuration</strong> and the <strong>target configuration</strong>. Every import needs to know from what resource it gets its data (resource) and where to put it (target).</p>
+
+<p>By default the extension ships with an Excel (HDNET\Importr\Service\Resources\Excel), CSV (HDNET\Importr\Service\Resources\Csv) resources and Extbase model (HDNET\Importr\Service\Targets\ExtbaseModel) and database record (HDNET\Importr\Service\Targets\DbRecord) targets.</p>
+
+<p>A simple <em>Strategy</em> can look like this:</p>
+
+<p><strong>Configuration</strong></p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">before:</span>
+  <span class="pl-ent">updateInterval:</span> <span class="pl-c1">100</span> <span class="pl-c"># Sets th</span>
+<span class="pl-ent">after:</span>
+  <span class="pl-ent">createImport:</span>
+    <span class="pl-ent">1:</span>
+      <span class="pl-ent">importId:</span> <span class="pl-c1">1</span>
+      <span class="pl-ent">start:</span> <span class="pl-s">tomorrow 0400</span>
+      <span class="pl-ent">filepath:</span> <span class="pl-s">uploads/my_import.csv</span></pre></div>
+
+<p><strong>Resources</strong></p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">HDNET\Importr\Service\Resources\Csv:</span> 
+  <span class="pl-ent">skipRows:</span> <span class="pl-c1">1</span>
+  <span class="pl-ent">delimiter:</span> <span class="pl-s">,</span></pre></div>
+
+<p><strong>Targets</strong></p>
+
+<div class="highlight highlight-source-yaml"><pre><span class="pl-ent">HDNET\Importr\Service\Targets\ExtbaseModel:</span> 
+  <span class="pl-ent">model:</span> <span class="pl-s">VENDOR\MyExt\Domain\Model\MyModel</span>
+  <span class="pl-ent">repository:</span> <span class="pl-s">VENDOR\MyExt\Domain\Repository\MyRepository</span>
+  <span class="pl-ent">pid:</span> <span class="pl-c1">123</span>
+  <span class="pl-ent">mapping:</span>
+    <span class="pl-ent">0:</span> <span class="pl-s">myPropertyA</span>
+    <span class="pl-ent">1:</span> <span class="pl-s">myPropertyB</span>
+    <span class="pl-ent">8:</span> <span class="pl-s">myPropertyD</span></pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sirdiego">sirdiego</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
