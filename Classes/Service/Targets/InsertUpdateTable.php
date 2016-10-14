@@ -150,7 +150,7 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         foreach ($this->getConfiguration()["mapping"] as $key => $value) {
             $field_values[$value] = $entry[$key];
         }
-        
+
         if ($this->getConfiguration()["salt_password"] == 1) {
             if (array_key_exists("password", $field_values)) {
                 $field_values["password"] = $this->saltPassword($field_values["password"]);
@@ -161,7 +161,7 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         $time = time();
         $field_values['tstamp'] = $time;
         $field_values['crdate'] = $time;
-        
+
         Utility::getDatabaseConnection()->exec_INSERTquery($into_table, $field_values);
     }
 
@@ -184,13 +184,13 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         foreach ($this->getConfiguration()["mapping"] as $key => $value) {
             $tmp_arr[$value] = $entry[$key];
         }
-        
+
         if ($this->getConfiguration()["salt_password"] == 1) {
             if (array_key_exists("password", $tmp_arr)) {
                 $tmp_arr["password"] = $this->saltPassword($tmp_arr["password"]);
             }
         }
-        
+
         $field_values = $this->duplicateArray($tmp_arr, $this->getConfiguration()['exclude_from_update']);
         $field_values['tstamp'] = time();
 
@@ -219,39 +219,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         }
 
         return $arr;
-    }
-    
-    /**
-    * This function takes a password as argument, salts it and returns the new password.
-    *
-    * @param string $password
-    *
-    * @return string
-    */
-    protected function saltPassword($password)
-    {
-        if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('saltedpasswords')) {
-            $saltedpasswordsInstance = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(null, 'FE');
-            $password = $saltedpasswordsInstance->getHashedPassword($password);
-
-            if ($this->isValidMd5($password)) {
-                $password = 'M' . $password;
-            }
-        }
-
-        return $password;
-    }
-    
-    /**
-    * This function checks if a password is in md5 format.
-    *
-    * @param string $md5
-    *
-    * @return int
-    */
-    protected function isValidMd5($md5 = '')
-    {
-        return preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 
     /**

@@ -16,6 +16,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = \
  * By default they are not connected to the slots, because they
  * can be a security risk.
  *
- * \HDNET\Importr\Feature\RenameFile::enable('afterImport');
+ * \HDNET\Importr\Feature\RenameFile::enable();
  * \HDNET\Importr\Feature\TruncateTable::enable();
  */

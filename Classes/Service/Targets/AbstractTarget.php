@@ -6,7 +6,7 @@ namespace HDNET\Importr\Service\Targets;
  *
  * @author timlochmueller
  */
-class AbstractTarget
+abstract class AbstractTarget
 {
 
     /**

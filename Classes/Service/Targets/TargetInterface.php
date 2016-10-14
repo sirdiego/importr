@@ -36,6 +36,11 @@ interface TargetInterface
     public function processEntry(array $entry);
 
     /**
+     * @return array
+     */
+    public function getConfiguration();
+
+    /**
      *
      */
     public function end();
