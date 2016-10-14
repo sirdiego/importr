@@ -21,7 +21,8 @@ use HDNET\Importr\Utility;
  *     2: zip
  *   pid: 324
  *   identifier: username
- *   salt_password: 1
+ *   filter:
+ *     - password
  *   mapping:
  *     0: username
  *     1: password
@@ -151,12 +152,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
             $field_values[$value] = $entry[$key];
         }
 
-        if ($this->getConfiguration()["salt_password"] == 1) {
-            if (array_key_exists("password", $field_values)) {
-                $field_values["password"] = $this->saltPassword($field_values["password"]);
-            }
-        }
-
         $field_values['pid'] = $this->getConfiguration()['pid'];
         $time = time();
         $field_values['tstamp'] = $time;
@@ -183,12 +178,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
 
         foreach ($this->getConfiguration()["mapping"] as $key => $value) {
             $tmp_arr[$value] = $entry[$key];
-        }
-
-        if ($this->getConfiguration()["salt_password"] == 1) {
-            if (array_key_exists("password", $tmp_arr)) {
-                $tmp_arr["password"] = $this->saltPassword($tmp_arr["password"]);
-            }
         }
 
         $field_values = $this->duplicateArray($tmp_arr, $this->getConfiguration()['exclude_from_update']);
