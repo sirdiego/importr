@@ -98,7 +98,7 @@ class Csv extends AbstractResource implements ResourceInterface
     /**
      * @param $handle
      * @param array  $configuration
-     * @return
+     * @return array
      */
     protected function fgetcsv($handle, array $configuration)
     {

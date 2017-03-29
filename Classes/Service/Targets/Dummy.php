@@ -49,7 +49,7 @@ class Dummy extends AbstractTarget implements TargetInterface
      * @param array $entry
      *
      * @throws \Exception
-     * @return int|void
+     * @return int
      */
     public function processEntry(array $entry)
     {
@@ -65,7 +65,7 @@ class Dummy extends AbstractTarget implements TargetInterface
         if (!in_array($configuration['result'], $this->possibleResults)) {
             throw new \Exception(
                 'Invalid result param "' . $configuration['result'] . '". Have to be one of: ' . var_export(
-                    $results,
+                    $this->possibleResults,
                     true
                 ),
                 12617283

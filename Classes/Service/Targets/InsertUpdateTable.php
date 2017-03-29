@@ -2,7 +2,6 @@
 namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use HDNET\Importr\Utility;
 
 /**
@@ -80,7 +79,7 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
      *
      * @param array $entry
      *
-     * @return int|void
+     * @return int
      */
     public function processEntry(array $entry)
     {

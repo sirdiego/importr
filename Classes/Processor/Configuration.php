@@ -32,8 +32,9 @@ class Configuration
     /**
      * Configuration constructor.
      *
-     * @param Dispatcher         $signalSlotDispatcher
+     * @param Dispatcher $signalSlotDispatcher
      * @param StrategyRepository $strategyRepository
+     * @param ImportServiceInterface $importService
      */
     public function __construct(Dispatcher $signalSlotDispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
     {
@@ -97,7 +98,7 @@ class Configuration
     /**
      * @param string $name
      * @param array  $configuration
-     * @return $this
+     *
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */

@@ -2,7 +2,6 @@
 namespace HDNET\Importr\Controller;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use HDNET\Importr\Service\ImportServiceInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
