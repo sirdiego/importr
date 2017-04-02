@@ -2,7 +2,6 @@
 namespace HDNET\Importr;
 
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Description of Utility

@@ -72,7 +72,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     /**
      * @param array $entry
      *
-     * @return int|void
+     * @return int
      */
     public function processEntry(array $entry)
     {
