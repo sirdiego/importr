@@ -2,7 +2,9 @@
 <f:layout name="Backend" />
 
 <f:section name="IconButtons">
-	<f:be.buttons.icon uri="{f:uri.action(action: 'index')}" icon="actions-view-go-back" title="Cancel Import" />
+	<a href="{f:uri.action(action:'index')}" title="Cancel Import" class="btn btn-default btn-sm">
+		<core:icon identifier="actions-move-left"/>
+	</a>
 </f:section>
 
 <f:section name="Content">

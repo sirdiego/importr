@@ -1,32 +1,34 @@
 <f:layout name="Backend"/>
 
 <f:section name="IconButtons">
-	<f:be.buttons.icon uri="{f:uri.action(action: 'index')}" icon="actions-move-left" title="Cancel Import"/>
+    <a href="{f:uri.action(action:'index')}" title="Cancel Import" class="btn btn-default btn-sm">
+        <core:icon identifier="actions-move-left"/>
+    </a>
 </f:section>
 
 <f:section name="Content">
-	<h1>
-		<f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xlf:importr"/>
-	</h1>
+    <h1>
+        <f:translate key="LLL:EXT:importr/Resources/Private/Language/locallang.xlf:importr"/>
+    </h1>
 
-	<f:form action="preview" class="form-inline">
-		<f:form.hidden name="identifier" value="{file.storage.uid}:{file.identifier}"/>
+    <f:form action="preview" class="form-inline">
+        <f:form.hidden name="identifier" value="{file.storage.uid}:{file.identifier}"/>
 
-		Import file <b>{file.name}</b> with the strategy:
-		<f:form.select options="{strategies}" id="strategy_select" class="strategy_select form-control" name="strategy"
-									 optionLabelField="title"/>
+        Import file <b>{file.name}</b> with the strategy:
+        <f:form.select options="{strategies}" id="strategy_select" class="strategy_select form-control" name="strategy"
+                       optionLabelField="title"/>
 
-		<f:form.submit value="Weiter" class="btn btn-default"/>
-	</f:form>
+        <f:form.submit value="Weiter" class="btn btn-default"/>
+    </f:form>
 
-	<f:for each="{strategies}" as="strategy">
-		<div id="configuration{strategy.uid}">
-			<h2>{strategy.title}</h2>
-			<f:debug inline="1" title="Configuration">{strategy.configuration}</f:debug>
-			<f:debug inline="1" title="Resources">{strategy.resources}</f:debug>
-			<f:debug inline="1" title="Targets">{strategy.targets}</f:debug>
-		</div>
-	</f:for>
+    <f:for each="{strategies}" as="strategy">
+        <div id="configuration{strategy.uid}">
+            <h2>{strategy.title}</h2>
+            <f:debug inline="1" title="Configuration">{strategy.configuration}</f:debug>
+            <f:debug inline="1" title="Resources">{strategy.resources}</f:debug>
+            <f:debug inline="1" title="Targets">{strategy.targets}</f:debug>
+        </div>
+    </f:for>
 
 </f:section>
 
