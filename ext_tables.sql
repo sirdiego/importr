@@ -33,8 +33,11 @@ CREATE TABLE tx_importr_domain_model_strategy (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	configuration text NOT NULL,
+	configuration_file varchar(255) DEFAULT '' NOT NULL,
 	resources text NOT NULL,
+	resources_file varchar(255) DEFAULT '' NOT NULL,
 	targets text NOT NULL,
+	targets_file varchar(255) DEFAULT '' NOT NULL,
 	general tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

@@ -1,7 +1,12 @@
 <?php
+
 namespace HDNET\Importr\Domain\Model;
 
 use HDNET\Importr\Service\Yaml;
+use TYPO3\CMS\Core\Core\ApplicationContext;
+use TYPO3\CMS\Core\LinkHandling\LinkService;
+use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -32,16 +37,31 @@ class Strategy extends AbstractEntity
     protected $configuration;
 
     /**
+     * @var string
+     */
+    protected $configurationFile;
+
+    /**
      *
      * @var string
      */
     protected $resources;
 
     /**
+     * @var string
+     */
+    protected $resourcesFile;
+
+    /**
      *
      * @var string
      */
     protected $targets;
+
+    /**
+     * @var string
+     */
+    protected $targetsFile;
 
     /**
      *
@@ -57,6 +77,10 @@ class Strategy extends AbstractEntity
      */
     public function getRawConfiguration()
     {
+        if ($config = GeneralUtility::getUrl($this->getRealFilePath($this->configurationFile))) {
+            return $config;
+        }
+
         return $this->configuration;
     }
 
@@ -75,6 +99,10 @@ class Strategy extends AbstractEntity
      */
     public function getRawResources()
     {
+        if ($resources = GeneralUtility::getUrl($this->getRealFilePath($this->resourcesFile))) {
+            return $resources;
+        }
+
         return $this->resources;
     }
 
@@ -91,6 +119,10 @@ class Strategy extends AbstractEntity
      */
     public function getRawTargets()
     {
+        if ($targets = GeneralUtility::getUrl($this->getRealFilePath($this->targetsFile))) {
+            return $targets;
+        }
+
         return $this->targets;
     }
 
@@ -136,5 +168,26 @@ class Strategy extends AbstractEntity
     public function setTargets($targets)
     {
         $this->targets = $targets;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    private function getRealFilePath($path)
+    {
+        if (!$path) {
+            return '';
+        }
+
+        if (GeneralUtility::compat_version('8.7')) {
+            $service = new LinkService();
+            $data = $service->resolveByStringRepresentation($path);
+            if ($data['file'] instanceof FileInterface) {
+                return $data['file']->getForLocalProcessing(false);
+            }
+        }
+
+        return GeneralUtility::getFileAbsFileName($path);
     }
 }

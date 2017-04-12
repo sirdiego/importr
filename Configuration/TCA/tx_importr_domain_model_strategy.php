@@ -15,10 +15,10 @@ return [
         'iconfile' => 'EXT:importr/Resources/Public/Icons/Strategy.png',
     ],
     'interface' => [
-        'showRecordFieldList' => 'title, configuration, resources, targets',
+        'showRecordFieldList' => 'title, configuration, configuration_file, resources, resources_file, targets, targets_file',
     ],
     'types' => [
-        '1' => ['showitem' => 'title, general, configuration, resources, targets'],
+        '1' => ['showitem' => 'title, general, configuration, configuration_file, resources, resources_file, targets, targets_file'],
     ],
     'columns' => [
         'title' => [
@@ -37,6 +37,30 @@ return [
                 'cols' => 100,
             ],
         ],
+        'configuration_file' => [
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:configuration_file',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 256,
+                'size' => 60,
+                'softref' => 'typolink',
+                'wizards' => [
+                    'link' => [
+                        'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif',
+                        'title' => 'File',
+                        'type' => 'popup',
+                        'module' => [
+                            'name' => 'wizard_link',
+                            'urlParameters' => [
+                                'mode' => 'wizard',
+                            ],
+                        ],
+                    ],
+                    '_PADDING' => 2,
+                ],
+            ],
+        ],
         'resources' => [
             'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:resources',
             'config' => [
@@ -45,12 +69,60 @@ return [
                 'cols' => 100,
             ],
         ],
+        'resources_file' => [
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:resources_file',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 256,
+                'size' => 60,
+                'softref' => 'typolink',
+                'wizards' => [
+                    'link' => [
+                        'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif',
+                        'title' => 'File',
+                        'type' => 'popup',
+                        'module' => [
+                            'name' => 'wizard_link',
+                            'urlParameters' => [
+                                'mode' => 'wizard',
+                            ],
+                        ],
+                    ],
+                    '_PADDING' => 2,
+                ],
+            ],
+        ],
         'targets' => [
             'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:targets',
             'config' => [
                 'type' => 'text',
                 'rows' => 15,
                 'cols' => 100,
+            ],
+        ],
+        'targets_file' => [
+            'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:targets_file',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'max' => 256,
+                'size' => 60,
+                'softref' => 'typolink',
+                'wizards' => [
+                    'link' => [
+                        'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif',
+                        'title' => 'File',
+                        'type' => 'popup',
+                        'module' => [
+                            'name' => 'wizard_link',
+                            'urlParameters' => [
+                                'mode' => 'wizard',
+                            ],
+                        ],
+                    ],
+                    '_PADDING' => 2,
+                ],
             ],
         ],
         'general' => [
