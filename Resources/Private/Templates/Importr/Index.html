@@ -39,6 +39,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Import <strong>{import.filepath}</strong> with <strong>{import.strategy.title}</strong>
+					<span style="float: right"><f:link.action action="reset" arguments="{import: import}" class="btn btn-default">Reset</f:link.action></span>
 				</h3>
 			</div>
 			<div class="panel-body">
@@ -55,12 +56,12 @@
 							<f:format.number>{import.ignoredPercentage}</f:format.number>
 							%
 						</div>
-						<div class="progress-bar progress-bar-info" style="width: {import.unknownsPercentage}%">
-							<f:format.number>{import.unknownsPercentage}</f:format.number>
+						<div class="progress-bar progress-bar-info" style="width: {import.updatedPercentage}%">
+							<f:format.number>{import.updatedPercentage}</f:format.number>
 							%
 						</div>
-						<div class="progress-bar progress-bar-warning" style="width: {import.updatedPercentage}%">
-							<f:format.number>{import.updatedPercentage}</f:format.number>
+						<div class="progress-bar progress-bar-warning" style="width: {import.unknownsPercentage}%">
+							<f:format.number>{import.unknownsPercentage}</f:format.number>
 							%
 						</div>
 						<div class="progress-bar progress-bar-danger" style="width: {import.errorsPercentage}%">
@@ -98,31 +99,6 @@
 						</dd>
 
 					</f:if>
-					<!--<dt>Status</dt>
-					<dd>
-						<div class="row">
-							<div class="col-md-2">
-								<div class="progress">
-									<div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar"
-											 style="width:100%">
-										Running
-									</div>
-								</div>
-								<div class="progress">
-									<div class="progress-bar progress-bar-warning" role="progressbar"
-											 style="width:100%">
-										Pending
-									</div>
-								</div>
-								<div class="progress">
-									<div class="progress-bar progress-bar-info" role="progressbar"
-											 style="width:100%">
-										Finish
-									</div>
-								</div>
-							</div>
-						</div>
-					</dd>-->
 				</dl>
 
 			</div>

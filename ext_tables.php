@@ -7,7 +7,7 @@ if (!defined('TYPO3_MODE')) {
 /** @var string $_EXTKEY */
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule('HDNET.' . $_EXTKEY, 'file', 'tx_importr_mod', '', [
-    'Importr' => 'index,import,preview,create',
+    'Importr' => 'index,import,preview,create,reset',
 ], [
     'access' => 'user,group',
     'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.svg',

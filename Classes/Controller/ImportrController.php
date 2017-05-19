@@ -1,6 +1,8 @@
 <?php
+
 namespace HDNET\Importr\Controller;
 
+use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
@@ -75,7 +77,7 @@ class ImportrController extends ActionController
 
     /**
      *
-     * @param string                               $identifier
+     * @param string $identifier
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
      *
      * @return void
@@ -92,7 +94,7 @@ class ImportrController extends ActionController
 
     /**
      *
-     * @param string                               $filepath
+     * @param string $filepath
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
      *
      * @return void
@@ -115,6 +117,16 @@ class ImportrController extends ActionController
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->addMessage($message);
 
+        $this->redirect('index');
+    }
+
+    /**
+     * @param Import $import
+     */
+    public function resetAction(Import $import)
+    {
+        $import->reset();
+        $this->importRepository->update($import);
         $this->redirect('index');
     }
 }

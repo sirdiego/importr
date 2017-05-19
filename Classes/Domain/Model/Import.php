@@ -1,4 +1,5 @@
 <?php
+
 namespace HDNET\Importr\Domain\Model;
 
 use HDNET\Importr\Service\Targets\TargetInterface;
@@ -331,5 +332,17 @@ class Import extends AbstractEntity
                 $this->setErrors($this->getErrors() + 1);
                 break;
         }
+    }
+
+    public function reset()
+    {
+        $this->endtime = 0;
+        $this->amount = 0;
+        $this->errors = 0;
+        $this->ignored = 0;
+        $this->inserted = 0;
+        $this->updated = 0;
+        $this->unknowns = 0;
+        $this->pointer = 0;
     }
 }
