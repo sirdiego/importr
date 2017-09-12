@@ -22,21 +22,7 @@
 
 	<h1>Preview</h1>
 
-	<script type="text/javascript" src="{f:uri.resource(path:'JavaScript/Components/Table.js')}"></script>
-	<script type="text/javascript">
-		var dataTest = eval("{preview -> importr:json()}");
-	</script>
-	<script type="text/javascript">    /*<![CDATA[*/
-	Ext.onReady(function () {
-		var t = new HDNET.Importr.Table({
-			storeData: dataTest,
-			title: 'Preview your data',
-			height: 500
-		});
-		t.render('grid');
-	});
-	/*]]>*/</script>
-	<div id="grid"></div>
+	<f:debug inline="1" title="Configuration">{preview}</f:debug>
 
 </f:section>
 
