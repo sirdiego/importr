@@ -63,8 +63,8 @@ class Excel extends AbstractResource implements ResourceInterface
     {
         $configuration = $this->getConfiguration();
 
-        if (!ExtensionManagementUtility::isLoaded('phpexcel_library')) {
-            throw new \Exception('phpexcel_library is not loaded', 12367812368);
+        if (!class_exists(\PHPExcel_IOFactory::class)) {
+            throw new \Exception('PHP Excel is needed! Please install EXT:phpexcel_library (regular mode) or phpoffice/phpexcel (composer mode)', 12367812368);
         }
 
         $filename = GeneralUtility::getFileAbsFileName($this->filepath);
