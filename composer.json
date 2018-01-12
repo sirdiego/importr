@@ -1,7 +1,7 @@
 {
   "name": "sirdiego/importr",
   "type": "typo3-cms-extension",
-  "version": "2.0.6",
+  "version": "2.0.7-dev",
   "description": "Flexible importer for all kinds of files!",
   "autoload": {
     "psr-4": {
