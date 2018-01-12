@@ -30,6 +30,9 @@
     "php": ">=5.5.0",
     "typo3/cms-core": "~6.2.0||~7.6.0||~8.6.0||~8.7.0||dev-master"
   },
+  "suggest": {
+    "phpoffice/phpexcel": "Use Excel files as import resource"
+  },
   "replace": {
     "importr": "self.version",
     "typo3-ter/importr": "self.version"
