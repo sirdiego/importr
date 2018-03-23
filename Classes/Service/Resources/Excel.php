@@ -2,13 +2,19 @@
 namespace HDNET\Importr\Service\Resources;
 
 use HDNET\Importr\Domain\Model\Strategy;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Collection\Cells;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\IReader;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Description of Excel
  *
- * @author timlochmueller
+ * @author Tim Spiekerkötter <tim.spiekerkoetter@hdnet.de>
+ * @author Tim Lochmüller <tim.lochmueller@hdnet.de>
  */
 class Excel extends AbstractResource implements ResourceInterface
 {
@@ -63,32 +69,31 @@ class Excel extends AbstractResource implements ResourceInterface
     {
         $configuration = $this->getConfiguration();
 
-        if (!class_exists(\PHPExcel_IOFactory::class)) {
-            throw new \Exception('PHP Excel is needed! Please install EXT:phpexcel_library (regular mode) or phpoffice/phpexcel (composer mode)', 12367812368);
+        if (!class_exists(IOFactory::class)) {
+            throw new \Exception('PHP Excel is needed! Please install phpoffice/phpexcel (composer mode)', 12367812368);
         }
 
         $filename = GeneralUtility::getFileAbsFileName($this->filepath);
-        GeneralUtility::makeInstanceService('phpexcel');
-
-        $objReader = \PHPExcel_IOFactory::createReaderForFile($filename);
-        $objReader->setReadDataOnly(true);
-        $objPHPExcel = $objReader->load($filename);
+        /** @var IReader $reader */
+        $reader = IOFactory::createReaderForFile($filename);
+        $reader->setReadDataOnly(true);
+        $sheet = $reader->load($filename);
         if ($configuration['sheet'] >= 0) {
-            $objWorksheet = $objPHPExcel->getSheet($configuration['sheet']);
+            $worksheet = $sheet->getSheet($configuration['sheet']);
         } else {
-            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $worksheet = $sheet->getActiveSheet();
         }
 
-        $highestRow = $objWorksheet->getHighestRow();
-        $highestColumn = $objWorksheet->getHighestColumn();
+        $highestRow = $worksheet->getHighestRow();
+        $highestColumn = $worksheet->getHighestColumn();
 
-        $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
+        $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
 
         for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
             $rowRecord = [];
             for ($col = 0; $col <= $highestColumnIndex; ++$col) {
                 $rowRecord[] = trim(
-                    $objWorksheet->getCellByColumnAndRow($col, $row)
+                    $worksheet->getCellByColumnAndRow($col, $row)
                         ->getValue()
                 );
             }
