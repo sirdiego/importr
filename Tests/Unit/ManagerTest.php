@@ -47,17 +47,17 @@ class ManagerTest extends UnitTestCase {
     public function is_preview_generated_correct()
     {
         $manager = new Manager;
-        $resource = $this->getMock(ResourceInterface::class);
+        $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
         $resource->expects($this->any())->method('getEntry')->will($this->returnValue('test'));
         $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
 
-        $objectManager = $this->getMock(ObjectManagerInterface::class);
+        $objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $objectManager->expects($this->once())->method('get')->will($this->returnCallback(function () use ($resource) {
             return $resource;
         }));
         $this->setProtectedProperty($manager, 'objectManager', $objectManager);
 
-        $strategy = $this->getMock(Strategy::class);
+        $strategy = $this->getAccessibleMock(Strategy::class);
         $filepath = './import.csv';
 
         $strategy->expects($this->once())->method('getResources')->will($this->returnValue([

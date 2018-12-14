@@ -33,7 +33,7 @@ class ResourceTest extends UnitTestCase {
         $configuration = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
         $target = $this->getMockBuilder(Target::class)->disableOriginalConstructor()->getMock();
         $this->target = $target;
-        $service = $this->getMock(ImportServiceInterface::class);
+        $service = $this->getMockBuilder(ImportServiceInterface::class)->getMock();
         $this->service = $service;
         $this->fixture = new Resource($configuration, $target, $service);
     }
@@ -43,11 +43,11 @@ class ResourceTest extends UnitTestCase {
      */
     public function do_not_process_on_filepath_missmatch()
     {
-        $import = $this->getMock(Import::class);
+        $import = $this->getAccessibleMock(Import::class);
         $import->expects($this->once())->method('getFilepath')->will($this->returnValue('./import.xlsx'));
-        $resource = $this->getMock(ResourceInterface::class);
+        $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
         $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
-        $manager = $this->getMock(ManagerInterface::class);
+        $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $result = $this->fixture->process($import, [], [], $resource, $manager);
         $this->assertEquals(false, $result);
     }
@@ -59,15 +59,15 @@ class ResourceTest extends UnitTestCase {
     {
         $this->target->expects($this->once())->method('process');
 
-        $import = $this->getMock(Import::class);
+        $import = $this->getAccessibleMock(Import::class);
         $import->expects($this->once())->method('getFilepath')->will($this->returnValue('./import.csv'));
         $import->expects($this->once())->method('getPointer')->will($this->returnValue(0));
         $import->expects($this->exactly(2))->method('getAmount')->will($this->returnValue(1));
-        $resource = $this->getMock(ResourceInterface::class);
+        $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
         $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
-        $manager = $this->getMock(ManagerInterface::class);
+        $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $manager->expects($this->any())->method('getUpdateInterval')->will($this->returnValue(42));
-        $target = $this->getMock(TargetInterface::class);
+        $target = $this->getMockBuilder(TargetInterface::class)->getMock();
 
         $result = $this->fixture->process($import, [$target], [], $resource, $manager);
     }
@@ -77,18 +77,18 @@ class ResourceTest extends UnitTestCase {
      */
     public function updates_current_import_status()
     {
-        $import = $this->getMock(Import::class);
+        $import = $this->getAccessibleMock(Import::class);
         $import->expects($this->once())->method('getFilepath')->will($this->returnValue('./import.csv'));
         $import->expects($this->once())->method('getPointer')->will($this->returnValue(1));
         $import->expects($this->exactly(2))->method('getAmount')->will($this->returnValue(2));
 
         $this->service->expects($this->exactly(3))->method('updateImport')->withConsecutive([$import], [$import, 2], [$import, 2]);
 
-        $resource = $this->getMock(ResourceInterface::class);
+        $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
         $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
-        $manager = $this->getMock(ManagerInterface::class);
+        $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $manager->expects($this->any())->method('getUpdateInterval')->will($this->returnValue(2));
-        $target = $this->getMock(TargetInterface::class);
+        $target = $this->getMockBuilder(TargetInterface::class)->getMock();
 
         $result = $this->fixture->process($import, [$target], [], $resource, $manager);
     }

@@ -37,7 +37,7 @@ class RenameFileTest extends UnitTestCase
     {
         $this->root = vfsStream::setup('import');
         /** @var \PHPUnit_Framework_MockObject_MockObject|FileService $fileService */
-        $fileService = $this->getMock(FileService::class);
+        $fileService = $this->getAccessibleMock(FileService::class);
         $this->fileService = $fileService;
         $this->fixture = new RenameFile($fileService);
     }
@@ -47,10 +47,10 @@ class RenameFileTest extends UnitTestCase
      */
     public function does_execute_rename_file_when_configured()
     {
-        $manager = $this->getMock(ManagerInterface::class);
-        $strategy = $this->getMock(Strategy::class);
+        $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
+        $strategy = $this->getAccessibleMock(Strategy::class);
         $strategy->expects($this->once())->method('getConfiguration')->will($this->returnValue(['after' => ['rename' => true]]));
-        $import = $this->getMock(Import::class);
+        $import = $this->getAccessibleMock(Import::class);
         $import->expects($this->once())->method('getStrategy')->will($this->returnValue($strategy));
 
         $file = vfsStream::newFile('import.csv')->at($this->root)->setContent("test;test");

@@ -30,9 +30,9 @@ class TruncateTableTest extends UnitTestCase
 
     public function setUp()
     {
-        $connection = $this->getMock(DatabaseConnection::class);
+        $connection = $this->getMockBuilder(DatabaseConnection::class)->getMock();
         $this->connection = $connection;
-        $databaseService = $this->getMock(DatabaseService::class);
+        $databaseService = $this->getMockBuilder(DatabaseService::class)->getMock();
         $databaseService->expects($this->any())->method('getDatabaseConnection')->will($this->returnValue($connection));
         $this->fixture = new TruncateTable($databaseService);
     }

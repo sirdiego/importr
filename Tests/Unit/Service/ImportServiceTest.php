@@ -28,8 +28,8 @@ class ImportServiceTest extends UnitTestCase {
 
     public function setUp()
     {
-        $persistenceManager = $this->getMock(PersistenceManagerInterface::class);
-        $objectManager = $this->getMock(ObjectManagerInterface::class);
+        $persistenceManager = $this->getMockBuilder(PersistenceManagerInterface::class)->getMock();
+        $objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $repository = $this->getMockBuilder(ImportRepository::class)->disableOriginalConstructor()->getMock();
         $this->repository = $repository;
         $this->objectManager = $objectManager;
@@ -42,7 +42,7 @@ class ImportServiceTest extends UnitTestCase {
      */
     public function is_pointer_increased_on_update()
     {
-        $import = $this->getMock(Import::class);
+        $import = $this->getAccessibleMock(Import::class);
         $pointer = 5;
 
         $this->repository->expects($this->once())->method('update')->with($import);
@@ -56,8 +56,8 @@ class ImportServiceTest extends UnitTestCase {
      */
     public function is_import_added_to_queue()
     {
-        $import = $this->getMock(Import::class);
-        $strategy = $this->getMock(Strategy::class);
+        $import = $this->getAccessibleMock(Import::class);
+        $strategy = $this->getAccessibleMock(Strategy::class);
         $path = './import.csv';
         $time = '2016-06-19T13:49:39+00:00';
 
@@ -81,8 +81,8 @@ class ImportServiceTest extends UnitTestCase {
      */
     public function is_datetime_created_with_invalid_text()
     {
-        $import = $this->getMock(Import::class);
-        $strategy = $this->getMock(Strategy::class);
+        $import = $this->getAccessibleMock(Import::class);
+        $strategy = $this->getAccessibleMock(Strategy::class);
         $path = './import.csv';
 
         $import->expects($this->once())->method('setStarttime')->with($this->isInstanceOf(\DateTime::class));

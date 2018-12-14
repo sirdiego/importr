@@ -26,7 +26,7 @@ class CsvTest extends UnitTestCase
     public function setUp()
     {
         $this->root = vfsStream::setup('import');
-        $this->fixture = $this->getMock(Csv::class, ['getFilePath']);
+        $this->fixture = $this->getAccessibleMock(Csv::class, ['getFilePath']);
         $this->fixture->expects($this->any())->method('getFilePath')->will($this->returnValue('vfs://import/import.csv'));
     }
 

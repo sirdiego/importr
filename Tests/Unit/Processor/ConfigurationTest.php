@@ -125,7 +125,7 @@ class ConfigurationTest extends UnitTestCase
      */
     public function processes_with_filter()
     {
-        $manager = $this->getMock(ManagerInterface::class);
+        $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $manager->expects($this->once())
             ->method('setUpdateInterval')
             ->with($this->equalTo(42));
@@ -137,7 +137,7 @@ class ConfigurationTest extends UnitTestCase
      */
     public function does_not_processes_with_invalid_filter()
     {
-        $manager = $this->getMock(ManagerInterface::class);
+        $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $this->dispatcher->expects($this->never())->method('dispatch');
         $result = $this->fixture->process(['each' => ['updateInterval' => 42]], $manager, 'lorem_ipsum');
     }

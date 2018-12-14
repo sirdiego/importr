@@ -29,7 +29,7 @@ class HashPasswordTest extends UnitTestCase
 
     public function setUp()
     {
-        $this->service = $this->getMock(PasswordHashService::class);
+        $this->service = $this->getAccessibleMock(PasswordHashService::class);
         $this->service->expects($this->any())->method('hash')->will($this->returnValue('password'));
         $this->fixture = new HashPassword($this->service);
     }
