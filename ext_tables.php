@@ -10,6 +10,6 @@ if (!defined('TYPO3_MODE')) {
     'Importr' => 'index,import,preview,create,reset',
 ], [
     'access' => 'user,group',
-    'icon' => 'EXT:' . $_EXTKEY . '/ext_icon.svg',
-    'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_mod.xlf'
+    'icon' => 'EXT:importr/ext_icon.svg',
+    'labels' => 'LLL:EXT:importr/Resources/Private/Language/locallang_mod.xlf'
 ]);

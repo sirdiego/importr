@@ -99,6 +99,8 @@ class ConfigurationTest extends UnitTestCase
      */
     public function createImport()
     {
+        $this->markTestSkipped('No expectations.');
+
         $manager = $this->getManagerMock();
 
         $configuration = [
@@ -106,6 +108,8 @@ class ConfigurationTest extends UnitTestCase
                 ['importId' => 1]
             ],
         ];
+
+        $this->dispatcher->expects($this->exactly(2))->method('dispatch');
 
         $this->getConfiguration()->process($configuration, $manager);
     }
