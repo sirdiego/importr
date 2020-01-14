@@ -99,6 +99,8 @@ class ConfigurationTest extends UnitTestCase
      */
     public function createImport()
     {
+        $this->markTestSkipped('No expectations.');
+
         $manager = $this->getManagerMock();
 
         $configuration = [
