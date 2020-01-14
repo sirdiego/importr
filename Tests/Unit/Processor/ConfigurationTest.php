@@ -107,6 +107,8 @@ class ConfigurationTest extends UnitTestCase
             ],
         ];
 
+        $this->dispatcher->expects($this->exactly(2))->method('dispatch');
+
         $this->getConfiguration()->process($configuration, $manager);
     }
 
