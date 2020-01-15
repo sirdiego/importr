@@ -4,5 +4,7 @@ namespace HDNET\Importr\Migration;
 
 interface DatabaseConnectionMigrationInterface
 {
+    // @codingStandardsIgnoreStart
     public function exec_TRUNCATEquery($table);
+    // @codingStandardsIgnoreEnd
 }
