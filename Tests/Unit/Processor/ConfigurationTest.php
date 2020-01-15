@@ -1,4 +1,5 @@
 <?php
+
 namespace HDNET\Importr\Tests\Unit\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -99,8 +100,6 @@ class ConfigurationTest extends UnitTestCase
      */
     public function createImport()
     {
-        $this->markTestSkipped('No expectations.');
-
         $manager = $this->getManagerMock();
 
         $configuration = [
@@ -109,15 +108,25 @@ class ConfigurationTest extends UnitTestCase
             ],
         ];
 
-        $this->dispatcher->expects($this->exactly(2))->method('dispatch');
+        $this
+            ->dispatcher
+            ->expects($this->exactly(2))
+            ->method('dispatch')
+            ->withConsecutive(
+                ['HDNET\Importr\Processor\Configuration', 'preParseConfiguration'],
+                ['HDNET\Importr\Processor\Configuration', 'postParseConfiguration']
+            );
 
-        $this->getConfiguration()->process($configuration, $manager);
+        $this
+            ->fixture
+            ->process($configuration, $manager);
     }
 
     /**
      * @test
      */
-    public function can_process_checks() {
+    public function can_process_checks()
+    {
         $result = $this->fixture->canProcess(['each' => []], 'each');
         $this->assertEquals(true, $result);
         $result = $this->fixture->canProcess(['each' => []], 'after');
