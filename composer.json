@@ -27,17 +27,16 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "typo3/cms-core": "~8.7.0||^9.5||dev-master"
+    "typo3/cms-core": "^8.7||^9.5"
   },
   "suggest": {
     "phpoffice/phpexcel": "Use Excel files as import resource"
   },
   "replace": {
-    "importr": "self.version",
     "typo3-ter/importr": "self.version"
   },
   "homepage": "https://github.com/sirdiego/importr",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "support": {
     "issues": "https://github.com/sirdiego/importr/issues"
   },
@@ -46,7 +45,7 @@
     "squizlabs/php_codesniffer": "^2.6",
     "phpmd/phpmd": "^2.4",
     "scrutinizer/ocular": "^1.3.0",
-    "mikey179/vfsStream": "~1",
+    "mikey179/vfsstream": "~1",
     "typo3/testing-framework": "^2.0.4"
   },
   "config": {
