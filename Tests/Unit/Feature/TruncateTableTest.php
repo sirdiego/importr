@@ -6,9 +6,9 @@
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Feature\TruncateTable;
+use HDNET\Importr\Migration\DatabaseConnectionMigrationInterface;
 use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\DatabaseService;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -24,13 +24,13 @@ class TruncateTableTest extends UnitTestCase
     protected $fixture;
 
     /**
-     * @var DatabaseConnection|\PHPUnit_Framework_MockObject_MockObject
+     * @var DatabaseConnectionMigrationInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $connection;
 
     public function setUp()
     {
-        $connection = $this->getMockBuilder(DatabaseConnection::class)->getMock();
+        $connection = $this->getMockBuilder(DatabaseConnectionMigrationInterface::class)->getMock();
         $this->connection = $connection;
         $databaseService = $this->getMockBuilder(DatabaseService::class)->getMock();
         $databaseService->expects($this->any())->method('getDatabaseConnection')->will($this->returnValue($connection));
@@ -42,8 +42,6 @@ class TruncateTableTest extends UnitTestCase
      */
     public function do_not_truncate_when_not_configured()
     {
-        $this->markTestSkipped('Migrate truncate to doctrine');
-
         $processor = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
         $this->connection->expects($this->never())->method('exec_TRUNCATEquery');
 
@@ -55,8 +53,6 @@ class TruncateTableTest extends UnitTestCase
      */
     public function truncate_when_configured()
     {
-        $this->markTestSkipped('Migrate truncate to doctrine');
-
         $processor = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
 
         $this->connection->expects($this->once())->method('exec_TRUNCATEquery');
@@ -69,8 +65,6 @@ class TruncateTableTest extends UnitTestCase
      */
     public function truncate_multiple_tables_when_configured()
     {
-        $this->markTestSkipped('Migrate truncate to doctrine');
-
         $configuration = [
             'truncate' => [
                 'test',
