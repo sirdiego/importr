@@ -1,4 +1,5 @@
 <?php
+
 namespace HDNET\Importr\Service;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -85,9 +86,7 @@ class Manager implements ManagerInterface
         $data = [];
         $resources = $this->initializeResources($strategy, $filepath);
         foreach ($resources as $resource) {
-            /**
- * @var \HDNET\Importr\Service\Resources\ResourceInterface $resource
-*/
+            /** @var \HDNET\Importr\Service\Resources\ResourceInterface $resource */
             // Resourcen Object anhand der Datei auswählen
             if (preg_match($resource->getFilepathExpression(), $filepath)) {
                 // Resource "benutzen"
@@ -123,6 +122,8 @@ class Manager implements ManagerInterface
                 break;
             }
         }
+
+        $this->teardownTargets($import);
 
         $this->emitSignal('postImport', $import);
     }
@@ -174,6 +175,21 @@ class Manager implements ManagerInterface
             $targets[$target] = $object;
         }
         return $targets;
+    }
+
+    /**
+     * @param \HDNET\Importr\Domain\Model\Import $import
+     */
+    protected function teardownTargets(Import $import)
+    {
+        $targetConfiguration = $import->getStrategy()
+            ->getTargets();
+        foreach ($targetConfiguration as $target => $configuration) {
+            $object = $this->objectManager->get($target);
+            $object->setConfiguration($configuration);
+            $object->getConfiguration();
+            $object->end($import->getStrategy());
+        }
     }
 
     /**
