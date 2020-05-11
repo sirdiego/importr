@@ -3,7 +3,13 @@ namespace HDNET\Importr\Service;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
+use HDNET\Importr\Domain\Repository\ImportRepository;
 use HDNET\Importr\Exception\ReinitializeException;
+use HDNET\Importr\Processor\Configuration;
+use HDNET\Importr\Processor\Resource;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Service Manager
@@ -16,39 +22,50 @@ class Manager implements ManagerInterface
 
     /**
      * @var \HDNET\Importr\Domain\Repository\ImportRepository
-     * @inject
      */
     protected $importRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
      */
     protected $signalSlotDispatcher;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
-     * @inject
      */
     protected $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
      */
     protected $objectManager;
 
     /**
      * @var \HDNET\Importr\Processor\Configuration
-     * @inject
      */
     protected $configuration;
 
     /**
      * @var \HDNET\Importr\Processor\Resource
-     * @inject
      */
     protected $resource;
+
+    public function __construct(
+        ImportRepository $importRepository,
+        Dispatcher $signalSlotDispatcher,
+        PersistenceManager $persistenceManager,
+        ObjectManager $objectManager,
+        Configuration $configuration,
+        Resource $resource
+    )
+    {
+        $this->importRepository = $importRepository;
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->persistenceManager = $persistenceManager;
+        $this->objectManager = $objectManager;
+        $this->configuration = $configuration;
+        $this->resource = $resource;
+    }
 
     /**
      * Update Interval

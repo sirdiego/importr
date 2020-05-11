@@ -4,8 +4,13 @@ namespace HDNET\Importr\Controller;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
+use HDNET\Importr\Domain\Repository\ImportRepository;
+use HDNET\Importr\Domain\Repository\StrategyRepository;
+use HDNET\Importr\Service\ImportServiceInterface;
+use HDNET\Importr\Service\Manager;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -16,36 +21,44 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class ImportrController extends ActionController
 {
-
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
      */
     protected $resourceFactory;
 
     /**
      * @var \HDNET\Importr\Domain\Repository\StrategyRepository
-     * @inject
      */
     protected $strategyRepository;
 
     /**
      * @var \HDNET\Importr\Domain\Repository\ImportRepository
-     * @inject
      */
     protected $importRepository;
 
     /**
      * @var \HDNET\Importr\Service\Manager
-     * @inject
      */
     protected $importManager;
 
     /**
      * @var \HDNET\Importr\Service\ImportServiceInterface
-     * @inject
      */
     protected $importService;
+
+    public function __construct(
+        ResourceFactory $resourceFactory,
+        StrategyRepository $strategyRepository,
+        ImportRepository $importRepository,
+        Manager $importManager,
+        ImportServiceInterface $importService)
+    {
+        $this->resourceFactory = $resourceFactory;
+        $this->strategyRepository = $strategyRepository;
+        $this->importRepository = $importRepository;
+        $this->importManager = $importManager;
+        $this->importService = $importService;
+    }
 
     /**
      * @return void
