@@ -7,6 +7,8 @@ namespace HDNET\Importr\Processor;
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\Targets\TargetInterface;
+use JMS\Serializer\EventDispatcher\EventDispatcher;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -20,20 +22,20 @@ class Target
     protected $importService;
 
     /**
-     * @var Dispatcher
+     * @var EventDispatcherInterface
      */
-    protected $signalSlotDispatcher;
+    protected $eventDispatcher;
 
     /**
      * Target constructor.
      *
      * @param ImportServiceInterface $importService
-     * @param Dispatcher $signalSlotDispatcher
+     * @param EventDispatcherInterface $signalSlotDispatcher
      */
-    public function __construct(ImportServiceInterface $importService, Dispatcher $signalSlotDispatcher)
+    public function __construct(ImportServiceInterface $importService, EventDispatcherInterface $eventDispatcher)
     {
         $this->importService = $importService;
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -66,8 +68,8 @@ class Target
      */
     protected function emitEntrySignal($name, array $configuration, $entry)
     {
-        $result = $this->signalSlotDispatcher->dispatch(
-            __CLASS__,
+        $result = $this->eventDispatcher->dispatch(
+            $this,
             $name,
             [$configuration, $entry]
         );

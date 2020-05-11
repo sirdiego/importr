@@ -8,8 +8,9 @@ use HDNET\Importr\Processor\Target;
 use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\Targets\TargetInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Http\DispatcherInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * TargetTest
@@ -23,8 +24,8 @@ class TargetTest extends UnitTestCase
 
     public function setUp():void
     {
-        /** @var MockObject|Dispatcher $dispatcher */
-        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        /** @var MockObject|EventDispatcherInterface $dispatcher */
+        $dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dispatcher->expects(self::any())->method('dispatch')->willReturn([[], []]);
         /** @var MockObject|ImportServiceInterface $importService */
         $importService = $this->getMockBuilder(ImportServiceInterface::class)->getMock();
