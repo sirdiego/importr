@@ -2,8 +2,7 @@
 
 namespace HDNET\Importr\Domain\Model;
 
-use HDNET\Importr\Service\Yaml;
-use TYPO3\CMS\Core\Core\ApplicationContext;
+use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
