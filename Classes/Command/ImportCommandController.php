@@ -5,29 +5,58 @@
 namespace HDNET\Importr\Command;
 
 use HDNET\Importr\Service\Manager;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * ImportCommandController
  *
  * For initializing the Manager
  */
-class ImportCommandController extends CommandController
+class ImportCommandController extends Command
 {
 
     /**
-     * @var \TYPO3\CMS\Extbase\Mvc\Cli\CommandManager
-     * @inject
+     * @var object|\Psr\Log\LoggerAwareInterface|\TYPO3\CMS\Core\SingletonInterface|ObjectManager
      */
-    protected $commandManager;
+    protected $objectManager;
 
     /**
-     * @var array
+     * ImportCommandController constructor.
+     * @param string|null $name
      */
-    protected $commandsByExtensionsAndControllers = [];
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+    }
+
+    /**
+     *
+     */
+    protected function configure()
+    {
+        $this->setDescription('tbd');
+        $this->setHelp('tbd');
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->initializeServiceManagerCommand();
+
+        return 0;
+    }
 
     /**
      * initializes the import service manager
@@ -71,9 +100,7 @@ class ImportCommandController extends CommandController
      */
     protected function addFlashMessage(FlashMessage $flashMessage)
     {
-        $flashMessageService = $this->objectManager->get(
-            FlashMessageService::class
-        );
+        $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $messageQueue = $flashMessageService->getMessageQueueByIdentifier();
         $messageQueue->addMessage($flashMessage);
     }
