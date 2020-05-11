@@ -3,7 +3,9 @@
 declare(strict_types=1);
 namespace HDNET\Importr\ViewHelpers;
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
+
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * JSON de- and encode
