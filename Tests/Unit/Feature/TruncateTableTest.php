@@ -10,7 +10,8 @@ use HDNET\Importr\Feature\TruncateTable;
 use HDNET\Importr\Migration\DatabaseConnectionMigrationInterface;
 use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\DatabaseService;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -25,11 +26,11 @@ class TruncateTableTest extends UnitTestCase
     protected $fixture;
 
     /**
-     * @var DatabaseConnectionMigrationInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var DatabaseConnectionMigrationInterface|MockObject
      */
     protected $connection;
 
-    public function setUp()
+    public function setUp():void
     {
         $connection = $this->getMockBuilder(DatabaseConnectionMigrationInterface::class)->getMock();
         $this->connection = $connection;

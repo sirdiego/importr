@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace HDNET\Importr\Tests\Resource\Csv;
 
 use HDNET\Importr\Service\Resources\AbstractResource;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * AbstractResourceTest
@@ -13,11 +14,11 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
 class AbstractResourceTest extends UnitTestCase
 {
     /**
-     * @var AbstractResource|\PHPUnit_Framework_MockObject_MockObject
+     * @var AbstractResource|MockObject
      */
     protected $fixture;
 
-    public function setUp()
+    public function setUp():void
     {
         $this->fixture = $this->getAccessibleMockForAbstractClass(AbstractResource::class);
     }

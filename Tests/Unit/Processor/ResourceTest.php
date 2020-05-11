@@ -11,7 +11,7 @@ use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\ManagerInterface;
 use HDNET\Importr\Service\Resources\ResourceInterface;
 use HDNET\Importr\Service\Targets\TargetInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ResourceTest extends UnitTestCase
 {
@@ -31,7 +31,7 @@ class ResourceTest extends UnitTestCase
      */
     protected $service;
 
-    public function setUp()
+    public function setUp():void
     {
         $configuration = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
         $target = $this->getMockBuilder(Target::class)->disableOriginalConstructor()->getMock();

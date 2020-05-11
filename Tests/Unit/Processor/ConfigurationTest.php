@@ -9,7 +9,8 @@ use HDNET\Importr\Domain\Repository\StrategyRepository;
 use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\ManagerInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -27,7 +28,7 @@ class ConfigurationTest extends UnitTestCase
      */
     protected $dispatcher;
 
-    public function setUp()
+    public function setUp():void
     {
         $this->fixture = $this->getConfiguration();
     }
@@ -39,13 +40,13 @@ class ConfigurationTest extends UnitTestCase
      */
     protected function getConfiguration($shouldAddToQueueBeCalled = false)
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Dispatcher $dispatcher */
+        /** @var MockObject|Dispatcher $dispatcher */
         $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
         $this->dispatcher = $dispatcher;
-        /** @var \PHPUnit_Framework_MockObject_MockObject|StrategyRepository $repository */
+        /** @var MockObject|StrategyRepository $repository */
         $repository = $this->getMockBuilder(StrategyRepository::class)->disableOriginalConstructor()->getMock();
         $repository->method('findByUid')->willReturn(new Strategy());
-        /** @var \PHPUnit_Framework_MockObject_MockObject|ImportServiceInterface $service */
+        /** @var MockObject|ImportServiceInterface $service */
         $service = $this->getMockBuilder(ImportServiceInterface::class)->getMock();
         if ($shouldAddToQueueBeCalled) {
             $service->expects(self::once())->method('addToQueue');
@@ -55,7 +56,7 @@ class ConfigurationTest extends UnitTestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ManagerInterface
+     * @return MockObject|ManagerInterface
      */
     protected function getManagerMock()
     {

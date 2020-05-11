@@ -9,7 +9,7 @@ use HDNET\Importr\Domain\Repository\ImportRepository;
 use HDNET\Importr\Service\Manager;
 use HDNET\Importr\Service\Resources\ResourceInterface;
 use ReflectionClass;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 class ManagerTest extends UnitTestCase

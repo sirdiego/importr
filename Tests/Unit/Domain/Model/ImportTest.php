@@ -8,7 +8,7 @@ namespace HDNET\Importr\Tests\Unit\Domain\Model;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Service\Targets\TargetInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ImportTest extends UnitTestCase
 {

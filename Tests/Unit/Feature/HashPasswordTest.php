@@ -9,7 +9,9 @@ namespace HDNET\Importr\Tests\Unit\Feature;
 use HDNET\Importr\Feature\HashPassword;
 use HDNET\Importr\Processor\Target;
 use HDNET\Importr\Service\PasswordHashService;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -24,11 +26,11 @@ class HashPasswordTest extends UnitTestCase
     protected $fixture;
 
     /**
-     * @var PasswordHashService|\PHPUnit_Framework_MockObject_MockObject
+     * @var PasswordHashService|MockObject|AccessibleObjectInterface
      */
     protected $service;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->service = $this->getAccessibleMock(PasswordHashService::class);
         $this->service->expects(self::any())->method('hash')->willReturn('password');

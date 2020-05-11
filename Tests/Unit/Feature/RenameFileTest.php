@@ -11,7 +11,9 @@ use HDNET\Importr\Service\Manager;
 use HDNET\Importr\Service\ManagerInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
@@ -26,7 +28,7 @@ class RenameFileTest extends UnitTestCase
     protected $fixture;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|FileService
+     * @var MockObject|AccessibleObjectInterface|FileService
      */
     protected $fileService;
 
@@ -35,10 +37,10 @@ class RenameFileTest extends UnitTestCase
      */
     protected $root;
 
-    public function setUp()
+    public function setUp():void
     {
         $this->root = vfsStream::setup('import');
-        /** @var \PHPUnit_Framework_MockObject_MockObject|FileService $fileService */
+        /** @var MockObject|FileService $fileService */
         $fileService = $this->getAccessibleMock(FileService::class);
         $this->fileService = $fileService;
         $this->fixture = new RenameFile($fileService);
@@ -66,7 +68,7 @@ class RenameFileTest extends UnitTestCase
 
         $children = $this->root->getChildren();
         self::assertEquals(1, \count($children));
-        self::assertRegExp('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
+        self::assertMatchesRegularExpression('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
     }
 
     /**

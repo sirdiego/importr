@@ -7,7 +7,8 @@ use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Processor\Target;
 use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\Targets\TargetInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -20,12 +21,12 @@ class TargetTest extends UnitTestCase
      */
     protected $fixture;
 
-    public function setUp()
+    public function setUp():void
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Dispatcher $dispatcher */
+        /** @var MockObject|Dispatcher $dispatcher */
         $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
         $dispatcher->expects(self::any())->method('dispatch')->willReturn([[], []]);
-        /** @var \PHPUnit_Framework_MockObject_MockObject|ImportServiceInterface $importService */
+        /** @var MockObject|ImportServiceInterface $importService */
         $importService = $this->getMockBuilder(ImportServiceInterface::class)->getMock();
         $this->fixture = new Target($importService, $dispatcher);
     }
@@ -37,14 +38,14 @@ class TargetTest extends UnitTestCase
     {
         $entry = [];
         $result = TargetInterface::RESULT_INSERT;
-        /** @var \PHPUnit_Framework_MockObject_MockObject|TargetInterface $target */
+        /** @var MockObject|TargetInterface $target */
         $target = $this->getMockBuilder(TargetInterface::class)->getMock();
         $target->expects(self::once())
             ->method('processEntry')
             ->with(self::equalTo($entry))
             ->willReturn($result);
         $target->expects(self::any())->method('getConfiguration')->willReturn([]);
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Import $import */
+        /** @var MockObject|Import $import */
         $import = $this->getMockBuilder(Import::class)->getMock();
         $import->expects(self::once())->method('increaseCount')->with(self::equalTo($result));
         $pointer = 1;
@@ -58,14 +59,14 @@ class TargetTest extends UnitTestCase
     public function processWithException()
     {
         $entry = [];
-        /** @var \PHPUnit_Framework_MockObject_MockObject|TargetInterface $target */
+        /** @var MockObject|TargetInterface $target */
         $target = $this->getMockBuilder(TargetInterface::class)->getMock();
         $target->expects(self::once())
             ->method('processEntry')
             ->with(self::equalTo($entry))
             ->will(self::throwException(new \Exception()));
         $target->expects(self::any())->method('getConfiguration')->willReturn([]);
-        /** @var \PHPUnit_Framework_MockObject_MockObject|Import $import */
+        /** @var MockObject|Import $import */
         $import = $this->getMockBuilder(Import::class)->getMock();
         $import->expects(self::once())->method('increaseCount')->with(self::equalTo(TargetInterface::RESULT_ERROR));
         $pointer = 1;

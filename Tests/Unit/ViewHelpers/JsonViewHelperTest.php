@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\ViewHelpers;
 
 use HDNET\Importr\ViewHelpers\JsonViewHelper;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * JsonViewHelperTest

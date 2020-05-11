@@ -8,7 +8,7 @@ use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Service\Resources\Csv;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * CsvTest
@@ -25,7 +25,7 @@ class CsvTest extends UnitTestCase
      */
     protected $root;
 
-    public function setUp()
+    public function setUp():void
     {
         $this->root = vfsStream::setup('import');
         $this->fixture = $this->getAccessibleMock(Csv::class, ['getFilePath']);

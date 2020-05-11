@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\Service;
 
 use HDNET\Importr\Service\Yaml;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * YamlTest
