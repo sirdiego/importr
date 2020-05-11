@@ -27,7 +27,7 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "typo3/cms-core": "^8.7||^9.5"
+    "typo3/cms-core": "^8.7||^9.5||^10.4"
   },
   "suggest": {
     "phpoffice/phpexcel": "Use Excel files as import resource"
