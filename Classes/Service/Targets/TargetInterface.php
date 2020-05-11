@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -11,7 +13,6 @@ use HDNET\Importr\Domain\Model\Strategy;
  */
 interface TargetInterface
 {
-
     const RESULT_INSERT = 1;
 
     const RESULT_UPDATE = 2;
@@ -28,10 +29,9 @@ interface TargetInterface
     public function start(Strategy $strategy);
 
     /**
-     *
      * @param $entry array
      *
-     * @return integer
+     * @return int
      */
     public function processEntry(array $entry);
 
@@ -40,8 +40,5 @@ interface TargetInterface
      */
     public function getConfiguration();
 
-    /**
-     *
-     */
     public function end();
 }

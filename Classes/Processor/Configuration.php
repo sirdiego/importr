@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -69,7 +71,7 @@ class Configuration
      */
     public function canProcess(array $configuration, $name)
     {
-        return isset($configuration[$name]) && is_array($configuration[$name]);
+        return isset($configuration[$name]) && \is_array($configuration[$name]);
     }
 
     /**
@@ -145,7 +147,7 @@ class Configuration
      */
     protected function createImport(array $configuration)
     {
-        if (!isset($configuration['createImport']) && !is_array($configuration['createImport'])) {
+        if (!isset($configuration['createImport']) && !\is_array($configuration['createImport'])) {
             return $this;
         }
 

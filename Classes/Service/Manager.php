@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -57,8 +59,7 @@ class Manager implements ManagerInterface
         ObjectManager $objectManager,
         Configuration $configuration,
         Resource $resource
-    )
-    {
+    ) {
         $this->importRepository = $importRepository;
         $this->signalSlotDispatcher = $signalSlotDispatcher;
         $this->persistenceManager = $persistenceManager;
@@ -70,7 +71,7 @@ class Manager implements ManagerInterface
     /**
      * Update Interval
      *
-     * @var integer
+     * @var int
      */
     protected $updateInterval = 1;
 
@@ -106,7 +107,7 @@ class Manager implements ManagerInterface
  * @var \HDNET\Importr\Service\Resources\ResourceInterface $resource
 */
             // Resourcen Object anhand der Datei auswählen
-            if (preg_match($resource->getFilepathExpression(), $filepath)) {
+            if (\preg_match($resource->getFilepathExpression(), $filepath)) {
                 // Resource "benutzen"
                 $resource->parseResource();
                 // Durchlauf starten

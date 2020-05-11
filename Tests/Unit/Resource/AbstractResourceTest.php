@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Tests\Resource\Csv;
 
 use HDNET\Importr\Service\Resources\AbstractResource;
@@ -26,8 +28,8 @@ class AbstractResourceTest extends UnitTestCase
     public function configuration()
     {
         $this->fixture->setConfiguration(['test' => 'test']);
-        $this->assertEquals(['test' => 'test'], $this->fixture->getConfiguration());
+        self::assertEquals(['test' => 'test'], $this->fixture->getConfiguration());
         $this->fixture->addConfiguration('test2', 'test2');
-        $this->assertEquals(['test' => 'test', 'test2' => 'test2'], $this->fixture->getConfiguration());
+        self::assertEquals(['test' => 'test', 'test2' => 'test2'], $this->fixture->getConfiguration());
     }
 }

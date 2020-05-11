@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Tests\Unit\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -25,9 +27,6 @@ class ConfigurationTest extends UnitTestCase
      */
     protected $dispatcher;
 
-    /**
-     *
-     */
     public function setUp()
     {
         $this->fixture = $this->getConfiguration();
@@ -49,7 +48,7 @@ class ConfigurationTest extends UnitTestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|ImportServiceInterface $service */
         $service = $this->getMockBuilder(ImportServiceInterface::class)->getMock();
         if ($shouldAddToQueueBeCalled) {
-            $service->expects($this->once())->method('addToQueue');
+            $service->expects(self::once())->method('addToQueue');
         }
 
         return new Configuration($dispatcher, $repository, $service);
@@ -69,9 +68,9 @@ class ConfigurationTest extends UnitTestCase
     public function updateInterval()
     {
         $manager = $this->getManagerMock();
-        $manager->expects($this->once())
+        $manager->expects(self::once())
             ->method('setUpdateInterval')
-            ->with($this->equalTo(1));
+            ->with(self::equalTo(1));
 
         $configuration = [
             'updateInterval' => 1,
@@ -110,7 +109,7 @@ class ConfigurationTest extends UnitTestCase
 
         $this
             ->dispatcher
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('dispatch')
             ->withConsecutive(
                 ['HDNET\Importr\Processor\Configuration', 'preParseConfiguration'],
@@ -128,9 +127,9 @@ class ConfigurationTest extends UnitTestCase
     public function can_process_checks()
     {
         $result = $this->fixture->canProcess(['each' => []], 'each');
-        $this->assertEquals(true, $result);
+        self::assertTrue($result);
         $result = $this->fixture->canProcess(['each' => []], 'after');
-        $this->assertEquals(false, $result);
+        self::assertFalse($result);
     }
 
     /**
@@ -139,9 +138,9 @@ class ConfigurationTest extends UnitTestCase
     public function processes_with_filter()
     {
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
-        $manager->expects($this->once())
+        $manager->expects(self::once())
             ->method('setUpdateInterval')
-            ->with($this->equalTo(42));
+            ->with(self::equalTo(42));
         $result = $this->fixture->process(['each' => ['updateInterval' => 42]], $manager, 'each');
     }
 
@@ -151,7 +150,7 @@ class ConfigurationTest extends UnitTestCase
     public function does_not_processes_with_invalid_filter()
     {
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
-        $this->dispatcher->expects($this->never())->method('dispatch');
+        $this->dispatcher->expects(self::never())->method('dispatch');
         $result = $this->fixture->process(['each' => ['updateInterval' => 42]], $manager, 'lorem_ipsum');
     }
 }

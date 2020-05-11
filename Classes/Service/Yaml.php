@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service;
 
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -27,7 +29,7 @@ class Yaml
              * We always need an configuration array, so
              * we drop any other datatype here.
              */
-            if (!is_array($array)) {
+            if (!\is_array($array)) {
                 $array = [];
             }
         } catch (ParseException $e) {
@@ -39,12 +41,9 @@ class Yaml
         return $array;
     }
 
-    /**
-     *
-     */
     public static function legacyClassLoading()
     {
-        if (!class_exists(\Symfony\Component\Yaml\Yaml::class)) {
+        if (!\class_exists(\Symfony\Component\Yaml\Yaml::class)) {
             $yamlComponentPath = ExtensionManagementUtility::extPath('importr', 'Resources/Private/Php/Yaml/');
             include_once $yamlComponentPath . 'Yaml.php';
             include_once $yamlComponentPath . 'Parser.php';

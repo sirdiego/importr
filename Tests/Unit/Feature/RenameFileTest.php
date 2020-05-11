@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -49,22 +51,22 @@ class RenameFileTest extends UnitTestCase
     {
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $strategy = $this->getAccessibleMock(Strategy::class);
-        $strategy->expects($this->once())->method('getConfiguration')->will($this->returnValue(['after' => ['rename' => true]]));
+        $strategy->expects(self::once())->method('getConfiguration')->willReturn(['after' => ['rename' => true]]);
         $import = $this->getAccessibleMock(Import::class);
-        $import->expects($this->once())->method('getStrategy')->will($this->returnValue($strategy));
+        $import->expects(self::once())->method('getStrategy')->willReturn($strategy);
 
-        $file = vfsStream::newFile('import.csv')->at($this->root)->setContent("test;test");
+        $file = vfsStream::newFile('import.csv')->at($this->root)->setContent('test;test');
         $oldFileName = $file->getName();
 
-        $this->fileService->expects($this->any())->method('getFileAbsFileName')->will($this->returnCallback(function () use ($file) {
+        $this->fileService->expects(self::any())->method('getFileAbsFileName')->willReturnCallback(function () use ($file) {
             return $file->url();
-        }));
+        });
 
         $this->fixture->execute($manager, $import);
 
         $children = $this->root->getChildren();
-        $this->assertEquals(1, sizeof($children));
-        $this->assertRegExp('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
+        self::assertEquals(1, \count($children));
+        self::assertRegExp('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
     }
 
     /**
@@ -77,12 +79,12 @@ class RenameFileTest extends UnitTestCase
         $slots = $dispatcher->getSlots(Manager::class, 'afterImport');
         $expectedSlots = [
             [
-                'class' => get_class($this->fixture),
+                'class' => \get_class($this->fixture),
                 'method' => 'execute',
                 'object' => null,
                 'passSignalInformation' => true,
             ],
         ];
-        $this->assertEquals($expectedSlots, $slots);
+        self::assertEquals($expectedSlots, $slots);
     }
 }

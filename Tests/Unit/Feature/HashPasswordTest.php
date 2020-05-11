@@ -1,8 +1,9 @@
 <?php
+
+declare(strict_types=1);
 /**
  * HashPasswordTest.php
  */
-
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Feature\HashPassword;
@@ -30,7 +31,7 @@ class HashPasswordTest extends UnitTestCase
     public function setUp()
     {
         $this->service = $this->getAccessibleMock(PasswordHashService::class);
-        $this->service->expects($this->any())->method('hash')->will($this->returnValue('password'));
+        $this->service->expects(self::any())->method('hash')->willReturn('password');
         $this->fixture = new HashPassword($this->service);
     }
 
@@ -44,12 +45,12 @@ class HashPasswordTest extends UnitTestCase
         $slots = $dispatcher->getSlots(Target::class, 'preProcess');
         $expectedSlots = [
             [
-                'class' => get_class($this->fixture),
+                'class' => \get_class($this->fixture),
                 'method' => 'execute',
                 'object' => null,
                 'passSignalInformation' => true,
             ],
         ];
-        $this->assertEquals($expectedSlots, $slots);
+        self::assertEquals($expectedSlots, $slots);
     }
 }

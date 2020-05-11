@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service;
 
 /**
@@ -8,7 +10,6 @@ interface ManagerInterface
 {
     /**
      * @param int $interval
-     * @return void
      */
     public function setUpdateInterval($interval);
 

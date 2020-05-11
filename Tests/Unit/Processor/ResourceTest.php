@@ -1,20 +1,23 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\Processor;
 
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 use HDNET\Importr\Domain\Model\Import;
+use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Processor\Resource;
 use HDNET\Importr\Processor\Target;
-use HDNET\Importr\Processor\Configuration;
-use HDNET\Importr\Service\ManagerInterface;
 use HDNET\Importr\Service\ImportServiceInterface;
-use HDNET\Importr\Service\Targets\TargetInterface;
+use HDNET\Importr\Service\ManagerInterface;
 use HDNET\Importr\Service\Resources\ResourceInterface;
+use HDNET\Importr\Service\Targets\TargetInterface;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 
-class ResourceTest extends UnitTestCase {
+class ResourceTest extends UnitTestCase
+{
 
     /**
-     * @var Resource
+     * @var resource
      */
     protected $fixture;
 
@@ -44,12 +47,12 @@ class ResourceTest extends UnitTestCase {
     public function do_not_process_on_filepath_missmatch()
     {
         $import = $this->getAccessibleMock(Import::class);
-        $import->expects($this->once())->method('getFilepath')->will($this->returnValue('./import.xlsx'));
+        $import->expects(self::once())->method('getFilepath')->willReturn('./import.xlsx');
         $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
-        $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
+        $resource->expects(self::once())->method('getFilepathExpression')->willReturn('/\.csv$/');
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $result = $this->fixture->process($import, [], [], $resource, $manager);
-        $this->assertEquals(false, $result);
+        self::assertFalse($result);
     }
 
     /**
@@ -57,16 +60,16 @@ class ResourceTest extends UnitTestCase {
      */
     public function calls_target_processor()
     {
-        $this->target->expects($this->once())->method('process');
+        $this->target->expects(self::once())->method('process');
 
         $import = $this->getAccessibleMock(Import::class);
-        $import->expects($this->once())->method('getFilepath')->will($this->returnValue('./import.csv'));
-        $import->expects($this->once())->method('getPointer')->will($this->returnValue(0));
-        $import->expects($this->exactly(2))->method('getAmount')->will($this->returnValue(1));
+        $import->expects(self::once())->method('getFilepath')->willReturn('./import.csv');
+        $import->expects(self::once())->method('getPointer')->willReturn(0);
+        $import->expects(self::exactly(2))->method('getAmount')->willReturn(1);
         $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
-        $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
+        $resource->expects(self::once())->method('getFilepathExpression')->willReturn('/\.csv$/');
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
-        $manager->expects($this->any())->method('getUpdateInterval')->will($this->returnValue(42));
+        $manager->expects(self::any())->method('getUpdateInterval')->willReturn(42);
         $target = $this->getMockBuilder(TargetInterface::class)->getMock();
 
         $result = $this->fixture->process($import, [$target], [], $resource, $manager);
@@ -78,16 +81,16 @@ class ResourceTest extends UnitTestCase {
     public function updates_current_import_status()
     {
         $import = $this->getAccessibleMock(Import::class);
-        $import->expects($this->once())->method('getFilepath')->will($this->returnValue('./import.csv'));
-        $import->expects($this->once())->method('getPointer')->will($this->returnValue(1));
-        $import->expects($this->exactly(2))->method('getAmount')->will($this->returnValue(2));
+        $import->expects(self::once())->method('getFilepath')->willReturn('./import.csv');
+        $import->expects(self::once())->method('getPointer')->willReturn(1);
+        $import->expects(self::exactly(2))->method('getAmount')->willReturn(2);
 
-        $this->service->expects($this->exactly(3))->method('updateImport')->withConsecutive([$import], [$import, 2], [$import, 2]);
+        $this->service->expects(self::exactly(3))->method('updateImport')->withConsecutive([$import], [$import, 2], [$import, 2]);
 
         $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
-        $resource->expects($this->once())->method('getFilepathExpression')->will($this->returnValue('/\.csv$/'));
+        $resource->expects(self::once())->method('getFilepathExpression')->willReturn('/\.csv$/');
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
-        $manager->expects($this->any())->method('getUpdateInterval')->will($this->returnValue(2));
+        $manager->expects(self::any())->method('getUpdateInterval')->willReturn(2);
         $target = $this->getMockBuilder(TargetInterface::class)->getMock();
 
         $result = $this->fixture->process($import, [$target], [], $resource, $manager);

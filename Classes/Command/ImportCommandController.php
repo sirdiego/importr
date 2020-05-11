@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * ImportCommandController.php
  */
@@ -37,9 +39,6 @@ class ImportCommandController extends Command
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
     }
 
-    /**
-     *
-     */
     protected function configure()
     {
         $this->setDescription('tbd');
@@ -63,7 +62,7 @@ class ImportCommandController extends Command
      *
      * @param string $mail Set an email address for error reporting
      *
-     * @return boolean
+     * @return bool
      */
     public function initializeServiceManagerCommand($mail = null)
     {

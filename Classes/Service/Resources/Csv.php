@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service\Resources;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -21,7 +23,7 @@ class Csv extends AbstractResource implements ResourceInterface
     /**
      * @var string
      */
-    protected $filepathExpression = "/.csv$/";
+    protected $filepathExpression = '/.csv$/';
 
     /**
      * @var array
@@ -39,7 +41,7 @@ class Csv extends AbstractResource implements ResourceInterface
     public function getConfiguration()
     {
         $configuration = parent::getConfiguration();
-        $configuration['length'] = (isset($configuration['length']) && is_numeric($configuration['length'])) ? $configuration['length'] : 1000;
+        $configuration['length'] = (isset($configuration['length']) && \is_numeric($configuration['length'])) ? $configuration['length'] : 1000;
         $configuration['delimiter'] = isset($configuration['delimiter']) ? $configuration['delimiter'] : ';';
         $configuration['enclosure'] = isset($configuration['enclosure']) ? $configuration['enclosure'] : '"';
         $configuration['escape'] = isset($configuration['escape']) ? $configuration['escape'] : '\\';
@@ -72,14 +74,11 @@ class Csv extends AbstractResource implements ResourceInterface
         return GeneralUtility::getFileAbsFileName($this->filepath);
     }
 
-    /**
-     *
-     */
     public function parseResource()
     {
         $configuration = $this->getConfiguration();
-        ini_set('auto_detect_line_endings', true);
-        if (($handle = fopen($this->getFilePath(), "r")) !== false) {
+        \ini_set('auto_detect_line_endings', '1');
+        if (($handle = \fopen($this->getFilePath(), 'r')) !== false) {
             $row = 0;
             while (($buffer = $this->fgetcsv($handle, $configuration)) !== false) {
                 if ($row < $configuration['skipRows']) {
@@ -90,9 +89,9 @@ class Csv extends AbstractResource implements ResourceInterface
                 $this->content[] = $buffer;
                 $row++;
             }
-            fclose($handle);
+            \fclose($handle);
         }
-        ini_set('auto_detect_line_endings', false);
+        \ini_set('auto_detect_line_endings', '0');
     }
 
     /**
@@ -102,19 +101,19 @@ class Csv extends AbstractResource implements ResourceInterface
      */
     protected function fgetcsv($handle, array $configuration)
     {
-        return fgetcsv($handle, $configuration['length'], $configuration['delimiter'], $configuration['enclosure'], $configuration['escape']);
+        return \fgetcsv($handle, $configuration['length'], $configuration['delimiter'], $configuration['enclosure'], $configuration['escape']);
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount()
     {
-        return count($this->content);
+        return \count($this->content);
     }
 
     /**
-     * @param integer $pointer
+     * @param int $pointer
      *
      * @return mixed
      */
@@ -123,9 +122,6 @@ class Csv extends AbstractResource implements ResourceInterface
         return $this->content[$pointer];
     }
 
-    /**
-     *
-     */
     public function end()
     {
     }

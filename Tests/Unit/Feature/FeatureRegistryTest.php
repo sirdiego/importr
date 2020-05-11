@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Feature\FeatureRegistry;
@@ -21,12 +23,12 @@ class FeatureRegistryTest extends UnitTestCase
         $slots = $dispatcher->getSlots(Manager::class, 'test');
         $expectedSlots = [
             [
-                'class' => get_class($this),
+                'class' => \get_class($this),
                 'method' => 'execute',
                 'object' => null,
                 'passSignalInformation' => true,
             ],
         ];
-        $this->assertEquals($expectedSlots, $slots);
+        self::assertEquals($expectedSlots, $slots);
     }
 }

@@ -1,8 +1,9 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use HDNET\Importr\Utility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -27,7 +28,7 @@ class DbRecord extends AbstractTarget implements TargetInterface
     public function getConfiguration()
     {
         $configuration = parent::getConfiguration();
-        $configuration['pid'] = (isset($configuration['pid']) && is_numeric($configuration['pid'])) ? $configuration['pid'] : 0;
+        $configuration['pid'] = (isset($configuration['pid']) && \is_numeric($configuration['pid'])) ? $configuration['pid'] : 0;
 
         return $configuration;
     }
@@ -35,7 +36,7 @@ class DbRecord extends AbstractTarget implements TargetInterface
     /**
      * @param array $entry
      *
-     * @return integer
+     * @return int
      */
     public function processEntry(array $entry)
     {
@@ -55,9 +56,6 @@ class DbRecord extends AbstractTarget implements TargetInterface
         return TargetInterface::RESULT_INSERT;
     }
 
-    /**
-     *
-     */
     public function end()
     {
     }

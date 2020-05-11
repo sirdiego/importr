@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\ViewHelpers;
 
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -8,8 +10,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @author     Tim Spiekerkötter <tim.spiekerkoetter@hdnet.de>
  * @version    SVN: $Id$
- * @package    Importr
- * @subpackage ViewHelper
  */
 class JsonViewHelper extends AbstractViewHelper
 {
@@ -19,6 +19,6 @@ class JsonViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        return addslashes(json_encode($this->renderChildren()));
+        return \addslashes(\json_encode($this->renderChildren()));
     }
 }

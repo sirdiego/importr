@@ -1,8 +1,9 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use HDNET\Importr\Utility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -69,7 +70,7 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
             throw new \RuntimeException('Identifier field is missing!');
         }
         $identifier = $this->getConfiguration()['identifier'];
-        $identifierField = array_search($identifier, $this->getConfiguration()['mapping']);
+        $identifierField = \array_search($identifier, $this->getConfiguration()['mapping']);
         if ($identifierField === false) {
             throw new \RuntimeException('Identifier field not found in mapping.');
         }
@@ -87,7 +88,7 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
     {
         $record_exists = false;
         $entry_identifier = $entry[$this->identifierField];
-        $records = $this->getRecords("*");
+        $records = $this->getRecords('*');
         $fieldName = $this->getConfiguration()['mapping'][$this->identifierField];
 
         foreach ($records as $record) {
@@ -111,7 +112,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
     }
 
     /**
-     *
      * Fetch all records from the target table, where the PID equals the PID specified
      * in the target section of the strategy
      *
@@ -128,7 +128,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         $fromTable = $this->getConfiguration()['target_table'];
         $whereStatement = ['pid' => $this->getConfiguration()['pid']];
 
-
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($fromTable);
         $records = $connection->select($selectFields, $fromTable, $whereStatement)->fetchAll();
 
@@ -139,24 +138,20 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
      * Insert record into the target table which you have specified in the target section of the strategy
      *
      * @param array $entry
-     *
-     * @return void
      */
     protected function insertRecord(array $entry)
     {
         $field_values = [];
         $into_table = $this->getConfiguration()['target_table'];
 
-        foreach ($this->getConfiguration()["mapping"] as $key => $value) {
+        foreach ($this->getConfiguration()['mapping'] as $key => $value) {
             $field_values[$value] = $entry[$key];
         }
 
         $field_values['pid'] = $this->getConfiguration()['pid'];
-        $time = time();
+        $time = \time();
         $field_values['tstamp'] = $time;
         $field_values['crdate'] = $time;
-
-
 
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($into_table);
         $connection->insert($into_table, $field_values);
@@ -167,8 +162,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
      * target section of the strategy (don't update the password)
      *
      * @param array $entry
-     *
-     * @return void
      */
     protected function updateRecord(array $entry)
     {
@@ -179,15 +172,14 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
             $fieldName => $entry[$this->identifierField],
             ];
 
-
         $tmp_arr = [];
 
-        foreach ($this->getConfiguration()["mapping"] as $key => $value) {
+        foreach ($this->getConfiguration()['mapping'] as $key => $value) {
             $tmp_arr[$value] = $entry[$key];
         }
 
         $field_values = $this->duplicateArray($tmp_arr, $this->getConfiguration()['exclude_from_update']);
-        $field_values['tstamp'] = time();
+        $field_values['tstamp'] = \time();
 
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($into_table);
         $connection->update($into_table, $field_values, $whereStatement);
@@ -204,12 +196,12 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
      */
     protected function duplicateArray(array $arr, array $exclude_arr = null)
     {
-        if (!is_array($exclude_arr)) {
+        if (!\is_array($exclude_arr)) {
             return $arr;
         }
 
         foreach ($arr as $key => $_) {
-            if (in_array($key, $exclude_arr)) {
+            if (\in_array($key, $exclude_arr)) {
                 unset($arr[$key]);
             }
         }
@@ -217,9 +209,6 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         return $arr;
     }
 
-    /**
-     *
-     */
     public function end()
     {
         parent::end();

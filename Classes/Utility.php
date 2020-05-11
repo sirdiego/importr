@@ -1,9 +1,8 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr;
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Service\Resources;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -23,24 +25,18 @@ interface ResourceInterface
      */
     public function getFilepathExpression();
 
-    /**
-     *
-     */
     public function parseResource();
 
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount();
 
     /**
-     * @param integer $pointer
+     * @param int $pointer
      */
     public function getEntry($pointer);
 
-    /**
-     *
-     */
     public function end();
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -53,7 +55,7 @@ class Resource
     public function process(Import $import, array $targets, array $configuration, ResourceInterface $resource, ManagerInterface $manager)
     {
         // Resourcen Object anhand der Datei auswählen
-        if (!preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
+        if (!\preg_match($resource->getFilepathExpression(), $import->getFilepath())) {
             return false;
         }
 

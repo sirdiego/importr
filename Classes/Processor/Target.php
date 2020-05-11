@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Import;

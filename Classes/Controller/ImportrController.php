@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Controller;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -51,8 +53,8 @@ class ImportrController extends ActionController
         StrategyRepository $strategyRepository,
         ImportRepository $importRepository,
         Manager $importManager,
-        ImportServiceInterface $importService)
-    {
+        ImportServiceInterface $importService
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->strategyRepository = $strategyRepository;
         $this->importRepository = $importRepository;
@@ -60,13 +62,10 @@ class ImportrController extends ActionController
         $this->importService = $importService;
     }
 
-    /**
-     * @return void
-     */
     public function indexAction()
     {
         $combinedIdentifier = GeneralUtility::_GP('id');
-        if (isset($combinedIdentifier) && is_string($combinedIdentifier)) {
+        if (isset($combinedIdentifier) && \is_string($combinedIdentifier)) {
             $folder = $this->resourceFactory->getFolderObjectFromCombinedIdentifier($combinedIdentifier);
             $files = [];
             foreach ($folder->getFiles() as $file) {
@@ -89,11 +88,8 @@ class ImportrController extends ActionController
     }
 
     /**
-     *
      * @param string $identifier
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     *
-     * @return void
      */
     public function previewAction($identifier, Strategy $strategy)
     {
@@ -106,11 +102,8 @@ class ImportrController extends ActionController
     }
 
     /**
-     *
      * @param string $filepath
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     *
-     * @return void
      */
     public function createAction($filepath, Strategy $strategy)
     {
@@ -118,7 +111,7 @@ class ImportrController extends ActionController
         $text = 'The Import file %s width the strategy %s was successfully added to the queue';
         $message = GeneralUtility::makeInstance(
             FlashMessage::class,
-            sprintf($text, $filepath, $strategy->getTitle()),
+            \sprintf($text, $filepath, $strategy->getTitle()),
             'Import is in Queue',
             FlashMessage::INFO,
             true

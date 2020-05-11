@@ -1,8 +1,9 @@
 <?php
+
+declare(strict_types=1);
 /**
  * TruncateTableTest.php
  */
-
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Feature\TruncateTable;
@@ -33,7 +34,7 @@ class TruncateTableTest extends UnitTestCase
         $connection = $this->getMockBuilder(DatabaseConnectionMigrationInterface::class)->getMock();
         $this->connection = $connection;
         $databaseService = $this->getMockBuilder(DatabaseService::class)->getMock();
-        $databaseService->expects($this->any())->method('getDatabaseConnection')->will($this->returnValue($connection));
+        $databaseService->expects(self::any())->method('getDatabaseConnection')->willReturn($connection);
         $this->fixture = new TruncateTable($databaseService);
     }
 
@@ -43,7 +44,7 @@ class TruncateTableTest extends UnitTestCase
     public function do_not_truncate_when_not_configured()
     {
         $processor = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
-        $this->connection->expects($this->never())->method('exec_TRUNCATEquery');
+        $this->connection->expects(self::never())->method('exec_TRUNCATEquery');
 
         $this->fixture->execute($processor, []);
     }
@@ -55,7 +56,7 @@ class TruncateTableTest extends UnitTestCase
     {
         $processor = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
 
-        $this->connection->expects($this->once())->method('exec_TRUNCATEquery');
+        $this->connection->expects(self::once())->method('exec_TRUNCATEquery');
 
         $this->fixture->execute($processor, ['truncate' => true]);
     }
@@ -74,7 +75,7 @@ class TruncateTableTest extends UnitTestCase
         ];
 
         $processor = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
-        $this->connection->expects($this->exactly(3))->method('exec_TRUNCATEquery')->withConsecutive(['test'], ['test2'], ['test3']);
+        $this->connection->expects(self::exactly(3))->method('exec_TRUNCATEquery')->withConsecutive(['test'], ['test2'], ['test3']);
 
         $this->fixture->execute($processor, $configuration);
     }
@@ -89,12 +90,12 @@ class TruncateTableTest extends UnitTestCase
         $slots = $dispatcher->getSlots(Configuration::class, 'preParseConfiguration');
         $expectedSlots = [
             [
-                'class' => get_class($this->fixture),
+                'class' => \get_class($this->fixture),
                 'method' => 'execute',
                 'object' => null,
                 'passSignalInformation' => true,
             ],
         ];
-        $this->assertEquals($expectedSlots, $slots);
+        self::assertEquals($expectedSlots, $slots);
     }
 }

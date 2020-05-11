@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Service;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -48,7 +50,7 @@ class ImportService implements ImportServiceInterface
      */
     public function updateImport(Import $import, $pointer = null)
     {
-        if (is_int($pointer)) {
+        if (\is_int($pointer)) {
             $import->setPointer($pointer);
         }
         $this->importRepository->update($import);

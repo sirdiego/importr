@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Tests\Resource\Csv;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -27,7 +29,7 @@ class CsvTest extends UnitTestCase
     {
         $this->root = vfsStream::setup('import');
         $this->fixture = $this->getAccessibleMock(Csv::class, ['getFilePath']);
-        $this->fixture->expects($this->any())->method('getFilePath')->will($this->returnValue('vfs://import/import.csv'));
+        $this->fixture->expects(self::any())->method('getFilePath')->willReturn('vfs://import/import.csv');
     }
 
     /**
@@ -35,12 +37,12 @@ class CsvTest extends UnitTestCase
      */
     public function import()
     {
-        $path = vfsStream::newFile('import.csv')->at($this->root)->setContent("test;test")->url();
+        $path = vfsStream::newFile('import.csv')->at($this->root)->setContent('test;test')->url();
 
         $this->fixture->start(new Strategy(), $path);
         $this->fixture->parseResource();
-        $this->assertEquals(1, $this->fixture->getAmount());
-        $this->assertEquals(['test', 'test'], $this->fixture->getEntry(0));
+        self::assertEquals(1, $this->fixture->getAmount());
+        self::assertEquals(['test', 'test'], $this->fixture->getEntry(0));
     }
 
     /**
@@ -53,8 +55,8 @@ class CsvTest extends UnitTestCase
         $this->fixture->addConfiguration('skipRows', 1);
         $this->fixture->start(new Strategy(), $path);
         $this->fixture->parseResource();
-        $this->assertEquals(1, $this->fixture->getAmount());
-        $this->assertEquals(['test', 'test'], $this->fixture->getEntry(0));
+        self::assertEquals(1, $this->fixture->getAmount());
+        self::assertEquals(['test', 'test'], $this->fixture->getEntry(0));
     }
 
     /**
@@ -63,6 +65,6 @@ class CsvTest extends UnitTestCase
     public function filePathExpressionIsCsv()
     {
         $expression = $this->fixture->getFilepathExpression();
-        $this->assertEquals('/.csv$/', $expression);
+        self::assertEquals('/.csv$/', $expression);
     }
 }

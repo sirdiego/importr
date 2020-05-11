@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service\Resources;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -14,7 +16,7 @@ class Dummy extends AbstractResource implements ResourceInterface
     /**
      * @var string
      */
-    protected $filepathExpression = "/.*/";
+    protected $filepathExpression = '/.*/';
 
     /**
      * @var array
@@ -44,17 +46,15 @@ class Dummy extends AbstractResource implements ResourceInterface
      */
     protected function getRandomContent()
     {
-        if (rand(0, 1)) {
-            return rand(0, 100) * 5;
-        } else {
-            $pos1 = rand(0, strlen($this->loremIpsum));
-            $pos2 = rand(0, strlen($this->loremIpsum));
-            if ($pos1 > $pos2) {
-                return substr($this->loremIpsum, $pos2, $pos1);
-            } else {
-                return substr($this->loremIpsum, $pos1, $pos2);
-            }
+        if (\rand(0, 1)) {
+            return \rand(0, 100) * 5;
         }
+        $pos1 = \rand(0, \strlen($this->loremIpsum));
+        $pos2 = \rand(0, \strlen($this->loremIpsum));
+        if ($pos1 > $pos2) {
+            return \substr($this->loremIpsum, $pos2, $pos1);
+        }
+        return \substr($this->loremIpsum, $pos1, $pos2);
     }
 
     /**
@@ -73,9 +73,6 @@ class Dummy extends AbstractResource implements ResourceInterface
         return $this->filepathExpression;
     }
 
-    /**
-     *
-     */
     public function parseResource()
     {
         $configuration = $this->getConfiguration();
@@ -91,15 +88,15 @@ class Dummy extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount()
     {
-        return count($this->content);
+        return \count($this->content);
     }
 
     /**
-     * @param integer $pointer
+     * @param int $pointer
      *
      * @return mixed
      */
@@ -108,9 +105,6 @@ class Dummy extends AbstractResource implements ResourceInterface
         return $this->content[$pointer];
     }
 
-    /**
-     *
-     */
     public function end()
     {
     }
