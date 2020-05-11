@@ -4,8 +4,7 @@
   "description": "Flexible importer for all kinds of files!",
   "autoload": {
     "psr-4": {
-      "HDNET\\Importr\\": "Classes/",
-      "Symfony\\Component\\Yaml\\": "Resources/Private/Php/Yaml/"
+      "HDNET\\Importr\\": "Classes/"
     }
   },
   "autoload-dev": {
