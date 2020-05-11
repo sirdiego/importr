@@ -3,6 +3,8 @@ namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Utility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Imports records from a .CSV file into the target table which you
@@ -124,13 +126,11 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         }
 
         $fromTable = $this->getConfiguration()['target_table'];
-        $whereStatement = "pid = '" . $this->getConfiguration()['pid'] . "'";
+        $whereStatement = ['pid' => $this->getConfiguration()['pid']];
 
-        $records = Utility::getDatabaseConnection()->exec_SELECTgetRows(
-            $selectFields,
-            $fromTable,
-            $whereStatement
-        );
+
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($fromTable);
+        $records = $connection->select($selectFields, $fromTable, $whereStatement)->fetchAll();
 
         return $records;
     }
@@ -156,7 +156,10 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         $field_values['tstamp'] = $time;
         $field_values['crdate'] = $time;
 
-        Utility::getDatabaseConnection()->exec_INSERTquery($into_table, $field_values);
+
+
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($into_table);
+        $connection->insert($into_table, $field_values);
     }
 
     /**
@@ -171,7 +174,11 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
     {
         $into_table = $this->getConfiguration()['target_table'];
         $fieldName = $this->getConfiguration()['mapping'][$this->identifierField];
-        $whereStatement = "pid = '" . $this->getConfiguration()['pid'] . "' AND " . $fieldName . " = '" . $entry[$this->identifierField] . "'";
+        $whereStatement = [
+            'pid' =>  $this->getConfiguration()['pid'],
+            $fieldName => $entry[$this->identifierField],
+            ];
+
 
         $tmp_arr = [];
 
@@ -182,7 +189,8 @@ class InsertUpdateTable extends DbRecord implements TargetInterface
         $field_values = $this->duplicateArray($tmp_arr, $this->getConfiguration()['exclude_from_update']);
         $field_values['tstamp'] = time();
 
-        Utility::getDatabaseConnection()->exec_UPDATEquery($into_table, $whereStatement, $field_values);
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($into_table);
+        $connection->update($into_table, $field_values, $whereStatement);
     }
 
     /**
