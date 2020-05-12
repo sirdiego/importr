@@ -19,7 +19,7 @@ class Configuration
     /**
      * @var Dispatcher
      */
-    protected $signalSlotDispatcher;
+    protected $dispatcher;
 
     /**
      * @var StrategyRepository
@@ -34,13 +34,13 @@ class Configuration
     /**
      * Configuration constructor.
      *
-     * @param Dispatcher $signalSlotDispatcher
+     * @param Dispatcher $dispatcher
      * @param StrategyRepository $strategyRepository
      * @param ImportServiceInterface $importService
      */
-    public function __construct(Dispatcher $signalSlotDispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
+    public function __construct(Dispatcher $dispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
     {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->dispatcher = $dispatcher;
         $this->strategyRepository = $strategyRepository;
         $this->importService = $importService;
     }
@@ -106,7 +106,7 @@ class Configuration
      */
     protected function emitSignal($name, array &$configuration)
     {
-        $this->signalSlotDispatcher->dispatch(
+        $this->dispatcher->dispatch(
             __CLASS__,
             $name,
             [$this, $configuration]

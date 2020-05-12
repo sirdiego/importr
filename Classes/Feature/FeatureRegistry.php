@@ -21,6 +21,7 @@ class FeatureRegistry
      */
     public static function enable($names, $class = Manager::class)
     {
+
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         if (!\is_array($names)) {
             $names = [$names];
