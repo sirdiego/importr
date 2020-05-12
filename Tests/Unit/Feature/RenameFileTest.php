@@ -12,10 +12,10 @@ use HDNET\Importr\Service\ManagerInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Class RenameFileTest
@@ -37,7 +37,7 @@ class RenameFileTest extends UnitTestCase
      */
     protected $root;
 
-    public function setUp():void
+    public function setUp(): void
     {
         $this->root = vfsStream::setup('import');
         /** @var MockObject|FileService $fileService */

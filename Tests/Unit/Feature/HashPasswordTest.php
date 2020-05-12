@@ -10,10 +10,10 @@ use HDNET\Importr\Feature\HashPassword;
 use HDNET\Importr\Processor\Target;
 use HDNET\Importr\Service\PasswordHashService;
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Class HashPasswordTest

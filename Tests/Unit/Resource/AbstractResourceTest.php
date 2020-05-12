@@ -18,7 +18,7 @@ class AbstractResourceTest extends UnitTestCase
      */
     protected $fixture;
 
-    public function setUp():void
+    public function setUp(): void
     {
         $this->fixture = $this->getAccessibleMockForAbstractClass(AbstractResource::class);
     }

@@ -5,9 +5,9 @@ namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Feature\FeatureRegistry;
 use HDNET\Importr\Service\Manager;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class FeatureRegistryTest extends UnitTestCase
 {

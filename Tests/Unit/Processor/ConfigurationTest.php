@@ -10,8 +10,8 @@ use HDNET\Importr\Processor\Configuration;
 use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\ManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * ConfigurationTest
@@ -28,7 +28,7 @@ class ConfigurationTest extends UnitTestCase
      */
     protected $dispatcher;
 
-    public function setUp():void
+    public function setUp(): void
     {
         $this->fixture = $this->getConfiguration();
     }

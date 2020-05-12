@@ -9,7 +9,6 @@ use HDNET\Importr\Service\ImportServiceInterface;
 use HDNET\Importr\Service\Targets\TargetInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use TYPO3\CMS\Core\Http\DispatcherInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -22,7 +21,7 @@ class TargetTest extends UnitTestCase
      */
     protected $fixture;
 
-    public function setUp():void
+    public function setUp(): void
     {
         /** @var MockObject|EventDispatcherInterface $dispatcher */
         $dispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();

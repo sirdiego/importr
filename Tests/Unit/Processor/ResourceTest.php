@@ -31,7 +31,7 @@ class ResourceTest extends UnitTestCase
      */
     protected $service;
 
-    public function setUp():void
+    public function setUp(): void
     {
         $configuration = $this->getMockBuilder(Configuration::class)->disableOriginalConstructor()->getMock();
         $target = $this->getMockBuilder(Target::class)->disableOriginalConstructor()->getMock();

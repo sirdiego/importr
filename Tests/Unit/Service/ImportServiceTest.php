@@ -7,9 +7,9 @@ use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Domain\Repository\ImportRepository;
 use HDNET\Importr\Service\ImportService;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ImportServiceTest extends UnitTestCase
 {
@@ -29,7 +29,7 @@ class ImportServiceTest extends UnitTestCase
      */
     protected $objectManager;
 
-    public function setUp():void
+    public function setUp(): void
     {
         $persistenceManager = $this->getMockBuilder(PersistenceManagerInterface::class)->getMock();
         $objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
