@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Feature;
 
 use HDNET\Importr\Processor\Target;
@@ -24,9 +26,6 @@ class HashPassword
         $this->hashService = $hashService;
     }
 
-    /**
-     * @return void
-     */
     public static function enable()
     {
         FeatureRegistry::enable('preProcess', Target::class);
@@ -40,8 +39,8 @@ class HashPassword
      */
     public function execute(array $configuration, array $entry)
     {
-        if (isset($configuration['filter']['password']) && in_array($configuration['filter']['password'], $configuration['mapping'])) {
-            $field = array_search($configuration['filter']['password'], $configuration['mapping']);
+        if (isset($configuration['filter']['password']) && \in_array($configuration['filter']['password'], $configuration['mapping'])) {
+            $field = \array_search($configuration['filter']['password'], $configuration['mapping']);
             $entry[$field] = $this->hashService->hash($entry[$field]);
         }
 

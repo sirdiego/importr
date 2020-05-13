@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Tests\Unit\Service;
 
 use HDNET\Importr\Service\Yaml;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * YamlTest
@@ -22,7 +24,7 @@ women:
   - Susan Williams
 EOT;
         $result = Yaml::parse($string);
-        $this->assertEquals([
+        self::assertEquals([
             'men' => [
                 'John Smith',
                 'Bill Jones',
@@ -46,7 +48,7 @@ women:
   - Susan Williams
 EOT;
         $result = Yaml::parse($string);
-        $this->assertEquals([], $result);
+        self::assertEquals([], $result);
     }
 
     /**
@@ -54,8 +56,8 @@ EOT;
      */
     public function parseSimpleText()
     {
-        $string = "Test";
+        $string = 'Test';
         $result = Yaml::parse($string);
-        $this->assertEquals([], $result);
+        self::assertEquals([], $result);
     }
 }

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * RenameFile.php
  */
@@ -28,9 +30,6 @@ class RenameFile
         $this->fileService = $fileService;
     }
 
-    /**
-     * @return void
-     */
     public static function enable()
     {
         FeatureRegistry::enable('afterImport');
@@ -49,7 +48,6 @@ class RenameFile
      *
      * @param  ManagerInterface $manager
      * @param  Import           $import
-     * @return void
      */
     public function execute(ManagerInterface $manager, Import $import)
     {
@@ -57,9 +55,9 @@ class RenameFile
             ->getConfiguration();
         if (isset($configuration['after']['rename'])) {
             $oldFileName = $this->fileService->getFileAbsFileName($import->getFilepath());
-            $info = pathinfo($oldFileName);
-            $newFileName = $info['dirname'] . DIRECTORY_SEPARATOR . date('YmdHis') . '_' . $info['basename'];
-            rename($oldFileName, $newFileName);
+            $info = \pathinfo($oldFileName);
+            $newFileName = $info['dirname'] . DIRECTORY_SEPARATOR . \date('YmdHis') . '_' . $info['basename'];
+            \rename($oldFileName, $newFileName);
         }
     }
 }

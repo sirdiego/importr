@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -39,6 +41,6 @@ class PasswordHashService
      */
     protected function isValidMd5($md5 = '')
     {
-        return preg_match('/^[a-f0-9]{32}$/', $md5);
+        return \preg_match('/^[a-f0-9]{32}$/', $md5);
     }
 }

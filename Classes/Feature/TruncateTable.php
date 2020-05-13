@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * TruncateTable.php
  */
@@ -27,9 +29,6 @@ class TruncateTable
         $this->databaseService = $databaseService;
     }
 
-    /**
-     * @return void
-     */
     public static function enable()
     {
         FeatureRegistry::enable('preParseConfiguration', Configuration::class);
@@ -49,7 +48,7 @@ class TruncateTable
     public function execute(Configuration $processor, array $configuration)
     {
         if (isset($configuration['truncate'])) {
-            if (is_array($configuration['truncate'])) {
+            if (\is_array($configuration['truncate'])) {
                 foreach ($configuration['truncate'] as $table) {
                     $this->databaseService->getDatabaseConnection()
                         ->exec_TRUNCATEquery($table);

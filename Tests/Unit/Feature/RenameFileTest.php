@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -9,9 +11,11 @@ use HDNET\Importr\Service\Manager;
 use HDNET\Importr\Service\ManagerInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Class RenameFileTest
@@ -24,7 +28,7 @@ class RenameFileTest extends UnitTestCase
     protected $fixture;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|FileService
+     * @var MockObject|AccessibleObjectInterface|FileService
      */
     protected $fileService;
 
@@ -33,10 +37,10 @@ class RenameFileTest extends UnitTestCase
      */
     protected $root;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->root = vfsStream::setup('import');
-        /** @var \PHPUnit_Framework_MockObject_MockObject|FileService $fileService */
+        /** @var MockObject|FileService $fileService */
         $fileService = $this->getAccessibleMock(FileService::class);
         $this->fileService = $fileService;
         $this->fixture = new RenameFile($fileService);
@@ -49,22 +53,22 @@ class RenameFileTest extends UnitTestCase
     {
         $manager = $this->getMockBuilder(ManagerInterface::class)->getMock();
         $strategy = $this->getAccessibleMock(Strategy::class);
-        $strategy->expects($this->once())->method('getConfiguration')->will($this->returnValue(['after' => ['rename' => true]]));
+        $strategy->expects(self::once())->method('getConfiguration')->willReturn(['after' => ['rename' => true]]);
         $import = $this->getAccessibleMock(Import::class);
-        $import->expects($this->once())->method('getStrategy')->will($this->returnValue($strategy));
+        $import->expects(self::once())->method('getStrategy')->willReturn($strategy);
 
-        $file = vfsStream::newFile('import.csv')->at($this->root)->setContent("test;test");
+        $file = vfsStream::newFile('import.csv')->at($this->root)->setContent('test;test');
         $oldFileName = $file->getName();
 
-        $this->fileService->expects($this->any())->method('getFileAbsFileName')->will($this->returnCallback(function () use ($file) {
+        $this->fileService->expects(self::any())->method('getFileAbsFileName')->willReturnCallback(function () use ($file) {
             return $file->url();
-        }));
+        });
 
         $this->fixture->execute($manager, $import);
 
         $children = $this->root->getChildren();
-        $this->assertEquals(1, sizeof($children));
-        $this->assertRegExp('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
+        self::assertEquals(1, \count($children));
+        self::assertMatchesRegularExpression('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
     }
 
     /**
@@ -77,12 +81,12 @@ class RenameFileTest extends UnitTestCase
         $slots = $dispatcher->getSlots(Manager::class, 'afterImport');
         $expectedSlots = [
             [
-                'class' => get_class($this->fixture),
+                'class' => \get_class($this->fixture),
                 'method' => 'execute',
                 'object' => null,
                 'passSignalInformation' => true,
             ],
         ];
-        $this->assertEquals($expectedSlots, $slots);
+        self::assertEquals($expectedSlots, $slots);
     }
 }

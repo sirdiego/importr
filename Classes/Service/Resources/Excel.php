@@ -1,13 +1,12 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service\Resources;
 
 use HDNET\Importr\Domain\Model\Strategy;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Collection\Cells;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReader;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -22,7 +21,7 @@ class Excel extends AbstractResource implements ResourceInterface
     /**
      * @var string
      */
-    protected $filepathExpression = "/.xlsx?$/";
+    protected $filepathExpression = '/.xlsx?$/';
 
     /**
      * @var array
@@ -62,14 +61,11 @@ class Excel extends AbstractResource implements ResourceInterface
         return $this->filepathExpression;
     }
 
-    /**
-     *
-     */
     public function parseResource()
     {
         $configuration = $this->getConfiguration();
 
-        if (!class_exists(IOFactory::class)) {
+        if (!\class_exists(IOFactory::class)) {
             throw new \Exception('PHP Excel is needed! Please install phpoffice/phpexcel (composer mode)', 12367812368);
         }
 
@@ -92,7 +88,7 @@ class Excel extends AbstractResource implements ResourceInterface
         for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
             $rowRecord = [];
             for ($col = 0; $col <= $highestColumnIndex; ++$col) {
-                $rowRecord[] = trim(
+                $rowRecord[] = \trim(
                     $worksheet->getCellByColumnAndRow($col, $row)
                         ->getValue()
                 );
@@ -102,15 +98,15 @@ class Excel extends AbstractResource implements ResourceInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount()
     {
-        return count($this->content);
+        return \count($this->content);
     }
 
     /**
-     * @param integer $pointer
+     * @param int $pointer
      *
      * @return mixed
      */
@@ -119,9 +115,6 @@ class Excel extends AbstractResource implements ResourceInterface
         return $this->content[$pointer];
     }
 
-    /**
-     *
-     */
     public function end()
     {
     }

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Service\Targets;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -52,7 +54,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
     public function getConfiguration()
     {
         $configuration = parent::getConfiguration();
-        if (!isset($configuration['pid']) || !is_numeric($configuration['pid'])) {
+        if (!isset($configuration['pid']) || !\is_numeric($configuration['pid'])) {
             $configuration['pid'] = 0;
         }
 
@@ -61,8 +63,6 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
 
     /**
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     *
-     * @return void
      */
     public function start(Strategy $strategy)
     {
@@ -83,7 +83,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
         $this->repository->add($model);
         $this->persistenceManager->persistAll();
 
-        if (isset($configuration['language']) && is_array($configuration['language'])) {
+        if (isset($configuration['language']) && \is_array($configuration['language'])) {
             $this->processLanguageEntries($configuration['language'], $model, $entry);
         }
         $this->persistenceManager->persistAll();
@@ -101,7 +101,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
         foreach ($configuration as $languageKey => $mapping) {
             $modelLang = $this->mapModel($this->getModel(), $mapping, $entry);
 
-            if (method_exists($modelLang, 'setSysLanguageUid') && method_exists($modelLang, 'setL10nParent')) {
+            if (\method_exists($modelLang, 'setSysLanguageUid') && \method_exists($modelLang, 'setL10nParent')) {
                 $modelLang->setSysLanguageUid($languageKey);
                 $modelLang->setL10nParent($model);
 
@@ -123,7 +123,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
      */
     protected function mapModel($model, $mapping, $entry)
     {
-        if (is_array($mapping)) {
+        if (\is_array($mapping)) {
             foreach ($mapping as $key => $value) {
                 $model->_setProperty($value, $entry[$key]);
             }
@@ -142,7 +142,7 @@ class ExtbaseModel extends AbstractTarget implements TargetInterface
         /**
  * @var \TYPO3\CMS\Extbase\DomainObject\AbstractEntity $model
 */
-        $model = new $configuration['model'];
+        $model = new $configuration['model']();
         $model->setPid($configuration['pid']);
         return $model;
     }

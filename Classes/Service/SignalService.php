@@ -1,11 +1,12 @@
 <?php
+
+declare(strict_types=1);
 /**
  * SignalService.php
  *
  * General file information
  *
  * @category Extension
- * @package  importr
  * @author   Tim Spiekerkoetter HDNET GmbH & Co. <tim.spiekerkoetter@hdnet.de>
  * @version  CVS: $Id:08.02.13$
  */
@@ -19,8 +20,6 @@ use HDNET\Importr\Feature\TruncateTable;
  *
  * General class information
  *
- * @package    importr
- * @subpackage Service
  * @author     Tim Spiekerkoetter HDNET GmbH & Co. <tim.spiekerkoetter@hdnet.de>
  */
 class SignalService

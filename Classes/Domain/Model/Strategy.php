@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Domain\Model;
 
-use HDNET\Importr\Service\Yaml;
-use TYPO3\CMS\Core\Core\ApplicationContext;
+use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -25,13 +26,11 @@ class Strategy extends AbstractEntity
 {
 
     /**
-     *
      * @var string
      */
     protected $title;
 
     /**
-     *
      * @var string
      */
     protected $configuration;
@@ -42,7 +41,6 @@ class Strategy extends AbstractEntity
     protected $configurationFile;
 
     /**
-     *
      * @var string
      */
     protected $resources;
@@ -53,7 +51,6 @@ class Strategy extends AbstractEntity
     protected $resourcesFile;
 
     /**
-     *
      * @var string
      */
     protected $targets;
@@ -64,7 +61,6 @@ class Strategy extends AbstractEntity
     protected $targetsFile;
 
     /**
-     *
      * @return string
      */
     public function getTitle()
@@ -90,7 +86,7 @@ class Strategy extends AbstractEntity
     public function getConfiguration()
     {
         $configuration = Yaml::parse($this->getRawConfiguration());
-        $configuration['updateInterval'] = (isset($configuration['updateInterval']) && is_numeric($configuration['updateInterval'])) ? $configuration['updateInterval'] : 100;
+        $configuration['updateInterval'] = (isset($configuration['updateInterval']) && \is_numeric($configuration['updateInterval'])) ? $configuration['updateInterval'] : 100;
         return $configuration;
     }
 
@@ -135,7 +131,6 @@ class Strategy extends AbstractEntity
     }
 
     /**
-     *
      * @param string $title
      */
     public function setTitle($title)
@@ -144,7 +139,6 @@ class Strategy extends AbstractEntity
     }
 
     /**
-     *
      * @param string $configuration
      */
     public function setConfiguration($configuration)
@@ -153,7 +147,6 @@ class Strategy extends AbstractEntity
     }
 
     /**
-     *
      * @param string $resources
      */
     public function setResources($resources)
@@ -162,7 +155,6 @@ class Strategy extends AbstractEntity
     }
 
     /**
-     *
      * @param string $targets
      */
     public function setTargets($targets)

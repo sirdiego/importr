@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Domain\Model;
 
 use HDNET\Importr\Service\Targets\TargetInterface;
@@ -34,37 +36,37 @@ class Import extends AbstractEntity
     protected $endtime;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $pointer;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $amount;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $inserted;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $updated;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $ignored;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $unknowns;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $errors;
 
@@ -101,7 +103,7 @@ class Import extends AbstractEntity
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getPointer()
     {
@@ -109,7 +111,7 @@ class Import extends AbstractEntity
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount()
     {
@@ -149,7 +151,7 @@ class Import extends AbstractEntity
     }
 
     /**
-     * @param integer $pointer
+     * @param int $pointer
      */
     public function setPointer($pointer)
     {
@@ -157,7 +159,7 @@ class Import extends AbstractEntity
     }
 
     /**
-     * @param integer $amount
+     * @param int $amount
      */
     public function setAmount($amount)
     {

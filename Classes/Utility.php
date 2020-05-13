@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr;
 
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
@@ -22,13 +24,5 @@ class Utility
             $version = TYPO3_version;
         }
         return VersionNumberUtility::convertIntegerToVersionNumber($version);
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    public static function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 }

@@ -1,15 +1,17 @@
 <?php
+
+declare(strict_types=1);
 /**
  * ImportTest.php
  */
-
 namespace HDNET\Importr\Tests\Unit\Domain\Model;
 
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Service\Targets\TargetInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
-class ImportTest extends UnitTestCase {
+class ImportTest extends UnitTestCase
+{
 
     /**
      * @test
@@ -24,10 +26,10 @@ class ImportTest extends UnitTestCase {
             TargetInterface::RESULT_ERROR => 'getErrors',
         ];
 
-        foreach($types as $type => $getter) {
-            $import = new Import;
+        foreach ($types as $type => $getter) {
+            $import = new Import();
             $import->increaseCount($type);
-            $this->assertEquals(1, $import->$getter());
+            self::assertEquals(1, $import->$getter());
         }
     }
 }

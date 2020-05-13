@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * StrategyRepository
  */
-
 namespace HDNET\Importr\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
