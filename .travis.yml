@@ -1,6 +1,5 @@
 language: php
 php:
-- 7.1
 - 7.2
 - 7.3
 env:
@@ -9,11 +8,7 @@ matrix:
   fast_finish: true
   include:
     - php: 7.2
-      env: TYPO3_VERSION=^10.4 COVERAGE=0
-    - php: 7.2
       env: TYPO3_VERSION=^10.4 COVERAGE=1
-    - php: 7.1
-      env: TYPO3_VERSION=^10.4 COVERAGE=0
 sudo: false
 cache:
   directories:
