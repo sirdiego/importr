@@ -70,8 +70,7 @@ class ImportCommandController extends Command
             FlashMessage::class,
             '',
             'Initializing ServiceManager',
-            FlashMessage::INFO,
-            true
+            FlashMessage::INFO
         );
         $this->addFlashMessage($message);
 
