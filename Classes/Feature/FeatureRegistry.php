@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * FeatureRegistry.php
  */
@@ -20,11 +22,11 @@ class FeatureRegistry
     public static function enable($names, $class = Manager::class)
     {
         $dispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        if (!is_array($names)) {
+        if (!\is_array($names)) {
             $names = [$names];
         }
 
-        $trace = debug_backtrace(false, 2);
+        $trace = \debug_backtrace(false, 2);
         $caller = $trace[1]['class'];
 
         foreach ($names as $name) {

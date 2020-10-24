@@ -1,11 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Controller;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
+use HDNET\Importr\Domain\Repository\ImportRepository;
+use HDNET\Importr\Domain\Repository\StrategyRepository;
+use HDNET\Importr\Service\ImportServiceInterface;
+use HDNET\Importr\Service\Manager;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -16,44 +23,49 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class ImportrController extends ActionController
 {
-
     /**
      * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @inject
      */
     protected $resourceFactory;
 
     /**
      * @var \HDNET\Importr\Domain\Repository\StrategyRepository
-     * @inject
      */
     protected $strategyRepository;
 
     /**
      * @var \HDNET\Importr\Domain\Repository\ImportRepository
-     * @inject
      */
     protected $importRepository;
 
     /**
      * @var \HDNET\Importr\Service\Manager
-     * @inject
      */
     protected $importManager;
 
     /**
      * @var \HDNET\Importr\Service\ImportServiceInterface
-     * @inject
      */
     protected $importService;
 
-    /**
-     * @return void
-     */
+    public function __construct(
+        ResourceFactory $resourceFactory,
+        StrategyRepository $strategyRepository,
+        ImportRepository $importRepository,
+        Manager $importManager,
+        ImportServiceInterface $importService
+    ) {
+        $this->resourceFactory = $resourceFactory;
+        $this->strategyRepository = $strategyRepository;
+        $this->importRepository = $importRepository;
+        $this->importManager = $importManager;
+        $this->importService = $importService;
+    }
+
     public function indexAction()
     {
         $combinedIdentifier = GeneralUtility::_GP('id');
-        if (isset($combinedIdentifier) && is_string($combinedIdentifier)) {
+        if (isset($combinedIdentifier) && \is_string($combinedIdentifier)) {
             $folder = $this->resourceFactory->getFolderObjectFromCombinedIdentifier($combinedIdentifier);
             $files = [];
             foreach ($folder->getFiles() as $file) {
@@ -76,11 +88,8 @@ class ImportrController extends ActionController
     }
 
     /**
-     *
      * @param string $identifier
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     *
-     * @return void
      */
     public function previewAction($identifier, Strategy $strategy)
     {
@@ -93,11 +102,8 @@ class ImportrController extends ActionController
     }
 
     /**
-     *
      * @param string $filepath
      * @param \HDNET\Importr\Domain\Model\Strategy $strategy
-     *
-     * @return void
      */
     public function createAction($filepath, Strategy $strategy)
     {
@@ -105,7 +111,7 @@ class ImportrController extends ActionController
         $text = 'The Import file %s width the strategy %s was successfully added to the queue';
         $message = GeneralUtility::makeInstance(
             FlashMessage::class,
-            sprintf($text, $filepath, $strategy->getTitle()),
+            \sprintf($text, $filepath, $strategy->getTitle()),
             'Import is in Queue',
             FlashMessage::INFO,
             true

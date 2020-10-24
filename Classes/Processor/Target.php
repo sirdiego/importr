@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Import;
@@ -20,18 +22,18 @@ class Target
     /**
      * @var Dispatcher
      */
-    protected $signalSlotDispatcher;
+    protected $dispatcher;
 
     /**
      * Target constructor.
      *
      * @param ImportServiceInterface $importService
-     * @param Dispatcher $signalSlotDispatcher
+     * @param Dispatcher $dispatcher
      */
-    public function __construct(ImportServiceInterface $importService, Dispatcher $signalSlotDispatcher)
+    public function __construct(ImportServiceInterface $importService, Dispatcher $dispatcher)
     {
         $this->importService = $importService;
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -64,7 +66,7 @@ class Target
      */
     protected function emitEntrySignal($name, array $configuration, $entry)
     {
-        $result = $this->signalSlotDispatcher->dispatch(
+        $result = $this->dispatcher->dispatch(
             __CLASS__,
             $name,
             [$configuration, $entry]

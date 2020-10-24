@@ -14,14 +14,14 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'Importr',
     'description' => 'Flexible importer for all kinds of files!',
     'category' => 'be',
-    'version' => '3.0.1-dev',
+    'version' => '4.0.1-dev',
     'state' => 'stable',
     'author' => 'Tim Lochmüller, Tim Spiekerkötter',
     'author_email' => 'tl@hdnet.de, ts@hdnet.de',
     'author_company' => '',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-9.5.99',
+            'typo3' => '10.4.0-11.0.0',
             'php' => '7.1.0-0.0.0'
         ],
     ],

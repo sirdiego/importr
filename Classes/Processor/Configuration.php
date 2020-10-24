@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HDNET\Importr\Processor;
 
 use HDNET\Importr\Domain\Model\Strategy;
@@ -17,7 +19,7 @@ class Configuration
     /**
      * @var Dispatcher
      */
-    protected $signalSlotDispatcher;
+    protected $dispatcher;
 
     /**
      * @var StrategyRepository
@@ -32,13 +34,13 @@ class Configuration
     /**
      * Configuration constructor.
      *
-     * @param Dispatcher $signalSlotDispatcher
+     * @param Dispatcher $dispatcher
      * @param StrategyRepository $strategyRepository
      * @param ImportServiceInterface $importService
      */
-    public function __construct(Dispatcher $signalSlotDispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
+    public function __construct(Dispatcher $dispatcher, StrategyRepository $strategyRepository, ImportServiceInterface $importService)
     {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->dispatcher = $dispatcher;
         $this->strategyRepository = $strategyRepository;
         $this->importService = $importService;
     }
@@ -69,7 +71,7 @@ class Configuration
      */
     public function canProcess(array $configuration, $name)
     {
-        return isset($configuration[$name]) && is_array($configuration[$name]);
+        return isset($configuration[$name]) && \is_array($configuration[$name]);
     }
 
     /**
@@ -104,7 +106,7 @@ class Configuration
      */
     protected function emitSignal($name, array &$configuration)
     {
-        $this->signalSlotDispatcher->dispatch(
+        $this->dispatcher->dispatch(
             __CLASS__,
             $name,
             [$this, $configuration]
@@ -145,7 +147,7 @@ class Configuration
      */
     protected function createImport(array $configuration)
     {
-        if (!isset($configuration['createImport']) && !is_array($configuration['createImport'])) {
+        if (!isset($configuration['createImport']) && !\is_array($configuration['createImport'])) {
             return $this;
         }
 

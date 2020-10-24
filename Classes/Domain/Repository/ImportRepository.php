@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * ImportRepository
  */
-
 namespace HDNET\Importr\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
@@ -27,7 +28,7 @@ class ImportRepository extends Repository
         $query = $this->createQuery();
 
         $conditions = [
-            $query->greaterThan('starttime', time() - 60 * 60 * 24 * $days)
+            $query->greaterThan('starttime', \time() - 60 * 60 * 24 * $days)
         ];
 
         $query->matching($query->logicalAnd($conditions));
@@ -47,7 +48,7 @@ class ImportRepository extends Repository
         $query = $this->createQuery();
 
         $conditions = [
-            $query->lessThanOrEqual('starttime', time()),
+            $query->lessThanOrEqual('starttime', \time()),
             $query->lessThan('endtime', 1),
         ];
 

@@ -1,19 +1,14 @@
 language: php
 php:
-- 7.1
 - 7.2
+- 7.3
 env:
-- TYPO3_VERSION=^9.5 COVERAGE=0
+- TYPO3_VERSION=^10.4 COVERAGE=0
 matrix:
   fast_finish: true
-  exclude:
-    - php: 7.1
-      env: TYPO3_VERSION=^9.5 COVERAGE=0
   include:
     - php: 7.2
-      env: TYPO3_VERSION=^9.5 COVERAGE=1
-    - php: 7.1
-      env: TYPO3_VERSION=^8.7 COVERAGE=0
+      env: TYPO3_VERSION=^10.4 COVERAGE=1
 sudo: false
 cache:
   directories:
@@ -44,23 +39,7 @@ script:
   echo; echo "Executing PHP code sniffer"; .Build/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 Classes/
 after_script:
 - |
-  if [ -n "$TRAVIS_TAG" ] && [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]; then
-    echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n"
-    curl -sSL https://raw.githubusercontent.com/alrra/travis-after-all/1.4.4/lib/travis-after-all.js | node
-    if [ $? -eq 0 ]; then
-      # Cleanup before we upload
-      git reset --hard HEAD && git clean -fx
-      TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
-      echo "Uploading release ${TRAVIS_TAG} to TER"
-      .Build/bin/upload . "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE"
-    fi;
-  fi;
-- |
   if [[ "$COVERAGE" == "1" ]]; then
     echo; echo "Uploading code coverage results";
     .Build/bin/ocular code-coverage:upload --format=php-clover .Build/unittest-coverage.clover
   fi
-notifications:
-  email: false
-  slack:
-    secure: OkRMcSFGVYn5gRYJdRCUvMZu3sHVpF7/XcSDIOUfkULNXo8MTRso3bbALvqPve4qmOYxJIQfcn/2PK9jgq5PhE8qVfPZX9+5YuiN817L4o174BXi3Kx4Xh7fOUNNSQo9aqAKF65qaUDA3lD9BoHdPD37nP3fqNZMALOp4X+rxRWyAuwpAKSW+nDk+egnV21YkZe8af4nsFJMOUMcB/aX0Bzb9D5115JsWyBUEBpalHbtV7sbs3hxT1Q+qqEbxuHlNybG4Uxc6BbWuCzY1t3K5NWawX27/pIFBOLWGzTPrE4rXst59S0iGGply0fCUoTgM3A9uQZNuIxjO+BZbz1D4Or7xupMKG7cKu4KbWq3a6/+y2M/Fsn1GAjAHHWJZ2I6SWiQxpX1q/JGzIFw8LwwhAz0bLbNQIB0c/XImC17d0WY+0M4GcSkjszxo4WqlJzDA1BkGy2FhEUGNLWuny7erT9IZdX0VXiu+m0zfWLCbtdQ2cRu/DVQPLVMIY1CKo32Tguw4lCdIl89NeIgdt2rkWHCNiJOqloahgIAy4X7cj2tI85kNlP+es49e743gzt+pS5DjNXVryamluW+VdpKohjh+cucoiEytz/3xDHBN0gHTzgp2ApecUMDr0SuaSwnQbv6wmXLEERKmsxraak6c2HK3MxeP5iSBUbvn7kJ7nQ=

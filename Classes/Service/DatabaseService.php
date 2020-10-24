@@ -1,8 +1,9 @@
 <?php
+
+declare(strict_types=1);
 /**
  * DatabaseService.php
  */
-
 namespace HDNET\Importr\Service;
 
 use HDNET\Importr\Migration\DatabaseConnection;

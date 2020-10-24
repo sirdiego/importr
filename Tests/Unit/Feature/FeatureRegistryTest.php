@@ -1,11 +1,13 @@
 <?php
+
+declare(strict_types=1);
 namespace HDNET\Importr\Tests\Unit\Feature;
 
 use HDNET\Importr\Feature\FeatureRegistry;
 use HDNET\Importr\Service\Manager;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class FeatureRegistryTest extends UnitTestCase
 {
@@ -21,12 +23,12 @@ class FeatureRegistryTest extends UnitTestCase
         $slots = $dispatcher->getSlots(Manager::class, 'test');
         $expectedSlots = [
             [
-                'class' => get_class($this),
+                'class' => \get_class($this),
                 'method' => 'execute',
                 'object' => null,
                 'passSignalInformation' => true,
             ],
         ];
-        $this->assertEquals($expectedSlots, $slots);
+        self::assertEquals($expectedSlots, $slots);
     }
 }
