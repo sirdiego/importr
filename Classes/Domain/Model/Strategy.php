@@ -180,12 +180,10 @@ class Strategy extends AbstractEntity
             return '';
         }
 
-        if (method_exists(GeneralUtility::class, 'compat_version') && GeneralUtility::compat_version('8.7')) {
-            $service = new LinkService();
-            $data = $service->resolveByStringRepresentation($path);
-            if ($data['file'] instanceof FileInterface) {
-                return $data['file']->getForLocalProcessing(false);
-            }
+        $service = new LinkService();
+        $data = $service->resolveByStringRepresentation($path);
+        if ($data['file'] instanceof FileInterface) {
+            return $data['file']->getForLocalProcessing(false);
         }
 
         return GeneralUtility::getFileAbsFileName($path);
