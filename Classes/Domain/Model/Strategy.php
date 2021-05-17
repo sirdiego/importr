@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace HDNET\Importr\Domain\Model;
 
 use Symfony\Component\Yaml\Yaml;
+use TYPO3\CMS\Core\LinkHandling\Exception\UnknownUrnException;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -172,14 +174,16 @@ class Strategy extends AbstractEntity
             return '';
         }
 
-        if (GeneralUtility::compat_version('8.7')) {
+        try {
             $service = new LinkService();
             $data = $service->resolveByStringRepresentation($path);
             if ($data['file'] instanceof FileInterface) {
                 return $data['file']->getForLocalProcessing(false);
+            } else {
+                return GeneralUtility::getFileAbsFileName($path);
             }
+        } catch (UnknownUrnException $e) {
+            return GeneralUtility::getFileAbsFileName($path);
         }
-
-        return GeneralUtility::getFileAbsFileName($path);
     }
 }
