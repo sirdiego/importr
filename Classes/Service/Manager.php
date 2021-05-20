@@ -182,15 +182,23 @@ class Manager implements ManagerInterface
      */
     protected function initializeTargets(Import $import)
     {
-        $targets = [];
         $targetConfiguration = $import->getStrategy()
             ->getTargets();
+        return $this->addTargets($targetConfiguration, $import);
+    }
+
+    protected function addTargets(array $targetConfiguration, Import $import, array $targets = []): array
+    {
         foreach ($targetConfiguration as $target => $configuration) {
+            if (\is_numeric($target)) {
+                $targets = $this->addTargets($configuration, $import, $targets);
+                continue;
+            }
             $object = $this->objectManager->get($target);
             $object->setConfiguration($configuration);
             $object->getConfiguration();
             $object->start($import->getStrategy());
-            $targets[$target] = $object;
+            $targets[] = $object;
         }
         return $targets;
     }
@@ -202,7 +210,16 @@ class Manager implements ManagerInterface
     {
         $targetConfiguration = $import->getStrategy()
             ->getTargets();
+        $this->endTargets($targetConfiguration, $import);
+    }
+
+    protected function endTargets(array $targetConfiguration, Import $import): void
+    {
         foreach ($targetConfiguration as $target => $configuration) {
+            if (\is_numeric($target)) {
+                $this->endTargets($configuration, $import);
+                continue;
+            }
             $object = $this->objectManager->get($target);
             $object->setConfiguration($configuration);
             $object->getConfiguration();
