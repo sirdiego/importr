@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-namespace HDNET\Importr\Tests\Unit\Feature;
+namespace HDNET\Importr\Tests\Functional\Feature;
 
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
@@ -15,12 +15,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * Class RenameFileTest
  */
-class RenameFileTest extends UnitTestCase
+class RenameFileTest extends FunctionalTestCase
 {
     /**
      * @var RenameFile

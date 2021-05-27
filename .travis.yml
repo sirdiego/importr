@@ -25,13 +25,16 @@ before_install:
 before_script:
 - composer require typo3/minimal=$TYPO3_VERSION
 - export TYPO3_PATH_WEB="$PWD/.Build/Web"
+- export typo3DatabaseDriver="pdo_sqlite"
 script:
 - |
   echo; echo "Running unit tests";
   if [[ "$COVERAGE" == "1" ]]; then
     .Build/bin/phpunit -c Tests/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover
+    .Build/bin/phpunit -c Tests/FunctionalTests.xml --coverage-clover=.Build/unittest-coverage.clover
   else
     .Build/bin/phpunit -c Tests/UnitTests.xml
+    .Build/bin/phpunit -c Tests/FunctionalTests.xml
   fi;
 - |
   echo; echo "Executing PHP mess detector"; .Build/bin/phpmd Classes/ text cleancode,codesize,controversial,design,naming || true

@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * TruncateTableTest.php
  */
-namespace HDNET\Importr\Tests\Unit\Feature;
+namespace HDNET\Importr\Tests\Functional\Feature;
 
 use HDNET\Importr\Feature\TruncateTable;
 use HDNET\Importr\Migration\DatabaseConnectionMigrationInterface;
@@ -13,12 +13,12 @@ use HDNET\Importr\Service\DatabaseService;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * Class TruncateTableTest
  */
-class TruncateTableTest extends UnitTestCase
+class TruncateTableTest extends FunctionalTestCase
 {
     /**
      * @var TruncateTable

@@ -41,7 +41,7 @@ class ConfigurationTest extends UnitTestCase
     protected function getConfiguration($shouldAddToQueueBeCalled = false)
     {
         /** @var MockObject|Dispatcher $dispatcher */
-        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $this->dispatcher = $dispatcher;
         /** @var MockObject|StrategyRepository $repository */
         $repository = $this->getMockBuilder(StrategyRepository::class)->disableOriginalConstructor()->getMock();
@@ -82,10 +82,10 @@ class ConfigurationTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \HDNET\Importr\Exception\ReinitializeException
      */
     public function reinitialize()
     {
+        $this->expectException(\HDNET\Importr\Exception\ReinitializeException::class);
         $manager = $this->getManagerMock();
 
         $configuration = [
