@@ -1,0 +1,63 @@
+name: test
+on: [push]
+jobs:
+  test-code:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ["7.2", "7.3", "7.4"]
+        typo3: ["^10.4"]
+    env:
+      TYPO3_VERSION: ${{ matrix.typo3 }}
+      COVERAGE: 0
+    steps:
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug2
+          tools: composer:v2
+      - uses: actions/checkout@v2
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Setup composer
+        run: |
+          composer self-update
+          composer --version
+          if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com
+          $GITHUB_COMPOSER_AUTH; fi
+      - name: Setup typo3 testing environment
+        run: |
+          composer require typo3/minimal=$TYPO3_VERSION
+      - name: Run tests
+        run: |
+          echo;
+            if [[ "$COVERAGE" == "1" ]]; then
+              .Build/bin/phpunit -c Tests/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover
+              .Build/bin/phpunit -c Tests/FunctionalTests.xml --coverage-clover=.Build/unittest-coverage.clover
+            else
+              .Build/bin/phpunit -c Tests/UnitTests.xml
+              .Build/bin/phpunit -c Tests/FunctionalTests.xml
+            fi;
+        env:
+          TYPO3_PATH_WEB: '$PWD/.Build/Web'
+          typo3DatabaseDriver: 'pdo_sqlite'
+      - name: Executing PHP mess detector
+        run: |
+          echo; .Build/bin/phpmd Classes/ text cleancode,codesize,controversial,design,naming || true
+      - name: Executing PHP code sniffer
+        run: |
+          echo; .Build/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 Classes/
+      - name: Archive code coverage results
+        run: |
+          if [[ "$COVERAGE" == "1" ]]; then
+          echo; echo "Uploading code coverage results";
+          .Build/bin/ocular code-coverage:upload --format=php-clover .Build/unittest-coverage.clover
+          fi

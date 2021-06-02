@@ -1,6 +1,6 @@
 # importr
 
-[![Build Status](https://travis-ci.org/sirdiego/importr.svg?branch=master)](https://travis-ci.org/sirdiego/importr) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sirdiego/importr/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sirdiego/importr/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/sirdiego/importr/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sirdiego/importr/?branch=master)
+[![Build Status](https://github.com/sirdiego/importr/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/sirdiego/importr/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sirdiego/importr/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sirdiego/importr/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/sirdiego/importr/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/sirdiego/importr/?branch=master)
 
 The importr can be used to create a bridge between TYPO3 entities and Excel, CSV or other text files.
 
@@ -10,7 +10,7 @@ After installing the extension via one of the possible methods you need to add t
 * Extbase CommandController Task (extbase) - importr:import:initializeservicemanager
 
 The frequency should be as often as possible (e.g. `* * * * *`), this way the Importr can be as precise as possible with the import timings.
- 
+
 TODO: Screenshot
 
 ### TYPO3 Composer Mode
@@ -40,13 +40,13 @@ after:
 ```
 **Resources**
 ```yaml
-HDNET\Importr\Service\Resources\Csv: 
+HDNET\Importr\Service\Resources\Csv:
   skipRows: 1
   delimiter: ,
 ```
 **Targets**
 ```yaml
-HDNET\Importr\Service\Targets\ExtbaseModel: 
+HDNET\Importr\Service\Targets\ExtbaseModel:
   model: VENDOR\MyExt\Domain\Model\MyModel
   repository: VENDOR\MyExt\Domain\Repository\MyRepository
   pid: 123
