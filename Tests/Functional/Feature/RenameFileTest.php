@@ -11,6 +11,7 @@ use HDNET\Importr\Service\Manager;
 use HDNET\Importr\Service\ManagerInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use PHPUnit\Framework\Constraint\RegularExpression;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -68,7 +69,8 @@ class RenameFileTest extends FunctionalTestCase
 
         $children = $this->root->getChildren();
         self::assertEquals(1, \count($children));
-        self::assertMatchesRegularExpression('/^[0-9]{14}_' . $oldFileName . '$/', $children[0]->getName());
+        $pattern = '/^[0-9]{14}_' . $oldFileName . '$/';
+        static::assertThat($children[0]->getName(), new RegularExpression($pattern));
     }
 
     /**
