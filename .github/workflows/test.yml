@@ -7,9 +7,15 @@ jobs:
       matrix:
         php: ["7.2", "7.3", "7.4"]
         typo3: ["^10.4"]
+      include:
+        - php: "7.4"
+          coverage: 1
+        - php: "8.0"
+          continue-on-error: true
+    continue-on-error: ${{ matrix.continue-on-error }}
     env:
       TYPO3_VERSION: ${{ matrix.typo3 }}
-      COVERAGE: 0
+      COVERAGE: ${{ matrix.coverage }}
     steps:
       - name: Setup PHP with composer v2
         uses: shivammathur/setup-php@v2
