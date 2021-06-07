@@ -6,10 +6,16 @@ namespace HDNET\Importr\Tests\Unit;
 use HDNET\Importr\Domain\Model\Import;
 use HDNET\Importr\Domain\Model\Strategy;
 use HDNET\Importr\Domain\Repository\ImportRepository;
+use HDNET\Importr\Processor\Configuration;
+use HDNET\Importr\Processor\Resource;
 use HDNET\Importr\Service\Manager;
+use HDNET\Importr\Service\ManagerInterface;
 use HDNET\Importr\Service\Resources\ResourceInterface;
 use ReflectionClass;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class ManagerTest extends UnitTestCase
@@ -20,7 +26,7 @@ class ManagerTest extends UnitTestCase
      */
     public function are_import_runs_executed()
     {
-        $manager = $this->getMockBuilder(Manager::class)->setMethods(['runImport'])->getMock();
+        $manager = $this->getMockBuilder(Manager::class)->onlyMethods(['runImport'])->disableOriginalConstructor()->getMock();
 
         $imports = [new Import(), new Import()];
         $manager->expects(self::exactly(2))->method('runImport')->withConsecutive(
@@ -41,7 +47,7 @@ class ManagerTest extends UnitTestCase
      */
     public function is_update_interval_updateable()
     {
-        $manager = new Manager();
+        $manager = $this->createManagerWithMockInputs();
         $manager->setUpdateInterval(42);
         self::assertEquals(42, $manager->getUpdateInterval());
     }
@@ -51,7 +57,7 @@ class ManagerTest extends UnitTestCase
      */
     public function is_preview_generated_correct()
     {
-        $manager = new Manager();
+        $manager = $this->createManagerWithMockInputs();
         $resource = $this->getMockBuilder(ResourceInterface::class)->getMock();
         $resource->expects(self::any())->method('getEntry')->willReturn('test');
         $resource->expects(self::once())->method('getFilepathExpression')->willReturn('/\.csv$/');
@@ -72,6 +78,13 @@ class ManagerTest extends UnitTestCase
         $data = $manager->getPreview($strategy, $filepath);
 
         self::assertEquals(\array_fill(0, 21, 'test'), $data);
+    }
+
+    protected function createManagerWithMockInputs(): ManagerInterface
+    {
+        return new Manager($this->createMock(ImportRepository::class), $this->createMock(Dispatcher::class),
+            $this->createMock(PersistenceManager::class), $this->createMock(ObjectManager::class),
+            $this->createMock(Configuration::class), $this->createMock(Resource::class));
     }
 
     protected function setProtectedProperty($object, $name, $value)

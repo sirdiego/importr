@@ -147,7 +147,7 @@ class Configuration
      */
     protected function createImport(array $configuration)
     {
-        if (!isset($configuration['createImport']) && !\is_array($configuration['createImport'])) {
+        if (!isset($configuration['createImport']) || !\is_array($configuration['createImport'])) {
             return $this;
         }
 

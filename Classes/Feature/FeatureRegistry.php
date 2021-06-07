@@ -26,7 +26,7 @@ class FeatureRegistry
             $names = [$names];
         }
 
-        $trace = \debug_backtrace(false, 2);
+        $trace = \debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
         $caller = $trace[1]['class'];
 
         foreach ($names as $name) {

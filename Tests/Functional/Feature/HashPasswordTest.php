@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * HashPasswordTest.php
  */
-namespace HDNET\Importr\Tests\Unit\Feature;
+namespace HDNET\Importr\Tests\Functional\Feature;
 
 use HDNET\Importr\Feature\HashPassword;
 use HDNET\Importr\Processor\Target;
@@ -13,12 +13,12 @@ use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * Class HashPasswordTest
  */
-class HashPasswordTest extends UnitTestCase
+class HashPasswordTest extends FunctionalTestCase
 {
     /**
      * @var HashPassword
