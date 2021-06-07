@@ -7,11 +7,13 @@ jobs:
       matrix:
         php: ["7.2", "7.3", "7.4"]
         typo3: ["^10.4"]
-      include:
-        - php: "7.4"
-          coverage: 1
-        - php: "8.0"
-          continue-on-error: true
+        continue-on-error: [false]
+        include:
+          - php: "7.4"
+            coverage: "1"
+          - php: "8.0"
+            typo3: "^10.4"
+            continue-on-error: true
     continue-on-error: ${{ matrix.continue-on-error }}
     env:
       TYPO3_VERSION: ${{ matrix.typo3 }}
@@ -46,6 +48,7 @@ jobs:
         run: |
           echo;
             if [[ "$COVERAGE" == "1" ]]; then
+              git fetch --unshallow
               .Build/bin/phpunit -c Tests/UnitTests.xml --coverage-clover=.Build/unittest-coverage.clover
               .Build/bin/phpunit -c Tests/FunctionalTests.xml --coverage-clover=.Build/unittest-coverage.clover
             else
