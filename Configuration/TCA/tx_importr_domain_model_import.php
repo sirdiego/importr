@@ -139,6 +139,7 @@ return [
             'label' => 'LLL:EXT:importr/Resources/Private/Language/locallang.xlf:strategy',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_importr_domain_model_strategy',
                 'maxitems' => 1,
                 'size' => 1,
