@@ -1,35 +1,7 @@
 <?php
 
 declare(strict_types = 1);
-/*
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
-/**
- * This file represents the configuration for Code Sniffing PSR-2-related
- * automatic checks of coding guidelines
- * Install @fabpot's great php-cs-fixer tool via
- *
- *  $ composer global require friendsofphp/php-cs-fixer
- *
- * And then simply run
- *
- *  $ php-cs-fixer fix --config ../Build/.php_cs
- *
- * inside the TYPO3 directory. Warning: This may take up to 10 minutes.
- *
- * For more information read:
- * 	 https://www.php-fig.org/psr/psr-2/
- * 	 https://cs.sensiolabs.org
- */
+
 if (PHP_SAPI !== 'cli') {
     die('This script supports command line usage only. Please check your command.');
 }
@@ -48,7 +20,7 @@ $finder = PhpCsFixer\Finder::create()
 //  - Remove unused use statements in the PHP source code
 //  - Ensure Concatenation to have at least one whitespace around
 //  - Remove trailing whitespace at the end of blank lines.
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,
@@ -62,7 +34,6 @@ return PhpCsFixer\Config::create()
         'declare_equal_normalize' => ['space' => 'none'],
         'dir_constant' => true,
         'function_typehint_space' => true,
-        'hash_to_slash_comment' => true,
         'lowercase_cast' => true,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'modernize_types_casting' => true,
@@ -72,7 +43,6 @@ return PhpCsFixer\Config::create()
         'no_blank_lines_after_phpdoc' => true,
         'no_empty_phpdoc' => true,
         'no_empty_statement' => true,
-        'no_extra_consecutive_blank_lines' => true,
         'no_leading_import_slash' => true,
         'no_leading_namespace_whitespace' => true,
         'no_null_property_initialization' => true,
@@ -85,7 +55,7 @@ return PhpCsFixer\Config::create()
         'no_useless_else' => true,
         'no_whitespace_in_blank_line' => true,
         'ordered_imports' => true,
-        'php_unit_construct' => ['assertEquals', 'assertSame', 'assertNotEquals', 'assertNotSame'],
+        'php_unit_construct' => true,
         'php_unit_mock_short_will_return' => true,
         'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
         'phpdoc_no_access' => true,

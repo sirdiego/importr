@@ -23,7 +23,7 @@ class Csv extends AbstractResource implements ResourceInterface
     /**
      * @var string
      */
-    protected $filepathExpression = '/.csv$/';
+    protected $filepathExpression = '/.csv$/i';
 
     /**
      * @var array

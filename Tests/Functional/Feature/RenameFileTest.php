@@ -70,7 +70,7 @@ class RenameFileTest extends FunctionalTestCase
         $children = $this->root->getChildren();
         self::assertEquals(1, \count($children));
         $pattern = '/^[0-9]{14}_' . $oldFileName . '$/';
-        static::assertThat($children[0]->getName(), new RegularExpression($pattern));
+        self::assertThat($children[0]->getName(), new RegularExpression($pattern));
     }
 
     /**
