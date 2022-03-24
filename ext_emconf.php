@@ -25,4 +25,7 @@ $EM_CONF[$_EXTKEY] = [
             'php' => '7.1.0-0.0.0'
         ],
     ],
+    'autoload' => [
+        'psr-4' => ['HDNET\\Importr\\' => 'Classes']
+    ],
 ];
