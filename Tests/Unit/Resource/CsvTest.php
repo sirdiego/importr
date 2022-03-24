@@ -58,13 +58,4 @@ class CsvTest extends UnitTestCase
         self::assertEquals(1, $this->fixture->getAmount());
         self::assertEquals(['test', 'test'], $this->fixture->getEntry(0));
     }
-
-    /**
-     * @test
-     */
-    public function filePathExpressionIsCsv()
-    {
-        $expression = $this->fixture->getFilepathExpression();
-        self::assertEquals('/.csv$/', $expression);
-    }
 }

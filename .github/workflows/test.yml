@@ -15,6 +15,15 @@ jobs:
           - php: "8.0"
             typo3: "^10.4"
             continue-on-error: true
+          - php: "7.4"
+            typo3: "^11.5"
+            continue-on-error: false
+          - php: "8.0"
+            typo3: "^11.5"
+            continue-on-error: false
+          - php: "8.1"
+            typo3: "^11.5"
+            continue-on-error: false
     continue-on-error: ${{ matrix.continue-on-error }}
     env:
       TYPO3_VERSION: ${{ matrix.typo3 }}
