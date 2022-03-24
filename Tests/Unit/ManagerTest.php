@@ -82,9 +82,14 @@ class ManagerTest extends UnitTestCase
 
     protected function createManagerWithMockInputs(): ManagerInterface
     {
-        return new Manager($this->createMock(ImportRepository::class), $this->createMock(Dispatcher::class),
-            $this->createMock(PersistenceManager::class), $this->createMock(ObjectManager::class),
-            $this->createMock(Configuration::class), $this->createMock(Resource::class));
+        return new Manager(
+            $this->createMock(ImportRepository::class),
+            $this->createMock(Dispatcher::class),
+            $this->createMock(PersistenceManager::class),
+            $this->createMock(ObjectManager::class),
+            $this->createMock(Configuration::class),
+            $this->createMock(Resource::class)
+        );
     }
 
     protected function setProtectedProperty($object, $name, $value)
