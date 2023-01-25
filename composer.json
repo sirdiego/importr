@@ -29,7 +29,7 @@
     "typo3/cms-core": "^10.4||^11.5"
   },
   "suggest": {
-    "phpoffice/phpexcel": "Use Excel files as import resource"
+    "phpoffice/phpspreadsheet": "Use Excel files as import resource"
   },
   "replace": {
     "typo3-ter/importr": "self.version"
