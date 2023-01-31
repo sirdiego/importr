@@ -14,9 +14,6 @@ return [
         'default_sortby' => 'ORDER BY title',
         'iconfile' => 'EXT:importr/Resources/Public/Icons/Strategy.png',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'title, configuration, configuration_file, resources, resources_file, targets, targets_file',
-    ],
     'types' => [
         '1' => ['showitem' => 'title, general, configuration, configuration_file, resources, resources_file, targets, targets_file'],
     ],

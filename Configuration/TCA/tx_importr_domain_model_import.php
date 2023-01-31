@@ -16,9 +16,6 @@ return [
         'delete' => 'deleted',
         'iconfile' => 'EXT:importr/Resources/Public/Icons/Import.png',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'strategy,filepath,starttime,endtime,pointer,amount',
-    ],
     'types' => [
         '1' => ['showitem' => 'strategy,filepath,starttime,endtime,pointer,amount'],
     ],
