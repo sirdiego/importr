@@ -6,7 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 /** @var string $_EXTKEY */
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule('HDNET.Importr', 'file', 'tx_importr_mod', '', [
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule('Importr', 'file', 'tx_importr_mod', '', [
     \HDNET\Importr\Controller\ImportrController::class => 'index,import,preview,create,reset',
 ], [
     'access' => 'user,group',
