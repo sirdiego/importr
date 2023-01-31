@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  HDNET\Importr\:
+    resource: '../Classes/*'
+
+  HDNET\Importr\Command\ImportCommandController:
+    tags:
+      - name: 'console.command'
+        command: 'importr:import'

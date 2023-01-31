@@ -39,12 +39,6 @@ class ImportCommandController extends Command
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
     }
 
-    protected function configure()
-    {
-        $this->setDescription('tbd');
-        $this->setHelp('tbd');
-    }
-
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
