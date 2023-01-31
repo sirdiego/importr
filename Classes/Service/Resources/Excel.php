@@ -7,7 +7,7 @@ use HDNET\Importr\Domain\Model\Strategy;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReader;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Core\Environment;
 
 /**
  * Description of Excel
@@ -66,10 +66,10 @@ class Excel extends AbstractResource implements ResourceInterface
         $configuration = $this->getConfiguration();
 
         if (!\class_exists(IOFactory::class)) {
-            throw new \Exception('PHP Excel is needed! Please install phpoffice/phpexcel (composer mode)', 12367812368);
+            throw new \Exception('PHP Excel is needed! Please install phpoffice/phpspreadsheet (composer mode)', 12367812368);
         }
 
-        $filename = GeneralUtility::getFileAbsFileName($this->filepath);
+        $filename = Environment::getPublicPath() . $this->filepath;
         /** @var IReader $reader */
         $reader = IOFactory::createReaderForFile($filename);
         $reader->setReadDataOnly(true);
@@ -88,7 +88,7 @@ class Excel extends AbstractResource implements ResourceInterface
         for ($row = 1 + $configuration['skipRows']; $row <= $highestRow; ++$row) {
             $rowRecord = [];
             for ($col = 0; $col <= $highestColumnIndex; ++$col) {
-                $rowRecord[] = \trim(
+                $rowRecord[] = \trim((string)
                     $worksheet->getCellByColumnAndRow($col, $row)
                         ->getValue()
                 );
